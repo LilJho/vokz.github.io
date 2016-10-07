@@ -1,0 +1,1 @@
+{"C:\\Users\\ph2150097\\Desktop\\wacoal_Materials\\wacoal\\gulpfile.js":{"sha1":"abae6fabcd45f2ca0f0dc68b4b80e5e41aa15690","tasks":{"serve":{"name":"serve","dependencies":"sass js"},"sass":{"name":"sass","dependencies":""},"js":{"name":"js","dependencies":""},"default":{"name":"default","dependencies":"serve"}}}}

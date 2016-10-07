@@ -1,0 +1,58 @@
+/**
+* Global styles
+*/
+
+body{
+	display: block;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	font-family: $font-light;
+	overflow-x: hidden;
+	min-width: 320px;
+}
+
+.pholder::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: $primary-color;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: $primary-color;
+	opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: $primary-color;
+	opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: $primary-color;
+}
+:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+	color: $primary-color;
+}
+
+.pholder{
+	color: $primary-color;
+}
+
+.pholder:focus{
+	outline: none;
+}
+
+.clearfix:before,
+.clearfix:after{
+	display: inline-block;
+	content: '';
+	clear: both;
+}
+
+.slide-open{
+	height: auto!important;
+	
+}
+
+.wrap {
+	.wrapInner{
+		max-width: 1094px;
+		margin: 0 auto;
+	}
+}
