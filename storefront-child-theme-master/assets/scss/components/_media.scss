@@ -1,0 +1,398 @@
+/**
+* Media
+*/
+
+//Slider
+.hasHover {
+	cursor: pointer;
+}
+
+.slider{
+	position: relative;
+	
+	.nav{
+		position: absolute;
+		cursor: pointer;
+	}
+	
+	.slideContainer {
+		display: block;
+		max-width: 1093px;
+		max-height: 460px;
+		width: auto;
+		height: auto;
+		overflow: hidden;
+		position: relative;
+		background-color:#fff;
+		
+		
+		.sliderImg{
+			li{
+				display: inline-block;
+				float: left;
+				position: relative;
+				top: 0;
+				left: 0;
+				
+				a {
+					display: inline-block;
+					
+					img{
+						position: relative;
+						width: 100%!important;
+						height: auto!important;
+						
+						&:hover{
+							cursor: pointer;
+							background: white;
+							opacity: 0.75;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	.sliderNavLeft{
+		left: 0px;
+		top: 202px;
+		z-index: 800;
+	}
+	
+	.sliderNavRight{
+		right: 0px;
+		top: 202px;
+		z-index: 800;
+	}
+	
+	.bullets{
+		display: block;
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		bottom: 0px;
+		
+		.navBullets {
+			li{
+				overflow: hidden;
+				height: 10px;
+				display: inline-block;
+				margin-right: 12px;
+				position: relative;
+				bottom: 8px;
+				left: 4px;
+				cursor: pointer;
+				
+				.circle {
+					width: 10px;
+					height: 10px;
+					-webkit-border-radius: 6px;
+					-moz-border-radius: 6px;
+					border-radius: 6px;
+					background-color: #737373;
+				}
+			}
+			
+			.active .circle{
+				width: 10px;
+				height: 10px;
+				-webkit-border-radius: 6px;
+				-moz-border-radius: 6px;
+				border-radius: 6px;
+				background-color: #e74063!important;
+			}
+		}
+	}
+}
+
+li.hoverFade{
+	position: relative;
+	&:hover:after{
+		content: '';
+		top: 0;
+		left: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		background: #772850;
+		opacity: 0.3;
+	}
+	
+	&:hover{
+		*{
+			-webkit-animation-name: fadeInUpShort;
+			animation-name: fadeInUpShort;
+			
+			-webkit-animation-name: growIn;
+			animation-name: growIn;
+		}
+		
+		span{
+			
+			&:before{
+				visibility: visible;
+				-webkit-transform: scaleX(1);
+				transform: scaleX(1);
+			}
+		}
+	}
+	
+	span{
+		position: absolute;
+		top: 45%;
+		left: 38%;
+		z-index: 10;
+		color: #fff;
+		text-transform: uppercase;
+		text-align: center;
+		font-family: $font-bold;
+		font-weight: bold;
+		font-size: 150%;
+		letter-spacing: -0.7px;
+		
+		&:before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			margin-bottom: -4px;
+			bottom: 0;
+			background-color: #fff;
+			visibility: hidden;
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+			-webkit-transition: all 0.5s ease-in-out 0s;
+			transition: all 0.5s ease-in-out 0s;
+		}
+	}
+	
+	a{
+		position: absolute;
+		top: 65%;
+		left: 36%;
+		padding: 5px 14px 8px 12px;
+		z-index: 10;
+		color: #fff;
+		text-transform: uppercase;
+		text-decoration: none;
+		font-family: $font-bold;
+		font-weight: bold;
+		font-size: 133%;
+		letter-spacing: -0.7px;
+		background-color: $primary-color;
+		
+		&:hover{
+			background-color: $secondary-color;
+		}
+	}
+	
+	@media only screen and (max-width : $medium) {
+		margin: 0 1em 1em 1em;
+		
+		img{
+			width: 100%;
+			height: auto;
+		}
+		
+		&:not(:last-child){
+			margin-right: 1em;
+		}
+	}
+	
+	
+	@media only screen and (max-width : $tablet) {
+		span{
+			top: 35%;
+			left: 36%;
+			font-size: 133%;
+			
+			&:before{
+				visibility: visible;
+				-webkit-transform: scaleX(1);
+				transform: scaleX(1);
+			}
+		}
+		
+		a{
+			top: 55%;
+			left: 34%;
+			font-size: 116%;
+		}
+		
+		*{
+			-webkit-animation-name: fadeInUpShort;
+			animation-name: fadeInUpShort;
+
+			-webkit-animation-name: growIn;
+			animation-name: growIn;
+		}
+		
+	}
+}
+
+li.categories{
+	position: relative;
+	&:hover:after{
+		content: '';
+		top: 0;
+		left: 0;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		background: #772850;
+		opacity: 0.3;
+
+		@media only screen and (max-width : $small) {
+			background: none;
+		}
+	}
+					
+	&:hover{
+		*{
+			-webkit-animation-name: fadeInUpShort;
+			animation-name: fadeInUpShort;
+			
+			-webkit-animation-name: growIn;
+			animation-name: growIn;
+		}
+		
+		span{
+			
+			&:before{
+				visibility: visible;
+				-webkit-transform: scaleX(1);
+				transform: scaleX(1);
+			}
+		}
+	}
+	
+	span{
+		position: absolute;
+		top: 25%;
+		left: 34%;
+		z-index: 10;
+		color: #fff;
+		text-transform: uppercase;
+		text-align: center;
+		font-family: $font-bold;
+		font-weight: bold;
+		font-size: 150%;
+		line-height: 1.5;
+		letter-spacing: -0.7px;
+		
+		&:before {
+			content: "";
+			position: absolute;
+			left: 13px;
+			width: 80%;
+			height: 2px;
+			margin-bottom: -6px;
+			bottom: 0;
+			background-color: #fff;
+			visibility: hidden;
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+			-webkit-transition: all 0.5s ease-in-out 0s;
+			transition: all 0.5s ease-in-out 0s;
+		}
+
+		@media only screen and (max-width : $mobile) {
+			&:before {width: 70%;}
+		}
+	}
+	
+	a{
+		position: absolute;
+		top: 65%;
+		left: 34%;
+		padding: 5px 14px 8px 12px;
+		z-index: 10;
+		color: #fff;
+		text-transform: uppercase;
+		text-decoration: none;
+		font-family: $font-bold;
+		font-weight: bold;
+		font-size: 133%;
+		letter-spacing: -0.7px;
+		background-color: $primary-color;
+		
+		&:hover{
+			background-color: $secondary-color;
+		}
+
+		@media only screen and (max-width : $mobile) {
+			top: 65%!important;
+			left: 36%!important;
+		}
+	}
+	
+	@media only screen and (max-width : $medium) {
+		img{
+			width: 100%;
+			height: auto;
+		}
+	}
+	
+	
+	@media only screen and (max-width : $tablet) {
+		span{
+			top: 15%;
+			left: 30%;
+			font-size: 133%;
+			
+			&:before{
+				visibility: visible;
+				-webkit-transform: scaleX(1);
+				transform: scaleX(1);
+			}
+		}
+		
+		a{
+			top: 55%;
+			left: 30%;
+			font-size: 116%;
+		}
+		
+		*{
+			-webkit-animation-name: fadeInUpShort;
+			animation-name: fadeInUpShort;
+
+			-webkit-animation-name: growIn;
+			animation-name: growIn;
+		}
+		
+	}
+
+	@media only screen and (max-width : $mobile) {
+		span{
+			top: 25%;
+			left: 36%;
+			font-size: 133%;
+			
+			&:before{
+				visibility: visible;
+				-webkit-transform: scaleX(1);
+				transform: scaleX(1);
+			}
+		}
+		
+		a{
+			top: 55%;
+			left: 30%;
+			font-size: 116%;
+		}
+		
+		*{
+			-webkit-animation-name: fadeInUpShort;
+			animation-name: fadeInUpShort;
+
+			-webkit-animation-name: growIn;
+			animation-name: growIn;
+		}
+		
+	}
+}
