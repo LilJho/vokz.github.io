@@ -26,23 +26,23 @@ const SubmitReport = () => {
             <Button className='absolute top-4 right-4 z-10' variant="unstyled" size="square" onClick={toggle}>
                 <HiX className="w-6 h-6 text-gray-400" />
             </Button>
-            <div className='relative flex flex-col gap-10 items-center justify-center p-4'>
+            <div className='relative flex flex-col gap-10 items-center justify-center'>
                 <div className='text-center'>
                     <h2 className='text-2xl font-bold'>Submit Report</h2>
                     <p>Please select on what type of report you want to submit.</p>
                 </div>
-                <div className='w-full flex gap-4 flex-wrap'>
+                <div className='w-full grid grid-cols-2 md:flex gap-4 flex-wrap'>
+                    <ReportButton image={DRMIllu} type="dmr" href="daily-medical-report">
+                        Daily Medical<br /> Record
+                    </ReportButton>
+                    <ReportButton image={CGMIllu} type="cgm" href="cgm-report">
+                        Continuous Glucose <br /> monitors (CGM)
+                    </ReportButton>
                     <ReportButton image={Ringllu} type="ring" href="02-ring-report">
                         02 <br /> Ring
                     </ReportButton>
                     <ReportButton image={BMIllu} type="bmi" href="bmi-report">
-                        Body Composition <br />Scale (BMI)
-                    </ReportButton>
-                    <ReportButton image={CGMIllu} type="cgm" href="cgm-report">
-                        Continuous glucose<br /> monitors (CGM)
-                    </ReportButton>
-                    <ReportButton image={DRMIllu} type="dmr" href="daily-medical-report">
-                        Dashboard<br /> (watch)
+                        BMI Body <br />Composition (BMI)
                     </ReportButton>
                 </div>
 
@@ -67,7 +67,7 @@ const ReportButton = ({ children, image, type, href }: IReportButton) => {
         "bmi": "hover:border-violet-600 hover:text-violet-600",
     }
     return (
-        <Link href={`/patients/${href}`} className='flex-1'>
+        <Link href={`/patients/${href}`} className='flex-1 min-w-[195px]'>
             <button className={`w-full transition-all flex flex-col items-center justify-center gap-2 border rounded-md p-4 active:scale-95 ${hover[type]}`}>
                 <Image src={image} alt="Illustration" className='w-32 select-none user-select-none pointer-events-none' />
                 <span className='leading-5 font-medium text-inherit'>
