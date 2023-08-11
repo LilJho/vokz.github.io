@@ -5,9 +5,7 @@ import { PatientsActivityService } from '@/services/databaseServices'
 const DashboardPage = async () => {
     const data = await PatientsActivityService.getAll()
     return (
-        <div>
-            <PatientsOverview data={data} />
-        </div>
+        <PatientsOverview data={data} />
     )
 }
 

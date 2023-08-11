@@ -17,7 +17,7 @@ const convertToGrayscale = (imageData: ImageData) => {
 const preProcessImage = (imageSrc: string, cropRegions: CropRegionsType[]) => {
   const image = new Image();
   image.src = imageSrc;
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     image.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -49,7 +49,7 @@ const preProcessImage = (imageSrc: string, cropRegions: CropRegionsType[]) => {
       const imageData = ctx?.getImageData(0, 0, canvas.width, canvas.height); // You can adjust blockSize and C based on your images
       ctx?.putImageData(convertToGrayscale(imageData!), 0, 0);
 
-      resolve(canvas.toDataURL("image/png"));
+      resolve(canvas.toDataURL("image/png") as string);
     };
     image.onerror = reject;
   });
@@ -83,13 +83,13 @@ const extractTextFromRegion = async (
   region: CropRegionsType
 ) => {
   const processedImage = await preProcessImage(imageSrc, [region]); // Process only the current region
-  let text = await handleExtractText(processedImage as unknown as string);
+  let text = await handleExtractText(processedImage);
   text = text.replace(/\n/g, "").trim();
   return text;
 };
 
 interface ProcessAndExtractType<T> {
-  getStructuredData: (res: T[]) => T[];
+  getStructuredData: (result: string[]) => T;
   regions: CropRegionsType[];
   image: string;
 }
@@ -99,11 +99,11 @@ export const processAndExtract = async <T>({
   regions,
   image,
 }: ProcessAndExtractType<T>) => {
-  const textExtractionPromises = regions.map((region) =>
+  const textExtractionPromises = regions.map((region: CropRegionsType) =>
     extractTextFromRegion(image, region)
   );
   const results = await Promise.all(textExtractionPromises);
   // Map the results to the dailyMedicalReportData structure
-  return { extractedText: getStructuredData(results as T[]), loading };
+  return { extractedText: getStructuredData(results), loading };
   // Update the state
 };

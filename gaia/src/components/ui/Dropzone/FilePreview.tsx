@@ -1,25 +1,24 @@
 import React, { FormEvent } from "react";
 import Image from "next/image";
 import { RiCloseFill, RiDeleteBin5Line } from "react-icons/ri";
+import { cn } from "@/lib/utils";
 
 interface IFilePreviewProps {
   previewUrl: string;
-  file: string;
+  fileName: string;
   handleRemoveImage: () => void;
-  imageName: string;
-  deleteTrigger: JSX.Element;
+  className?: string;
 }
 
 const FilePreview = ({
   previewUrl,
-  file,
-  imageName,
+  fileName,
   handleRemoveImage,
-  deleteTrigger,
+  className = ""
 }: IFilePreviewProps) => {
 
   return (
-    <div className="flex items-center border border-gray-200 p-1.5 rounded-lg gap-4">
+    <div className={cn(`flex items-center border border-gray-200 p-1.5 rounded-lg gap-4`, className)}>
       {previewUrl ? (
         <Image
           src={previewUrl}
@@ -30,29 +29,10 @@ const FilePreview = ({
         />
       ) : <div className="w-10 h-10 rounded bg-gray-200"></div>}
       <div className="flex items-center justify-between w-full">
-        {(() => {
-          if (!file && !imageName) {
-            return <p className="text-gray-400 truncate max-w-md">No selected photo</p>;
-          }
-
-          if (file && file !== imageName) {
-            return (
-              <>
-                <p className="text-gray-800 truncate max-w-md">{file}</p>
-                <RemoveImage handleRemoveImage={handleRemoveImage} />
-              </>
-            );
-          }
-
-          if (!file && imageName) {
-            return (
-              <>
-                <p className="text-gray-800 truncate max-w-md">{imageName}</p>
-                {deleteTrigger}
-              </>
-            );
-          }
-        })()}
+        {previewUrl ? <>
+          <p className="text-gray-800 truncate max-w-md">{fileName}</p>
+          <RemoveImage handleRemoveImage={handleRemoveImage} />
+        </> : <p className="text-gray-400 truncate max-w-md">No selected photo</p>}
       </div>
     </div>
   );
