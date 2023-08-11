@@ -47,7 +47,6 @@ const SubmitReport = () => {
                 </div>
 
             </div>
-
         </HeadlessDialog >
     )
 }
@@ -70,7 +69,7 @@ const ReportButton = ({ children, image, type, href }: IReportButton) => {
     return (
         <Link href={`/patients/${href}`} className='flex-1'>
             <button className={`w-full transition-all flex flex-col items-center justify-center gap-2 border rounded-md p-4 active:scale-95 ${hover[type]}`}>
-                <Image src={image} alt="Illustration" className='w-32' />
+                <Image src={image} alt="Illustration" className='w-32 select-none user-select-none pointer-events-none' />
                 <span className='leading-5 font-medium text-inherit'>
                     {children}
                 </span>
