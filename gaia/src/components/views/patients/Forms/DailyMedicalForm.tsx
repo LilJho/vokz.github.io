@@ -5,7 +5,9 @@ import RecordForm from './RecordForm'
 import { CropRegionsType } from '@/lib/types'
 import { getSleepHours } from '@/helper/getSleepHours'
 import { v4 as uuidv4 } from 'uuid';
-import { processAndExtract } from '@/helper/tesseractExtract'
+import useExtractText from '@/hooks/useExtractText'
+import { DailyActivitiesService } from '@/services/databaseServices'
+import { toast } from '@/components/ui/use-toast'
 
 const DailyMedicalForm = () => {
     const [selectedFile, setSelectedFile] = useState({
@@ -13,8 +15,24 @@ const DailyMedicalForm = () => {
         file: "",
     })
 
+    const { extractTextFromRegions, progress } = useExtractText()
+
     const handleSubmit = async () => {
-        const processedData = await processAndExtract({ getStructuredData: getDashboardReportData, regions: dailyMedicalReportRegion, image: selectedFile.file })
+        try {
+            const data = await extractTextFromRegions({ getStructuredData: getDashboardReportData, regions: dailyMedicalReportRegion, image: selectedFile.file })
+            await DailyActivitiesService.create(data)
+            toast({
+                title: "Upload Success",
+                description: "Photo has been uploaded successfully.",
+                variant: "success",
+            })
+        } catch (error) {
+            toast({
+                title: "Upload Error",
+                description: "There is a problem occured. Please try again!.",
+                variant: "destructive",
+            })
+        }
     }
 
     return (
@@ -24,6 +42,7 @@ const DailyMedicalForm = () => {
             handleSubmit={handleSubmit}
             title="Daily Medical Record Form"
             description="Kindly submit your daily health log. Ensure the image is clear and the text can be easily read."
+            progress={progress}
         />
     )
 }

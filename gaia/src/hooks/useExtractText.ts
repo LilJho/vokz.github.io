@@ -1,0 +1,121 @@
+import { CropRegionsType } from "@/lib/types";
+import { useState } from "react";
+import { createWorker } from "tesseract.js";
+
+const useExtractText = () => {
+  const [progress, setProgress] = useState({
+    loading: 0,
+    status: "",
+  });
+
+  const convertToGrayscale = (imageData: ImageData) => {
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+      data[i] = avg; // red
+      data[i + 1] = avg; // green
+      data[i + 2] = avg; // blue
+    }
+    return imageData;
+  };
+
+  const preProcessImage = (
+    imageSrc: string,
+    cropRegions: CropRegionsType[]
+  ) => {
+    const image = new Image();
+    image.src = imageSrc;
+    return new Promise<string>((resolve, reject) => {
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const scaleFactor = 0.55; // Adjusted for further scaling
+
+        // Upscale the canvas dimensions
+        canvas.width = cropRegions[0].width * scaleFactor;
+        canvas.height =
+          cropRegions.reduce((sum, region) => sum + region.height, 0) *
+          scaleFactor;
+
+        let currentY = 0;
+        for (const region of cropRegions) {
+          ctx?.drawImage(
+            image,
+            region.x,
+            region.y,
+            region.width,
+            region.height, // Source rectangle
+            0,
+            currentY,
+            region.width * scaleFactor,
+            region.height * scaleFactor // Destination rectangle
+          );
+          currentY += region.height * scaleFactor;
+        }
+
+        const imageData = ctx?.getImageData(0, 0, canvas.width, canvas.height); // You can adjust blockSize and C based on your images
+        ctx?.putImageData(convertToGrayscale(imageData!), 0, 0);
+
+        resolve(canvas.toDataURL("image/png") as string);
+      };
+      image.onerror = reject;
+    });
+  };
+
+  const handleExtractText = async (image: string) => {
+    const worker = await createWorker({
+      logger: (m) =>
+        setProgress({
+          loading: m.progress * 100,
+          status: m.status,
+        }),
+    });
+
+    await worker.loadLanguage("eng");
+    await worker.initialize("eng");
+
+    const {
+      data: { text },
+    } = await worker.recognize(
+      image,
+      { rotateAuto: true },
+      { imageColor: true, imageGrey: true, imageBinary: true }
+    );
+    await worker.terminate();
+    return text;
+  };
+
+  const extractTextFromRegion = async (
+    imageSrc: string,
+    region: CropRegionsType
+  ) => {
+    const processedImage = await preProcessImage(imageSrc, [region]); // Process only the current region
+    let text = await handleExtractText(processedImage);
+    text = text.replace(/\n/g, "").trim();
+    return text;
+  };
+
+  interface ProcessAndExtractType<T> {
+    getStructuredData: (result: string[]) => T;
+    regions: CropRegionsType[];
+    image: string;
+  }
+
+  const extractTextFromRegions = async <T>({
+    getStructuredData,
+    regions,
+    image,
+  }: ProcessAndExtractType<T>) => {
+    const textExtractionPromises = regions.map((region: CropRegionsType) =>
+      extractTextFromRegion(image, region)
+    );
+
+    const data = await Promise.all(textExtractionPromises);
+    return getStructuredData(data);
+  };
+
+  return { extractTextFromRegions, progress };
+};
+
+export default useExtractText;

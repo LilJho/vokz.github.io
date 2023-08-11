@@ -141,7 +141,7 @@ const OCRComponent = () => {
                         crop={crop}
                         onComplete={onCropComplete}
                         onChange={(crop: any) => setCrop(crop)}
-                        onImageLoaded={getCroppedImg}
+                    // onImageLoaded={getCroppedImg}
                     >
                         {selectedFile.type === "pdf" &&
                             <Document file={selectedFile.file}>
