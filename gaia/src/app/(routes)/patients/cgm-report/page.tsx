@@ -1,8 +1,13 @@
+import BreadcrumbsLayout from '@/components/layout/BreadcrumbsLayout'
 import React from 'react'
 
 const page = () => {
     return (
-        <div>page</div>
+        <BreadcrumbsLayout href="/patients" parentPageTitle='Patients Profile' currentPageTitle='CGM Report'>
+            <div>
+                CGM Report
+            </div>
+        </BreadcrumbsLayout>
     )
 }
 
