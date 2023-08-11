@@ -43,15 +43,13 @@ const PatientsOverview = ({ data }: any) => {
     });
 
     return (
-        <div>
-            <div className="py-8 px-10 border rounded-lg h-full mt-5 bg-white">
-                <h3 className="text-xl font-semibold">Patients Daily Activity</h3>
-                <DataTableControl table={table} />
-                <div className="rounded-md mt-6">
-                    <DataTable table={table} columns={columns} />
-                </div>
-                <Pagination table={table} />
+        <div className="py-8 px-10 border rounded-lg h-full mt-5 bg-white">
+            <h3 className="text-xl font-semibold">Patients Daily Activity</h3>
+            <DataTableControl table={table} />
+            <div className="rounded-md mt-6">
+                <DataTable table={table} columns={columns} />
             </div>
+            <Pagination table={table} />
         </div>
     )
 }

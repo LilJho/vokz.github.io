@@ -1,13 +1,16 @@
 import BreadcrumbsLayout from '@/components/layout/BreadcrumbsLayout'
 import OCRComponent from '@/components/ui/OCR'
-import TextExtract from '@/components/views/patients/Record/TextExtract'
+import DailyMedicalForm from '@/components/views/patients/Forms/DailyMedicalForm'
+import RecordForm from '@/components/views/patients/Forms/RecordForm'
 import React from 'react'
 
 const page = () => {
     return (
-        <BreadcrumbsLayout href="/patients" parentPageTitle='Patients Profile' currentPageTitle='Daily Medical Report'>
-            <OCRComponent />
-            <TextExtract />
+        <BreadcrumbsLayout href="/patients" parentPageTitle='Patients Profile' currentPageTitle='Daily Medical Record'>
+            {/* <OCRComponent /> */}
+            <div className='flex justify-center mt-4 3xl:mt-24'>
+                <DailyMedicalForm />
+            </div>
         </BreadcrumbsLayout>
     )
 }
