@@ -68,8 +68,8 @@ const ReportButton = ({ children, image, type, href }: IReportButton) => {
         "bmi": "hover:border-violet-600 hover:text-violet-600",
     }
     return (
-        <Link href={`/patients/${href}`}>
-            <button className={`transition-all flex flex-col items-center justify-center gap-2 border rounded-md p-4 flex-1 active:scale-95 ${hover[type]}`}>
+        <Link href={`/patients/${href}`} className='flex-1'>
+            <button className={`w-full transition-all flex flex-col items-center justify-center gap-2 border rounded-md p-4 active:scale-95 ${hover[type]}`}>
                 <Image src={image} alt="Illustration" className='w-32' />
                 <span className='leading-5 font-medium text-inherit'>
                     {children}
