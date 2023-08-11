@@ -32,17 +32,17 @@ const SubmitReport = () => {
                     <p>Please select on what type of report you want to submit.</p>
                 </div>
                 <div className='w-full flex gap-4 flex-wrap'>
-                    <ReportButton image={DRMIllu} type="dmr" href="daily-medical-report">
-                        Daily Medical<br /> Report
-                    </ReportButton>
-                    <ReportButton image={CGMIllu} type="cgm" href="cgm-report">
-                        Continuous glucose<br /> monitors (CGM)
-                    </ReportButton>
                     <ReportButton image={Ringllu} type="ring" href="02-ring-report">
                         02 <br /> Ring
                     </ReportButton>
                     <ReportButton image={BMIllu} type="bmi" href="bmi-report">
-                        Body mass <br />index (BMI)
+                        Body Composition <br />Scale (BMI)
+                    </ReportButton>
+                    <ReportButton image={CGMIllu} type="cgm" href="cgm-report">
+                        Continuous glucose<br /> monitors (CGM)
+                    </ReportButton>
+                    <ReportButton image={DRMIllu} type="dmr" href="daily-medical-report">
+                        Dashboard<br /> (watch)
                     </ReportButton>
                 </div>
 
