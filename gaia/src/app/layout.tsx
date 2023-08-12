@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from "@/components/ui/toaster"
 import 'react-image-crop/dist/ReactCrop.css'
+import Providers from '@/utils/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} text-gray-800`}>
-        <main>
+        <Providers>
           {children}
-        </main>
+        </Providers>
         <Toaster />
       </body>
     </html>

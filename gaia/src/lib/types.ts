@@ -45,3 +45,9 @@ export type DashboardReportDataType = {
     diagnosis_keyValue: string;
   }[];
 };
+
+export type ToastTypes = {
+  title: string;
+  description: string;
+  variant: "success" | "destructive" | "default";
+};
