@@ -1,46 +1,54 @@
 "use client"
 
-import React, { useState } from 'react'
-import RecordForm from './RecordForm'
-import { CropRegionsType } from '@/lib/types'
-import { getSleepHours } from '@/helper/getSleepHours'
+import * as z from "zod";
+import { RecordSchema } from '@/lib/validations/records'
 import { v4 as uuidv4 } from 'uuid';
 import useExtractText from '@/hooks/useExtractText'
+
 import { DailyActivitiesService } from '@/services/databaseServices'
-import { toast } from '@/components/ui/use-toast'
+
+import RecordForm from './RecordForm'
+import { CropRegionsType, ToastTypes } from '@/lib/types'
+import { getSleepHours } from '@/helper/getSleepHours'
+import { catchError } from '@/lib/utils'
+import usePostForm from '@/hooks/usePostForm';
 
 const DailyMedicalForm = () => {
-    const [selectedFile, setSelectedFile] = useState({
+    const defaultValues = {
         fileName: "",
         file: "",
-    })
-
-    const { extractTextFromRegions, progress } = useExtractText()
-
-    const handleSubmit = async () => {
-        try {
-            const data = await extractTextFromRegions({ getStructuredData: getDashboardReportData, regions: dailyMedicalReportRegion, image: selectedFile.file })
-            await DailyActivitiesService.create(data)
-            toast({
-                title: "Upload Success",
-                description: "Photo has been uploaded successfully.",
-                variant: "success",
-            })
-        } catch (error) {
-            toast({
-                title: "Upload Error",
-                description: "There is a problem occured. Please try again!.",
-                variant: "destructive",
-            })
-        }
     }
+
+    const { extractTextFromRegions, progress } = useExtractText();
+
+    const handleFormSubmit = async (values: z.infer<typeof RecordSchema>) => {
+        try {
+            const data = await extractTextFromRegions({
+                getStructuredData: getDashboardReportData,
+                regions: dailyMedicalReportRegion,
+                image: values.file,
+            });
+            await DailyActivitiesService.create(data);
+        } catch (error) {
+            catchError(error);
+        }
+    };
+
+    const { onSubmit, isLoading, formMethods } = usePostForm({
+        handleFormSubmit,
+        queryKey: ["daily-medical-report"],
+        successMessage,
+        errorMessage,
+        schema: RecordSchema,
+        defaultValues
+    })
 
     return (
         <RecordForm
-            selectedFile={selectedFile}
-            setSelectedFile={setSelectedFile}
-            handleSubmit={handleSubmit}
+            handleSubmit={formMethods.handleSubmit(onSubmit)}
+            isLoading={isLoading}
             title="Daily Medical Record Form"
+            form={formMethods}
             description="Kindly submit your daily health log. Ensure the image is clear and the text can be easily read."
             progress={progress}
         />
@@ -49,6 +57,20 @@ const DailyMedicalForm = () => {
 
 export default DailyMedicalForm
 
+
+const successMessage: ToastTypes = {
+    title: "Upload Success",
+    description: "Daily Medical Record Form Submitted",
+    variant: "success"
+}
+
+const errorMessage: ToastTypes = {
+    title: "Upload Failed",
+    description: "Daily Medical Record Form Submission Failed",
+    variant: "destructive"
+}
+
+//Location of text in the image
 const dailyMedicalReportRegion: CropRegionsType[] = [
     { x: 401, y: 516, width: 318, height: 166 },
     { x: 401, y: 757, width: 318, height: 166 },
@@ -69,7 +91,7 @@ const dailyMedicalReportRegion: CropRegionsType[] = [
     { x: 780, y: 6001, width: 276, height: 88 },//BloodGlucose Value
 ]
 
-
+//Format the data to be stored in the database
 const getDashboardReportData = (ocrResults: string[]) => {
     return {
         activity_id: uuidv4(),
