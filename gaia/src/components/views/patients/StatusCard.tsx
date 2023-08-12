@@ -1,6 +1,6 @@
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic'
-
+// import Chart from "react-apexcharts"
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface IStatusCardProps {
@@ -21,9 +21,6 @@ const StatusCard = ({ title, description, value, icon, backgroundColor, records 
                 show: false
             },
             zoom: {
-                enabled: false
-            },
-            animations: {
                 enabled: false
             },
             sparkline: {
@@ -86,8 +83,6 @@ const StatusCard = ({ title, description, value, icon, backgroundColor, records 
         }
     ]
 
-
-
     return (
         <div className={`min-[270px] flex-1 rounded-lg ${backgroundColor}`}>
             <div className='p-4 flex justify-between items-center text-white'>
@@ -98,12 +93,14 @@ const StatusCard = ({ title, description, value, icon, backgroundColor, records 
                 </div>
                 {icon}
             </div>
-            <Chart
-                options={chartData}
-                series={series}
-                type="area"
-                height="50px"
-            />
+            <div className='h-[50px]'>
+                <Chart
+                    options={chartData}
+                    series={series}
+                    type="area"
+                    height="50px"
+                />
+            </div>
         </div>
     )
 }
