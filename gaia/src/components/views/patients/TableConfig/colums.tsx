@@ -2,7 +2,7 @@ import { LuArrowUpDown } from "react-icons/lu";
 import { ColumnDef } from "@tanstack/react-table";
 import { PatientOverviewType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { BiDownArrowAlt, BiUser } from "react-icons/bi";
+import { BiDownArrowAlt, BiLoaderAlt } from "react-icons/bi";
 import { ReportIcon } from "@/config/reportSubmitted";
 import { Badge } from "@/components/ui/badge";
 
@@ -16,6 +16,8 @@ export const columns: ColumnDef<PatientOverviewType>[] = [
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="px-0 hover:bg-transparent text-primary-600 font-semibold"
                     variant="ghost"
+                    data-bs-original-title="Test"
+                    tooltip="yes"
                 >
                     Date
                     <LuArrowUpDown className="ml-2 h-4 w-4" />
@@ -79,7 +81,7 @@ export const columns: ColumnDef<PatientOverviewType>[] = [
         cell: ({ row }: any) => {
             return <div className="flex gap-2">
                 <Button variant="secondary" size="icon">
-                    <BiUser className="w-5 h-5" />
+                    <BiLoaderAlt className="w-5 h-5" />
                 </Button>
                 <Button variant="secondary" size="icon">
                     <BiDownArrowAlt className="w-5 h-5" />

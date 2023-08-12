@@ -6,6 +6,7 @@ import { CropRegionsType } from '@/lib/types'
 import { getSleepHours } from '@/helper/getSleepHours'
 import { v4 as uuidv4 } from 'uuid';
 import { processAndExtract } from '@/helper/tesseractExtract'
+import { DailyActivitiesService } from '@/services/databaseServices'
 
 const DailyMedicalForm = () => {
     const [selectedFile, setSelectedFile] = useState({
@@ -14,8 +15,29 @@ const DailyMedicalForm = () => {
     })
 
     const handleSubmit = async () => {
-        const processedData = await processAndExtract({ getStructuredData: getDashboardReportData, regions: dailyMedicalReportRegion, image: selectedFile.file })
-    }
+        try {
+          const processedData = await processAndExtract({
+            getStructuredData: getDashboardReportData,
+            regions: dailyMedicalReportRegion,
+            image: selectedFile.file
+          });
+      
+        //   const response = await DailyActivitiesService.create(processedData.extractedText);
+          
+          if (processedData.extractedText) {
+            // Handle success
+            console.log(processedData.extractedText)
+            alert('Data created successfully');
+          } else {
+            // Handle failure
+            alert('Failed to create data');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred');
+        }
+    };
+      
 
     return (
         <RecordForm

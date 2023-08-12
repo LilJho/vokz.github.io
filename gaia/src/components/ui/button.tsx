@@ -28,10 +28,22 @@ const buttonVariants = cva(
         square: "p-2 rounded-md text-sm",
         text: "px-2 py-1.5 rounded-sm text-sm"
       },
+      tooltip: {
+        yes: true,
+        no: false
+      },
+      tooltipPlacement: {
+        top: 'top',
+        bottom: 'bottom',
+        left: 'left',
+        right: ' right'
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      tooltip: "no",
+      tooltipPlacement: "top"
     },
   }
 )
