@@ -28,6 +28,7 @@ const DailyMedicalForm = () => {
                 regions: dailyMedicalReportRegion,
                 image: values.file,
             });
+            console.log({ data })
             await DailyActivitiesService.create(data);
         } catch (error) {
             catchError(error);
@@ -56,7 +57,6 @@ const DailyMedicalForm = () => {
 }
 
 export default DailyMedicalForm
-
 
 const successMessage: ToastTypes = {
     title: "Upload Success",

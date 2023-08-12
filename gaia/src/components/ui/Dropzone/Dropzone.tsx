@@ -108,6 +108,9 @@ const Dropzone: React.FC<DropzoneProps> = ({
       setIsValid(true);
       setCounter(0);
     }, 100);
+
+    // Reset the value of the file input to ensure onChange is triggered every time
+    e.target.value = '';
   };
 
   const validateFile = (file: File) => {
