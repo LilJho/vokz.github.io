@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from "zod";
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useForm } from 'react-hook-form'
+import { UseFormReturn, useForm } from 'react-hook-form'
 
 import { ToastTypes } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
@@ -14,18 +14,15 @@ interface IUseFormProps<T> {
     successMessage: ToastTypes
     errorMessage: ToastTypes
     schema: z.ZodSchema<T>;
-    defaultValues: T
+    defaultValues: any;
 }
 
-const usePostForm = <T,>({ handleFormSubmit, queryKey, successMessage, errorMessage, schema }: IUseFormProps<T>) => {
+const usePostForm = <T,>({ handleFormSubmit, queryKey, successMessage, errorMessage, schema, defaultValues }: IUseFormProps<T>) => {
     const queryClient = useQueryClient();
 
     const formMethods = useForm({
         resolver: zodResolver(schema),
-        defaultValues: {
-            fileName: "",
-            file: "",
-        },
+        defaultValues
     });
 
 

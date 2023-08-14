@@ -12,24 +12,26 @@ import { CropRegionsType, ToastTypes } from '@/lib/types'
 import { getSleepHours } from '@/helper/getSleepHours'
 import { catchError } from '@/lib/utils'
 import usePostForm from '@/hooks/usePostForm';
+import axios from 'axios';
 
 const DailyMedicalForm = () => {
     const defaultValues = {
-        fileName: "",
-        file: "",
+        preview: "",
+        file: null as unknown as File,
     }
 
-    const { extractTextFromRegions, progress } = useExtractText();
+
+    // const { extractTextFromRegions, progress } = useExtractText();
 
     const handleFormSubmit = async (values: z.infer<typeof RecordSchema>) => {
         try {
-            const data = await extractTextFromRegions({
-                getStructuredData: getDashboardReportData,
-                regions: dailyMedicalReportRegion,
-                image: values.file,
-            });
-            console.log({ data })
-            await DailyActivitiesService.create(data);
+            const formData = new FormData();
+            formData.append('record_file', values.file);  // Assuming 'yourFileInput' is your file input element
+            formData.append('region_choice', 'dashboard');  // values: dashboard, bmi, ring
+            formData.append("file_type", "image") // values: image, pdf
+            const result = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData)
+            console.log({ result })
+            // await DailyActivitiesService.create(data);
         } catch (error) {
             catchError(error);
         }
@@ -51,7 +53,6 @@ const DailyMedicalForm = () => {
             title="Daily Medical Record Form"
             form={formMethods}
             description="Kindly submit your daily health log. Ensure the image is clear and the text can be easily read."
-            progress={progress}
         />
     )
 }
