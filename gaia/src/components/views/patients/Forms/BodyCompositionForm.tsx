@@ -1,33 +1,54 @@
 "use client"
 
-import React, { useState } from 'react'
-import RecordForm from './RecordForm'
-import { CropRegionsType } from '@/lib/types'
+import * as z from "zod";
+import { RecordSchema } from '@/lib/validations/records'
 import { v4 as uuidv4 } from 'uuid';
-import useExtractText from '@/hooks/useExtractText';
+import useExtractText from '@/hooks/useExtractText'
+
+import { DailyActivitiesService } from '@/services/databaseServices'
+
+import RecordForm from './RecordForm'
+import { CropRegionsType, ToastTypes } from '@/lib/types'
+import { catchError } from '@/lib/utils'
+import usePostForm from '@/hooks/usePostForm';
+import axios from "axios";
 
 const BodyCompositionForm = () => {
-    const [selectedFile, setSelectedFile] = useState({
+    const defaultValues = {
         fileName: "",
         file: "",
-    })
-
-    const { extractTextFromRegions, progress } = useExtractText()
-
-    const handleSubmit = async () => {
-        const data = await extractTextFromRegions({ getStructuredData: getBMIReportData, regions: bodyCompositionReportRegion, image: selectedFile.file })
-        console.log({ data })
     }
+    // const { extractTextFromRegions, progress } = useExtractText();
 
+    const handleFormSubmit = async (values: z.infer<typeof RecordSchema>) => {
+        try {
+            const formData = new FormData();
+            formData.append('record_file', values.file);  // Assuming 'yourFileInput' is your file input element
+            formData.append('region_choice', 'bmi');  // values: dashboard, bmi, ring
+            formData.append("file_type", "image") // values: image, pdf
+            const result = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData)
+            console.log({ result })
+        } catch (error) {
+            catchError(error);
+        }
+    };
+
+    const { onSubmit, isLoading, formMethods } = usePostForm({
+        handleFormSubmit,
+        queryKey: ["bmi-report"],
+        successMessage,
+        errorMessage,
+        schema: RecordSchema,
+        defaultValues
+    })
 
     return (
         <RecordForm
-            selectedFile={selectedFile}
-            setSelectedFile={setSelectedFile}
-            handleSubmit={handleSubmit}
-            title="Body Composition Form"
-            description="Kindly submit your daily health log. Ensure the image is clear and the text can be easily read."
-            progress={progress}
+            handleSubmit={formMethods.handleSubmit(onSubmit)}
+            isLoading={isLoading}
+            title="Body Composition BMI Form"
+            form={formMethods}
+            description="Kindly submit your BMI log. Ensure the image is clear and the text can be easily read."
         />
 
     )
@@ -35,37 +56,51 @@ const BodyCompositionForm = () => {
 
 export default BodyCompositionForm
 
+const successMessage: ToastTypes = {
+    title: "Upload Success",
+    description: "Daily Medical Record Form Submitted",
+    variant: "success"
+}
+
+const errorMessage: ToastTypes = {
+    title: "Upload Failed",
+    description: "Daily Medical Record Form Submission Failed",
+    variant: "destructive"
+}
+
 const bodyCompositionReportRegion: CropRegionsType[] = [
-    { x: 243, y: 276, width: 829, height: 277 },//weight
-    { x: 225, y: 600, width: 857, height: 172 },//status
-    { x: 200, y: 857, width: 378, height: 113 },//weightValue
-    { x: 826, y: 902, width: 378, height: 113 },//weightStatus
-    { x: 197, y: 1124, width: 379, height: 162 },//bodyfatValue
-    { x: 818, y: 1163, width: 379, height: 162 },//bodyfatStatus
-    { x: 197, y: 1384, width: 379, height: 162 },//BMIValue
-    { x: 821, y: 1432, width: 379, height: 162 },//BMIStatus
-    { x: 188, y: 1657, width: 379, height: 162 },//SkeletalMuscleValue
-    { x: 819, y: 1695, width: 379, height: 162 },//SkeletalMuscleStatus
-    { x: 205, y: 1914, width: 379, height: 162 },//MuscleMassValue
-    { x: 819, y: 1964, width: 379, height: 162 },//MuscleMassStatus
-    { x: 202, y: 2178, width: 379, height: 162 },//ProteinValue
-    { x: 817, y: 2225, width: 379, height: 162 },//ProteinStatus
-    { x: 205, y: 2448, width: 379, height: 162 },//BMRValue
-    { x: 788, y: 2490, width: 379, height: 162 },//BMRStatus
-    { x: 198, y: 2715, width: 379, height: 162 },//FatFreeValue
-    { x: 203, y: 2962, width: 379, height: 162 },//SubcutaneousFatValue
-    { x: 859, y: 3017, width: 379, height: 162 },//SubcutaneousFatStatus
-    { x: 200, y: 3229, width: 379, height: 162 },//VisceralFatValue
-    { x: 848, y: 3277, width: 379, height: 162 },//VisceralFatStatus
-    { x: 201, y: 3492, width: 379, height: 162 },//BodyWaterValue
-    { x: 855, y: 3543, width: 379, height: 162 },//BodyWaterStatus
-    // { x: 202, y: 3765, width: 379, height: 162 },//BoneMassValue
-    // { x: 816, y: 3787, width: 379, height: 162 },//BoneMassStatus 
-    // { x: 200, y: 4029, width: 379, height: 162 },//heartRateValue
-    // { x: 813, y: 4072, width: 379, height: 162 },//heartRateStatus
-    // { x: 198, y: 4294, width: 379, height: 162 },//cardiacIndexValue
-    // { x: 811, y: 4331, width: 379, height: 162 },//cardiacIndexStatus
-    // { x: 199, y: 4558, width: 379, height: 162 },//metabolicAgeValue
+    { x: 113, y: 252, width: 1061, height: 315, unit: "px" },
+    { x: 100, y: 589, width: 1061, height: 209, unit: "px" },
+    { x: 196, y: 858, width: 403, height: 116, unit: "px" },
+    { x: 797, y: 860, width: 403, height: 199, unit: "px" },
+    { x: 202, y: 1128, width: 403, height: 109, unit: "px" },
+    { x: 788, y: 1119, width: 404, height: 211, unit: "px" },
+    { x: 196, y: 1400, width: 404, height: 108, unit: "px" },
+    { x: 794, y: 1378, width: 404, height: 220, unit: "px" },
+    { x: 190, y: 1650, width: 404, height: 123, unit: "px" },
+    { x: 812, y: 1631, width: 391, height: 241, unit: "px" },
+    { x: 195, y: 1913, width: 420, height: 122, unit: "px" },
+    { x: 780, y: 1896, width: 420, height: 231, unit: "px" },
+    { x: 179, y: 2176, width: 420, height: 120, unit: "px" },
+    { x: 780, y: 2167, width: 420, height: 227, unit: "px" },
+    { x: 198, y: 2438, width: 430, height: 125, unit: "px" },
+    { x: 774, y: 2425, width: 430, height: 236, unit: "px" },
+    { x: 202, y: 2711, width: 481, height: 112, unit: "px" },
+    { x: 769, y: 2686, width: 424, height: 240, unit: "px" },
+    { x: 206, y: 2960, width: 554, height: 133, unit: "px" },
+    { x: 719, y: 2957, width: 478, height: 239, unit: "px" },
+    { x: 205, y: 3238, width: 478, height: 118, unit: "px" },
+    { x: 720, y: 3218, width: 478, height: 242, unit: "px" },
+    { x: 206, y: 3489, width: 478, height: 130, unit: "px" },
+    { x: 721, y: 3478, width: 478, height: 247, unit: "px" },
+    { x: 190, y: 3764, width: 478, height: 119, unit: "px" },
+    { x: 720, y: 3746, width: 478, height: 234, unit: "px" },
+    { x: 199, y: 4033, width: 478, height: 110, unit: "px" },
+    { x: 725, y: 4011, width: 478, height: 237, unit: "px" },
+    { x: 203, y: 4289, width: 478, height: 125, unit: "px" },
+    { x: 728, y: 4275, width: 478, height: 238, unit: "px" },
+    { x: 201, y: 4548, width: 478, height: 128, unit: "px" },
+    { x: 731, y: 4534, width: 478, height: 239, unit: "px" },
 ]
 
 const getBMIReportData = (data: string[]) => {

@@ -13,10 +13,9 @@ import { pdfjs, Document, Page } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const OCRComponent = () => {
-    const [crop, setCrop] = useState<Crop>({
-        unit: 'px', // Can be 'px' or '%'
-        x: 473, y: 768, width: 182, height: 147
-    });
+    const [crop, setCrop] = useState<Crop>(
+        { x: 1407, y: 274, width: 78, height: 47.5, unit: 'px' }
+    );
 
     const [selectedFile, setSelectedFile] = useState({
         file: "",
