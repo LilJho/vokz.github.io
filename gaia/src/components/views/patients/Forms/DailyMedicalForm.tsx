@@ -5,7 +5,7 @@ import { RecordSchema } from '@/lib/validations/records'
 import { v4 as uuidv4 } from 'uuid';
 import useExtractText from '@/hooks/useExtractText'
 
-import { DailyActivitiesService } from '@/services/databaseServices'
+import { DailyActivitiesService, DailyDiagnosisService } from '@/services/databaseServices'
 
 import RecordForm from './RecordForm'
 import { CropRegionsType, ToastTypes } from '@/lib/types'
@@ -29,9 +29,43 @@ const DailyMedicalForm = () => {
             formData.append('record_file', values.file);  // Assuming 'yourFileInput' is your file input element
             formData.append('region_choice', 'dashboard');  // values: dashboard, bmi, ring
             formData.append("file_type", "image") // values: image, pdf
-            const result = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData)
-            console.log({ result })
-            // await DailyActivitiesService.create(data);
+            const response = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData)
+            
+            // const structuredDataArray = result.structured_data;
+            // console.log({ result });
+            const result = response.data; // Access the response data
+             const structuredDataArray = result.structured_data ;
+            
+            //   console.log("Result:", structuredDataArray[2]); getting structured data key
+
+            const summary_data = [structuredDataArray[0],structuredDataArray[1]];
+
+            const dailyActivities = {
+                report_type: "Watch Report",
+                summary_data: summary_data
+            }
+
+            const activity = await DailyActivitiesService.create(dailyActivities); // insert daily activity report
+            // console.log(activity[0].activity_id)
+
+            const diagnosisArray = result.structured_data[2] as Array<{
+                diagnosis: string;
+                diagnosis_keyValue: string;
+                diagnosis_label: string;
+                diagnosis_value: string;
+              }>;
+
+            const diagnosisArrayWithActivityId = diagnosisArray.map(diagnosisItem => {
+                const updatedDiagnosisItem = {
+                    ...diagnosisItem, // Spread existing diagnosis item
+                    activity_id: activity[0].activity_id,
+                };
+                return updatedDiagnosisItem;
+            });
+
+            console.log(diagnosisArrayWithActivityId)
+           
+            await DailyDiagnosisService.create(diagnosisArrayWithActivityId); // insert diagnosis
         } catch (error) {
             catchError(error);
         }
