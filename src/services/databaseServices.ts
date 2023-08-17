@@ -1,0 +1,141 @@
+import { supabase } from "./supabaseConfig";
+
+class DatabaseServices {
+  supabase;
+
+  constructor(tableName: string) {
+    this.supabase = supabase.from(tableName);
+  }
+
+  getAll = async () => {
+    const { data, error } = await this.supabase.select("*");
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
+  getOne = async (columns: string = "id", id: string) => {
+    const { data, error } = await this.supabase.select("*").eq(columns, id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
+  create = async (insert: any) => {
+    const { data, error } = await this.supabase.insert(insert).select();
+
+    if (error) {
+      console.log(error);
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
+  update = async (id: string, update: any, columnName = "id") => {
+    const { data, error } = await this.supabase
+      .update(update)
+      .eq(columnName, id)
+      .select();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
+  delete = async (id: string, columnName = "id") => {
+    const { error } = await this.supabase.delete().eq(columnName, id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+    return "Deleted";
+  };
+}
+
+export const PatientsActivityService = new DatabaseServices(
+  "patients_activity"
+);
+// export const DailyActivitiesService = new DatabaseServices("daily_activities");
+export const UserAccountsService = new DatabaseServices("user_accounts");
+
+// import { PatientActivityType, UserType } from "@/lib/types";
+// import { supabase } from "./supabaseConfig";
+
+// type GetOneReturn<T> = T[] | null;
+// type GetAllReturn<T> = T[];
+// type CreateReturn<T> = T;
+// type UpdateReturn<T> = T;
+// type DeleteReturn = string;
+
+// class DatabaseServices<T> {
+//   private supabase;
+
+//   constructor(tableName: string) {
+//     this.supabase = supabase.from(tableName);
+//   }
+
+//   getAll = async (): Promise<GetAllReturn<T>> => {
+//     const { data, error } = await this.supabase.select("*");
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return data || [];
+//   };
+
+//   getOne = async (
+//     column: string = "id",
+//     id: string
+//   ): Promise<GetOneReturn<T>> => {
+//     const { data, error } = await this.supabase.select("*").eq(column, id);
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return data[0];
+//   };
+
+//   create = async (insert: T): Promise<CreateReturn<T>> => {
+//     const { data, error } = await this.supabase.insert(insert).select();
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return data[0];
+//   };
+
+//   update = async (
+//     id: string,
+//     update: T,
+//     columnName = "id"
+//   ): Promise<UpdateReturn<T>> => {
+//     const { data, error } = await this.supabase
+//       .update(update)
+//       .eq(columnName, id)
+//       .select();
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return data[0];
+//   };
+
+//   delete = async (id: string, columnName = "id"): Promise<DeleteReturn> => {
+//     const { error } = await this.supabase.delete().eq(columnName, id);
+//     if (error) {
+//       throw new Error(error.message);
+//     }
+//     return "Deleted";
+//   };
+// }
+
+// export const PatientsActivityService =
+//   new DatabaseServices<PatientActivityType>("patients_activity");
+
+// // export const DailyActivitiesService = new DatabaseServices<DailyActivity>(
+// //   "daily_activities"
+// // );
+
+// export const UserAccountsService = new DatabaseServices<UserType>(
+//   "user_accounts"
+// );
