@@ -11,6 +11,8 @@ import React from "react";
 import AlertSample from "@/components/views/samples/AlertSample";
 import ProgressSample from "@/components/views/samples/ProgressSample";
 import TabsSample from "@/components/views/samples/TabsSample";
+import { Badge } from "@/components/ui/badge";
+// import SampleModal from "@/components/views/sample/SampleModal";
 
 const page = () => {
   const AreaChartData = {
@@ -137,95 +139,149 @@ const page = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div className="">
-        <h4 className="mb-2 text-lg font-semibold">
-          Horizontal Bar graph with labels and value inside
-        </h4>
-        <HorizontalBarchart
-          data={HorizontalBarchartData}
-          title="Horizontal Bar graph"
-          height="300px"
-        />
-      </div>
-      <div>
-        <h4 className="mb-2 text-lg font-semibold">Area chart</h4>
-        <AreaChart data={AreaChartData} title="Area Chart" height="300px" />
-      </div>
-      <div>
-        <h4 className="mb-2 text-lg font-semibold">Basic Bar chart</h4>
-        <BasicBarChart
-          data={BasicBarChartData}
-          title="Basic Cost"
-          height="200px"
-        />
-      </div>
-      <div>
-        <h4 className="mb-2 text-lg font-semibold">Time Line chart</h4>
-        <TimeLineChart
-          data={TimeLineChartData}
-          title="Time Line"
-          height="200px"
-        />
-      </div>
-      <div>
-        <h4 className="mb-2 text-lg font-semibold">Time Line chart</h4>
-        <RadialCircleChart
-          data={RadialCircleChartData}
-          title="Radial"
-          height="200px"
-        />
-      </div>
-      <div className="flex flex-col gap-4">
-        <h4 className="mb-2 text-lg font-semibold">Loaders</h4>
+    <>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="">
+          <h4 className="mb-2 text-lg font-semibold">
+            Horizontal Bar graph with labels and value inside
+          </h4>
+          <HorizontalBarchart
+            data={HorizontalBarchartData}
+            title="Horizontal Bar graph"
+            height="300px"
+          />
+        </div>
         <div>
-          <Loaders />
-          <Loaders variant="success" />
-          <Loaders variant="warning" />
-          <Loaders variant="destructive" />
-          <Loaders />
-          <Loaders variant="success" type="ping" />
-          <Loaders variant="warning" type="ping" />
-          <Loaders variant="destructive" type="ping" />
+          <h4 className="mb-2 text-lg font-semibold">Area chart</h4>
+          <AreaChart data={AreaChartData} title="Area Chart" height="300px" />
         </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <h4 className="mb-2 text-lg font-semibold">Button</h4>
-        <div className="flex gap-4">
-          <Button>Hello</Button>
-          <Button isLoading>loading</Button>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <h4 className="mb-2 text-lg font-semibold">ToolTip</h4>
-        <div className="flex gap-10">
-          <ReactToolTip
-            side="left"
-            trigger={<div className="p-2 bg-gray-500">help</div>}
-            text="hello"
-          />
-          <ReactToolTip
-            side="top"
-            trigger={<div className="p-2 bg-gray-500">help</div>}
-            text="hello"
-          />
-          <ReactToolTip
-            side="right"
-            trigger={<div className="p-2 bg-gray-500">help</div>}
-            text="hello"
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Basic Bar chart</h4>
+          <BasicBarChart
+            data={BasicBarChartData}
+            title="Basic Cost"
+            height="200px"
           />
         </div>
-      </div>
-      {/* <div className="flex flex-col gap-4">
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Time Line chart</h4>
+          <TimeLineChart
+            data={TimeLineChartData}
+            title="Time Line"
+            height="200px"
+          />
+        </div>
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Time Line chart</h4>
+          <RadialCircleChart
+            data={RadialCircleChartData}
+            title="Radial"
+            height="200px"
+          />
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="mb-2 text-lg font-semibold">Loaders</h4>
+          <div>
+            <Loaders />
+            <Loaders variant="success" />
+            <Loaders variant="warning" />
+            <Loaders variant="destructive" />
+            <Loaders />
+            <Loaders variant="success" type="ping" />
+            <Loaders variant="warning" type="ping" />
+            <Loaders variant="destructive" type="ping" />
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="mb-2 text-lg font-semibold">Button</h4>
+          <div className="flex gap-4">
+            <Button>Hello</Button>
+            <Button isLoading>loading</Button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="mb-2 text-lg font-semibold">ToolTip</h4>
+          <div className="flex gap-10">
+            <ReactToolTip
+              side="left"
+              trigger={<div className="p-2 bg-gray-500">help</div>}
+              text="hello"
+            />
+            <ReactToolTip
+              side="top"
+              trigger={<div className="p-2 bg-gray-500">help</div>}
+              text="hello"
+            />
+            <ReactToolTip
+              side="right"
+              trigger={<div className="p-2 bg-gray-500">help</div>}
+              text="hello"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="mb-2 text-lg font-semibold">Badge</h4>
+          <div className="flex gap-4">
+            <Badge className="max-w-max">hello</Badge>
+            <Badge variant="dark" className="max-w-max">
+              hello
+            </Badge>
+            <Badge variant="secondary" className="max-w-max">
+              hello
+            </Badge>
+            <Badge variant="destructive" className="max-w-max">
+              hello
+            </Badge>
+            <Badge variant="success" className="max-w-max">
+              hello
+            </Badge>
+            <Badge variant="info" className="max-w-max">
+              hello
+            </Badge>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="mb-2 text-lg font-semibold">Modal</h4>
+          {/* <SampleModal /> */}
+        </div>
+        {/* <div className="flex flex-col gap-4">
                 <h4 className='mb-2 text-lg font-semibold'>PDF Viewer</h4>
                 <PDFViewer fileURL="/sample.pdf" />
             </div> */}
-      <div className="flex flex-col gap-10">
-        {/* <AlertSample />
+        <div className="flex flex-col gap-10">
+          {/* <AlertSample />
         <ProgressSample /> */}
-        <TabsSample />
+          <TabsSample />
+        </div>
       </div>
-    </div>
+      <div className="flex flex-col gap-4">
+        <h4 className="mb-2 text-lg font-semibold">Grid </h4>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="h-10 border bg-slate-200">col 1</div>
+          <div className="h-10 border bg-slate-200">col 2</div>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          <div className="h-10 border bg-slate-200">col 1</div>
+          <div className="h-10 border bg-slate-200">col 2</div>
+          <div className="h-10 border bg-slate-200">col 3</div>
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          <div className="h-10 border bg-slate-200">col 1</div>
+          <div className="h-10 border bg-slate-200">col 2</div>
+          <div className="h-10 border bg-slate-200">col 3</div>
+          <div className="h-10 border bg-slate-200">col 4</div>
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          <div className="h-10 col-span-3 border bg-slate-200">col 3 space</div>
+          <div className="h-10 border bg-slate-200">col 2</div>
+        </div>
+        <div className="grid grid-cols-6 gap-2">
+          <div className="h-10 border bg-slate-200">col 1</div>
+          <div className="h-10 col-span-4 border bg-slate-200">col 4 space</div>
+          <div className="h-10 border bg-slate-200">col 1 space</div>
+        </div>
+      </div>
+    </>
   );
 };
 
