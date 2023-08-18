@@ -25,14 +25,14 @@ const tabs = [
     icon: <BsPersonBoundingBox />,
     value: "profile",
     content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed eveniet voluptatibus excepturi illum, porro sequi voluptatum.",
+      "expedita aperiam officia, ipsum, inventore quidem aliquam possimus! Ut laboriosam laborum obcaecati! Quas fuga nisi eius quae, consequuntur corporis hic nulla exercitationem natus quasi repellat placeat dolore!",
   },
   {
     title: "Contact",
     icon: <BsMic />,
     value: "contact",
     content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed eveniet voluptatibus excepturi illum, porro sequi voluptatum.",
+      "sit amet consectetur, adipisicing elit. Excepturi quo corporis tempora recusandae iusto dolorum dolorem esse blanditiis modi veniam ipsa officiis saepe,",
   },
 ];
 

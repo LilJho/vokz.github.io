@@ -221,8 +221,8 @@ const page = () => {
                 <PDFViewer fileURL="/sample.pdf" />
             </div> */}
       <div className="flex flex-col gap-10">
-        <AlertSample />
-        <ProgressSample />
+        {/* <AlertSample />
+        <ProgressSample /> */}
         <TabsSample />
       </div>
     </div>
