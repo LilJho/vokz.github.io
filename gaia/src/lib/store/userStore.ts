@@ -33,8 +33,8 @@ export const useUserStore = create(
       },
       signOut: async () => {
         set({ user: null });
-        await supabase.auth.signOut();
         localStorage.removeItem("user-session");
+        await supabase.auth.signOut();
       },
     }),
     {

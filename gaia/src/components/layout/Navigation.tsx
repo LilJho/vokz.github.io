@@ -14,7 +14,6 @@ import { RiProfileLine, RiDashboardLine, RiArrowLeftLine } from 'react-icons/ri'
 const Navigation = () => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
     const user = useUserStore((state) => state.user)
-    const { role } = user!
 
     return (
         <>
@@ -35,10 +34,10 @@ const Navigation = () => {
                         <NavLink href="/" icon={<RiDashboardLine className="w-5 h-5" />}>
                             Dashboard
                         </NavLink>
-                        {role === "admin" && <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
+                        {user && user?.role === "admin" && <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
                             Patients
                         </NavLink>}
-                        {role === "patient" && <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
+                        {user && user?.role === "patient" && <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
                             My Profile
                         </NavLink>}
                         <NavLink href="/sample" icon={<FiLayers className="w-5 h-5" />}>
