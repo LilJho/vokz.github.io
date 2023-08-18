@@ -344,18 +344,12 @@ const page = () => {
 
         <div>
           <h4 className="mb-2 text-lg font-semibold">Progress</h4>
-
           <ProgressSample />
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Tabs</h4>
 
           <TabsSample />
-        </div>
-
-        <div>
-          <h4 className="mb-2 text-lg font-semibold">Slider</h4>
-          <SwiperSlider data={data} />
         </div>
       </div>
       <div className="flex flex-col gap-4">
@@ -384,6 +378,10 @@ const page = () => {
           <div className="h-10 col-span-4 border bg-slate-200">col 4 space</div>
           <div className="h-10 border bg-slate-200">col 1 space</div>
         </div>
+      </div>
+      <div>
+        <h4 className="mb-2 text-lg font-semibold">Slider</h4>
+        <SwiperSlider data={data} />
       </div>
     </>
   );

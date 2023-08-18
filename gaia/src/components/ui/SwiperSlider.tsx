@@ -6,10 +6,10 @@ import { Controller, Navigation, Pagination } from "swiper/modules";
 // Import Swiper styles
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import Image from "next/image";
+import "swiper/css/navigation"; // Navigation module
+import { GrNext, GrPrevious } from "react-icons/gr";
+
 import StatusCard from "../views/patients/StatusCard";
 
 const SwiperSlider = ({ data }: any) => {
@@ -17,16 +17,16 @@ const SwiperSlider = ({ data }: any) => {
   return (
     <Swiper
       modules={[Controller, Navigation, Pagination]}
-      spaceBetween={50}
-      slidesPerView={1}
+      spaceBetween={10}
+      slidesPerView={3}
       navigation
       pagination={{ clickable: true }}
       loop
       controller={{ control: controlledSwiper }}
-      className="w-full md:w-[500px]"
+      className="w-[78%] "
     >
       {data?.map((val: any, index: number) => (
-        <SwiperSlide className="px-8 py-6">
+        <SwiperSlide>
           <StatusCard
             key={val.id}
             title={val.title}
