@@ -10,7 +10,7 @@ const Logout = ({ children = "Logout" }: { children: React.ReactNode }) => {
     const { push, refresh } = useRouter()
     const handleSignOut = async () => {
         await supabase.auth.signOut()
-        refresh()
+        // refresh()
         push("/auth/sign-in")
     }
 

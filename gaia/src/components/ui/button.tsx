@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { RiLoader5Line } from "react-icons/ri"
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-gray-950 dark:focus-visible:ring-gray-800",
@@ -40,17 +41,23 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, isLoading = false, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {isLoading && <RiLoader5Line className={`animate-spin absolute  w-6 h-6 -mt-2 ${isLoading ? "opacity-100" : "opacity-0"}`} />}
+        <span className={`inline-flex ${isLoading ? "opacity-0" : "opacity-100"}`}>
+          {props.children}
+        </span>
+      </Comp>
     )
   }
 )
