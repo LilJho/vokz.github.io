@@ -97,7 +97,7 @@ const PatientStatus = async () => {
 
 
     return (
-        <div className='flex flex-col gap-4 bg-white p-6  rounded-lg h-full'>
+        <div className='flex flex-col gap-4 bg-white  rounded-lg h-full'>
             <div className='grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 gap-3 '>
                 {data?.map((val, index) => (
                     <StatusCard
