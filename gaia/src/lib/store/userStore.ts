@@ -1,6 +1,5 @@
 import { authService } from "@/services/authService";
 import { create } from "zustand";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { IUserSessionData } from "../types";
 import { persist } from "zustand/middleware";
 
@@ -16,8 +15,6 @@ interface UserStore {
   signOut: () => void;
 }
 
-const supabase = createClientComponentClient();
-
 export const useUserStore = create(
   persist<UserStore>(
     (set) => ({
@@ -32,9 +29,8 @@ export const useUserStore = create(
         }
       },
       signOut: async () => {
-        set({ user: null });
         localStorage.removeItem("user-session");
-        await supabase.auth.signOut();
+        set({ user: null });
       },
     }),
     {

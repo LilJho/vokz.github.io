@@ -17,7 +17,6 @@ import { useUserStore } from '@/lib/store/userStore'
 
 const UserProfile = () => {
     const user = useUserStore((state) => state.user)
-    const { first_name = "", last_name = "" } = user!
 
     return (
         <DropdownMenu>
@@ -30,7 +29,7 @@ const UserProfile = () => {
                         </AvatarFallback>
                     </Avatar>
                     <div className='flex flex-col items-start'>
-                        <h4 className='text-sm font-medium'>{`${first_name} ${last_name}`}</h4>
+                        <h4 className='text-sm font-medium'>{`${user?.first_name ?? ""} ${user?.last_name ?? ""}`}</h4>
                         <span className='text-xs text-gray-600'>Doctor</span>
                     </div>
                 </button>
