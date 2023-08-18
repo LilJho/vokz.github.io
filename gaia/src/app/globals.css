@@ -21,13 +21,58 @@ body {
   background-color: #f8f9fe;
 }
 
-.logo-icon-invert {
-  filter: invert(1) grayscale(100%) brightness(200%);
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px white inset !important;
   box-shadow: 0 0 0 1000px white inset !important;
+}
+
+.logo-icon-invert {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.octagon {
+  transform: "rotate(45deg)";
+  clip-path: "polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%)";
+}
+
+.ping {
+  -webkit-animation: ping 0.8s ease-in-out infinite both;
+  animation: ping 0.8s ease-in-out infinite both;
+}
+
+@-webkit-keyframes ping {
+  0% {
+    -webkit-transform: scale(0.2);
+    transform: scale(0.2);
+    opacity: 0.8;
+  }
+  80% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(2.2);
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+@keyframes ping {
+  0% {
+    -webkit-transform: scale(0.2);
+    transform: scale(0.2);
+    opacity: 0.8;
+  }
+  80% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(2.2);
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }

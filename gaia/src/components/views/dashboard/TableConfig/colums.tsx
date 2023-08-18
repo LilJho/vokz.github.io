@@ -8,19 +8,6 @@ import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<PatientActivityType>[] = [
     {
-        id: "patient_id",
-        accessorKey: "patient_id",
-        header: ({ column }) => {
-            return (
-                <span
-                    className="px-0 hover:bg-transparent text-primary-600 font-semibold"
-                >
-                    Patiens ID
-                </span>
-            );
-        },
-    },
-    {
         id: "last_name",
         accessorKey: "last_name",
         header: ({ column }) => {
