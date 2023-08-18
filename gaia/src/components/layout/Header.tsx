@@ -8,6 +8,7 @@ import useToggleSidebar from '@/lib/store/useToggleSidebar'
 
 const Header = () => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
+
     return (
         <div className='sticky top-0 h-16 bg-white py-2 px-6 flex items-center z-20 border-b'>
             <Button variant="unstyled" size="square" className='block lg:hidden mr-auto hover:bg-gray-200/30' onClick={toggle}>

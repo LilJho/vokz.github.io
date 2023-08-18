@@ -4,17 +4,8 @@ import React from 'react'
 import ApexChart from '../ApexChart';
 import { ApexOptions } from 'apexcharts';
 
-const AreaChart = () => {
-    const series = [
-        {
-            name: 'New Users',
-            data: [31, 40, 28, 51, 42, 109, 100]
-        },
-        {
-            name: 'Returing Users',
-            data: [11, 32, 45, 32, 34, 52, 41]
-        }
-    ]
+const AreaChart = ({ data, title, height }: any) => {
+    const series = data?.data
 
     var options: ApexOptions = {
         chart: {
@@ -28,7 +19,7 @@ const AreaChart = () => {
                 }
             },
         },
-        colors: ['#008FFB', '#00E396'],
+        colors: data?.colors,
         dataLabels: {
             enabled: false
         },
@@ -43,7 +34,7 @@ const AreaChart = () => {
             horizontalAlign: 'left'
         },
         xaxis: {
-            categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            categories: data?.categories,
         },
         yaxis: {
             labels: {
@@ -56,8 +47,8 @@ const AreaChart = () => {
     };
     return (
         <div className='p-4 bg-white rounded-md'>
-            <h2 className='text-lg font-semibold'>Countries</h2>
-            <ApexChart height='400px' options={options} series={series} type="area" />
+            <h2 className='text-lg font-semibold'>{title}</h2>
+            <ApexChart height={height} options={options} series={series} type="area" />
         </div>
     )
 }

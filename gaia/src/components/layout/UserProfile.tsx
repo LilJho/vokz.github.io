@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -11,8 +13,12 @@ import {
 } from "@/components/ui/FormControls/dropdown-menu"
 import { LuLogOut, LuSettings, LuUser } from 'react-icons/lu'
 import Logout from '../views/auth/Logout'
+import { useUserStore } from '@/lib/store/userStore'
 
 const UserProfile = () => {
+    const user = useUserStore((state) => state.user)
+    const { first_name = "", last_name = "" } = user!
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild className="outline-none">
@@ -24,7 +30,7 @@ const UserProfile = () => {
                         </AvatarFallback>
                     </Avatar>
                     <div className='flex flex-col items-start'>
-                        <h4 className='text-sm font-medium'>John Doe</h4>
+                        <h4 className='text-sm font-medium'>{`${first_name} ${last_name}`}</h4>
                         <span className='text-xs text-gray-600'>Doctor</span>
                     </div>
                 </button>
