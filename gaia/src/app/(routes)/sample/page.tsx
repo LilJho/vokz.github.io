@@ -1,5 +1,6 @@
 "use client";
-
+import { BiRun } from "react-icons/bi";
+import { FiActivity, FiDroplet, FiThermometer } from "react-icons/fi";
 import AreaChart from "@/components/ui/Charts/AreaChart";
 import BasicBarChart from "@/components/ui/Charts/BasicBarChart";
 import HorizontalBarchart from "@/components/ui/Charts/HorizontalBarchart";
@@ -142,12 +143,88 @@ const page = () => {
     data: [70],
   };
 
-  const books = [
-    { name: "Happy Place", img: "/books-image/happyPlace.jpg" },
-    { name: "Poverty", img: "/books-image/poverty.png" },
-    { name: "Happy Place", img: "/books-image/theCovenantOfWater.jpg" },
-    { name: "Happy Place", img: "/books-image/theWager.jpg" },
-    { name: "Happy Place", img: "/books-image/Yellowface.jpg" },
+  const data = [
+    {
+      id: "1",
+      title: "Pedometer",
+      description: "Maximum Steps",
+      value: "867",
+      records: [38, 40, 72, 71, 99, 56, 44, 56],
+      icon: <BiRun className="w-8 h-8" />,
+      backgroundColor: "bg-primary-600",
+    },
+    {
+      id: "2",
+      title: "Heart Rate",
+      description: "Latest 01:05 PM",
+      value: "73bmp",
+      records: [91, 58, 30, 52, 59, 84, 92, 51],
+      icon: <FiActivity className="w-8 h-8" />,
+      backgroundColor: "bg-danger-600",
+    },
+    {
+      id: "3",
+      title: "Blood Glucose",
+      description: "Latest",
+      value: "92 mg/dL",
+      records: [96, 47, 83, 40, 66, 31, 42, 68],
+      icon: <FiDroplet className="w-8 h-8" />,
+      backgroundColor: "bg-accent-600",
+    },
+    {
+      id: "4",
+      title: "Sleep",
+      description: "Latest",
+      value: "335.4°C",
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
+      icon: <FiThermometer className="w-8 h-8" />,
+      backgroundColor: "bg-warning-600",
+    },
+    {
+      id: "5",
+      title: "Blood Pressure",
+      description: "Maximum Steps",
+      value: "867",
+      records: [38, 40, 72, 71, 99, 56, 44, 56],
+      icon: <BiRun className="w-8 h-8" />,
+      backgroundColor: "bg-primary-600",
+    },
+    {
+      id: "6",
+      title: "Blood Oxygen",
+      description: "Latest 01:05 PM",
+      value: "73bmp",
+      records: [91, 58, 30, 52, 59, 84, 92, 51],
+      icon: <FiActivity className="w-8 h-8" />,
+      backgroundColor: "bg-danger-600",
+    },
+    {
+      id: "7",
+      title: "HRV",
+      description: "Latest",
+      value: "92 mg/dL",
+      records: [96, 47, 83, 40, 66, 31, 42, 68],
+      icon: <FiDroplet className="w-8 h-8" />,
+      backgroundColor: "bg-accent-600",
+    },
+    {
+      id: "8",
+      title: "ECG",
+      description: "Latest",
+      value: "335.4°C",
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
+      icon: <FiThermometer className="w-8 h-8" />,
+      backgroundColor: "bg-warning-600",
+    },
+    {
+      id: "9",
+      title: "Body Temperature",
+      description: "Latest",
+      value: "335.4°C",
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
+      icon: <FiThermometer className="w-8 h-8" />,
+      backgroundColor: "bg-warning-600",
+    },
   ];
 
   return (
@@ -260,15 +337,25 @@ const page = () => {
                 <h4 className='mb-2 text-lg font-semibold'>PDF Viewer</h4>
                 <PDFViewer fileURL="/sample.pdf" />
             </div> */}
-        <div className="flex flex-col gap-10">
-          {/* <AlertSample />
-        <ProgressSample /> */}
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Alert</h4>
+          <AlertSample />
+        </div>
+
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Progress</h4>
+
+          <ProgressSample />
+        </div>
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Tabs</h4>
+
           <TabsSample />
         </div>
 
         <div>
           <h4 className="mb-2 text-lg font-semibold">Slider</h4>
-          <SwiperSlider data={books} />
+          <SwiperSlider data={data} />
         </div>
       </div>
       <div className="flex flex-col gap-4">

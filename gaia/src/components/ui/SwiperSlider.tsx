@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image from "next/image";
+import StatusCard from "../views/patients/StatusCard";
 
 const SwiperSlider = ({ data }: any) => {
   const [controlledSwiper, setControlledSwiper] = useState<any>(null);
@@ -22,11 +23,19 @@ const SwiperSlider = ({ data }: any) => {
       pagination={{ clickable: true }}
       loop
       controller={{ control: controlledSwiper }}
-      className="w-full md:w-[200px]"
+      className="w-full md:w-[500px]"
     >
-      {data.map((item: any) => (
-        <SwiperSlide className="flex items-center justify-center">
-          <Image src={item.img} alt={item.name} width={200} height={80} />
+      {data?.map((val: any, index: number) => (
+        <SwiperSlide className="px-8 py-6">
+          <StatusCard
+            key={val.id}
+            title={val.title}
+            description={val.description}
+            value={val.value}
+            icon={val.icon}
+            backgroundColor={val.backgroundColor}
+            records={val.records}
+          />
         </SwiperSlide>
       ))}
     </Swiper>
