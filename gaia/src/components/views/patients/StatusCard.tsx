@@ -84,7 +84,7 @@ const StatusCard = ({ title, description, value, icon, backgroundColor, records 
     ]
 
     return (
-        <div className={`min-[270px] flex-1 rounded-lg ${backgroundColor}`}>
+        <div className={`card min-[270px] flex-1 rounded-lg ${backgroundColor}`}>
             <div className='p-4 flex justify-between items-center text-white'>
                 <div className='flex flex-col'>
                     <h5 className='text-2xl font-semibold'>{title}</h5>
