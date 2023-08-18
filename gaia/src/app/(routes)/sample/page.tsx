@@ -1,3 +1,5 @@
+"use client";
+
 import AreaChart from "@/components/ui/Charts/AreaChart";
 import BasicBarChart from "@/components/ui/Charts/BasicBarChart";
 import HorizontalBarchart from "@/components/ui/Charts/HorizontalBarchart";
@@ -8,10 +10,12 @@ import PDFViewer from "@/components/ui/PDFViewer";
 import ReactToolTip from "@/components/ui/Tooltip/ReactToolTip";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { useState } from "react";
 import AlertSample from "@/components/views/samples/AlertSample";
 import ProgressSample from "@/components/views/samples/ProgressSample";
 import TabsSample from "@/components/views/samples/TabsSample";
 import { Badge } from "@/components/ui/badge";
+import SwiperSlider from "@/components/ui/SwiperSlider";
 // import SampleModal from "@/components/views/sample/SampleModal";
 
 const page = () => {
@@ -138,6 +142,14 @@ const page = () => {
     data: [70],
   };
 
+  const books = [
+    { name: "Happy Place", img: "/books-image/happyPlace.jpg" },
+    { name: "Poverty", img: "/books-image/poverty.png" },
+    { name: "Happy Place", img: "/books-image/theCovenantOfWater.jpg" },
+    { name: "Happy Place", img: "/books-image/theWager.jpg" },
+    { name: "Happy Place", img: "/books-image/Yellowface.jpg" },
+  ];
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
@@ -240,10 +252,10 @@ const page = () => {
             </Badge>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        {/* <div className="flex flex-col gap-4">
           <h4 className="mb-2 text-lg font-semibold">Modal</h4>
-          {/* <SampleModal /> */}
-        </div>
+          <SampleModal />
+        </div> */}
         {/* <div className="flex flex-col gap-4">
                 <h4 className='mb-2 text-lg font-semibold'>PDF Viewer</h4>
                 <PDFViewer fileURL="/sample.pdf" />
@@ -252,6 +264,11 @@ const page = () => {
           {/* <AlertSample />
         <ProgressSample /> */}
           <TabsSample />
+        </div>
+
+        <div>
+          <h4 className="mb-2 text-lg font-semibold">Slider</h4>
+          <SwiperSlider data={books} />
         </div>
       </div>
       <div className="flex flex-col gap-4">
