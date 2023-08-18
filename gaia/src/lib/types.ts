@@ -17,6 +17,17 @@ export const PatientOverviewSchema = z.object({
   status: z.string(),
 });
 
+export interface IUserSessionData {
+  email: string;
+  id?: number;
+  first_name?: string;
+  middle_name?: string;
+  last_name?: string;
+  role?: string;
+  uuid?: string;
+  created_at?: string;
+}
+
 export type PatientActivityType = z.infer<typeof PatientActivitySchema>;
 export type PatientOverviewType = z.infer<typeof PatientOverviewSchema>;
 

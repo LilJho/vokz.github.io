@@ -13,15 +13,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from '@/lib/validations/login';
 import { TextField } from '@/components/ui/FormControls/TextField';
 import { Button } from '@/components/ui/button';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { PasswordField } from '@/components/ui/FormControls/PasswordField';
 import { RiLoader5Line } from 'react-icons/ri';
 import { catchError } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
+import { useUserStore } from '@/lib/store/userStore';
 
 const LoginForm = () => {
-    const supabase = createClientComponentClient()
+    const signIn = useUserStore((state) => state.signIn)
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -37,29 +37,26 @@ const LoginForm = () => {
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            await signIn({
                 email: values.email,
                 password: values.password,
             });
-            if (error) {
-                form.setError("email", {
-                    type: "manual",
-                    message: "Incorrect email. Please try again!",
-                });
-                form.setError("password", {
-                    type: "manual",
-                    message: "Incorrect password. Please try again!",
-                });
-            } else {
-                push("/");
-                refresh()
-                toast({
-                    title: "Login Success",
-                    description: "You have successfully logged in!",
-                    variant: "success",
-                })
-            }
+            push("/");
+            refresh()
+            toast({
+                title: "Login Success",
+                description: "You have successfully logged in!",
+                variant: "success",
+            })
         } catch (error) {
+            form.setError("email", {
+                type: "manual",
+                message: "Incorrect email. Please try again!",
+            });
+            form.setError("password", {
+                type: "manual",
+                message: "Incorrect password. Please try again!",
+            });
             catchError(error);
         } finally {
             setLoading(false);

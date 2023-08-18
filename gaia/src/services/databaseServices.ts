@@ -15,8 +15,8 @@ class DatabaseServices {
     return data;
   };
 
-  getOne = async (id: string) => {
-    const { data, error } = await this.supabase.select("*").eq("id", id);
+  getOne = async (column: string = "id", id: string) => {
+    const { data, error } = await this.supabase.select("*").eq(column, id);
 
     if (error) {
       throw new Error(error.message);
@@ -61,3 +61,4 @@ export const PatientsActivityService = new DatabaseServices(
 );
 
 export const DailyActivitiesService = new DatabaseServices("daily_activities");
+export const UserAccountsService = new DatabaseServices("user_accounts");

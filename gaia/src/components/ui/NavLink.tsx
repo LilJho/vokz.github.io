@@ -18,17 +18,17 @@ const NavLink = ({ href, children, icon }: Props) => {
 
   return (
     <Link href={href}>
+
       <li
-        className={`flex gap-4 ${isActive ? "bg-primary-600 hover:bg-primary-700 text-white" : "text-secondary-800 hover:bg-gray-100 "
-          }  items-center min-h-10 py-3 px-5 rounded-md transition-all duration-200 active:scale-95`}
+        className={`relative flex gap-4 text-white hover:bg-gray-100/30 items-center min-h-10 py-3 px-4 transition-all duration-200 active:scale-95`}
       >
+        {isActive && <div className="w-[2px] h-[24px] left-0 bg-white absolute my-auto"></div>}
         <div
-          className={`[&>*]:relatve flex items-center justify-center [&>*]:-top-[1px] [&>*]:w-5 [&>*]:h-5 ${isActive ? "text-white" : "text-secondary-800"
-            }`}
+          className={`relative [&>*]:relatve flex items-center justify-center [&>*]:top-[20px] [&>*]:w-6 [&>*]:h-6 text-white`}
         >
           {icon}
         </div>
-        <span>{children}</span>
+        <span className="text-sm font-light">{children}</span>
       </li>
     </Link>
   );
