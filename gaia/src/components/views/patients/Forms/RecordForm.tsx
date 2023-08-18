@@ -52,7 +52,7 @@ const RecordForm = ({ handleSubmit, title = "", description = "", progress, isLo
                         <div className='mx-auto max-w-3xl'>
                             <h3 className='text-2xl font-bold text-center'>{title}</h3>
                             <p className='max-w-md text-gray-500 mb-6 3xl:mb-10 text-center'>{description}</p>
-                            <Dropzone className='px-8 py-16 mb-4' onDrop={(file) => handleImageChange(file)} acceptedTypes={acceptedTypes} />
+                            <Dropzone className='px-8 py-16 mb-4' onDrop={(file) => handleImageChange(file)} acceptedTypes={acceptedTypes} maxSize={10_000_000} />
                             <Label className=''>Preview</Label>
                             <FilePreview className='mt-1' previewUrl={preview} fileName={file?.name} handleRemoveImage={handleRemoveImage} />
                             <FormMessage className='mt-2'>
