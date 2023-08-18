@@ -3,8 +3,8 @@
 import React from 'react'
 import ApexChart from '../ApexChart'
 
-const RadialCircleChart = () => {
-    const series = [70]
+const RadialCircleChart = ({ data, title, height }: any) => {
+    const series = data.data
     var options = {
         chart: {
             toolbar: {
@@ -22,8 +22,8 @@ const RadialCircleChart = () => {
     };
     return (
         <div className='p-4 bg-white rounded-md'>
-            <h2 className='text-lg font-semibold'>Radial Bar</h2>
-            <ApexChart height='400px' options={options} series={series} type="radialBar" />
+            <h2 className='text-lg font-semibold'>{title}</h2>
+            <ApexChart height={height} options={options} series={series} type="radialBar" />
         </div>
     )
 }
