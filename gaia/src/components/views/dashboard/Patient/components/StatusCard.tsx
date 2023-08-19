@@ -91,7 +91,7 @@ const StatusCard = ({
   ];
 
   return (
-    <div className={`card min-[270px] flex-1 rounded-lg ${backgroundColor}`}>
+    <div className={`card  flex-1 rounded-lg ${backgroundColor}`}>
       <div className="flex items-center justify-between p-4 text-white">
         <div className="flex flex-col">
           <h5 className="text-2xl font-semibold">{title}</h5>
@@ -101,7 +101,7 @@ const StatusCard = ({
         {icon}
       </div>
       <div className="h-[50px]">
-        <Chart options={chartData} series={series} type="area" height="50px" />
+        <Chart options={chartData} series={series} type="bar" height="50px" />
       </div>
     </div>
   );
