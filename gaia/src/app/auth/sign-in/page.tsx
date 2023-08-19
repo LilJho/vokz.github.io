@@ -14,7 +14,6 @@ const AuthPage = async () => {
     }
 
     return (
-
         <div className='flex flex-col items-center justify-center min-h-[100dvh] bg-white'>
             <Image src={LoginIllu} alt="Login Illustration" className='w-52' />
             <div className='my-6 text-center'>

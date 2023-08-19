@@ -62,6 +62,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
       setIsValid(true);
       onDrop(file);
     } else {
+      console.log("hey", validateFile(file))
       setIsValid(false);
       toast({
         title: "Error",
@@ -98,11 +99,21 @@ const Dropzone: React.FC<DropzoneProps> = ({
       onDrop(file);
     } else {
       setIsValid(false);
-      toast({
-        title: "Error",
-        description: "Image file size exceed",
-        variant: "destructive",
-      })
+      if (!acceptedTypes.includes(file?.type)) {
+        toast({
+          title: "Error",
+          description: "Invalid file type. Please try again.",
+          variant: "destructive",
+        })
+      }
+      if (file?.size > maxSize) {
+        toast({
+          title: "Error",
+          description: `Image file size exceeds ${formatFileSize(maxSize)}. Please try again.`,
+          variant: "destructive",
+        })
+      }
+
     }
     setTimeout(() => {
       setIsValid(true);
