@@ -10,6 +10,7 @@ interface IStatusCardProps {
   icon: React.ReactNode | any;
   backgroundColor: string;
   records: number[];
+  chart: string;
 }
 
 const StatusCard = ({
@@ -19,6 +20,7 @@ const StatusCard = ({
   icon,
   backgroundColor,
   records,
+  chart,
 }: IStatusCardProps) => {
   const chartData: ApexOptions = {
     chart: {
@@ -43,7 +45,7 @@ const StatusCard = ({
     },
     xaxis: {
       labels: {
-        show: false,
+        show: true,
       },
     },
     yaxis: {
@@ -101,7 +103,7 @@ const StatusCard = ({
         {icon}
       </div>
       <div className="h-[50px]">
-        <Chart options={chartData} series={series} type="bar" height="50px" />
+        <Chart options={chartData} series={series} type={chart} height="50px" />
       </div>
     </div>
   );

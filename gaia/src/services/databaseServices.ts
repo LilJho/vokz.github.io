@@ -15,6 +15,14 @@ class DatabaseServices {
     return data;
   };
 
+  getWhere = async (column: string, value: string) => {
+    const { data, error } = await this.supabase.select("*").eq(column, value);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  };
+
   getOne = async (column: string = "id", id: string) => {
     const { data, error } = await this.supabase.select("*").eq(column, id);
 
@@ -62,7 +70,7 @@ export const PatientsActivityService = new DatabaseServices(
 
 export const DailyActivitiesService = new DatabaseServices("daily_activities");
 
-//export const DailyDiagnosisService = new DatabaseServices("watch_report");
+export const DailyDiagnosisService = new DatabaseServices("watch_report");
 
 export const UserAccountsService = new DatabaseServices("user_accounts");
 
