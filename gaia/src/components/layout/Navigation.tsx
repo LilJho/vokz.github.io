@@ -21,7 +21,6 @@ const Navigation = () => {
             My Profile
         </NavLink>
 
-
     return (
         <>
             {isToggled && <div className="fixed inset-0 backdrop-blur bg-gray-400/30 z-40" onClick={toggle}></div>}
