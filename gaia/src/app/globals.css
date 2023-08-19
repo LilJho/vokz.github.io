@@ -42,6 +42,10 @@ input:-webkit-autofill:focus {
   animation: ping 0.8s ease-in-out infinite both;
 }
 
+.react-pdf__Page__annotations {
+  display: none;
+}
+
 @-webkit-keyframes ping {
   0% {
     -webkit-transform: scale(0.2);

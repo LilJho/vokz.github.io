@@ -4,7 +4,7 @@ import React from 'react'
 import StatusCard from './StatusCard'
 import { BiRun } from 'react-icons/bi'
 import { FiActivity, FiDroplet, FiThermometer } from 'react-icons/fi'
-import { DailyDiagnosisService } from '@/services/databaseServices'
+// import { DailyDiagnosisService } from '@/services/databaseServices'
 
 const PatientStatus = async () => {
     const data = [
@@ -15,7 +15,7 @@ const PatientStatus = async () => {
             value: "867",
             records: [38, 40, 72, 71, 99, 56, 44, 56],
             icon: <BiRun className="w-8 h-8" />,
-            backgroundColor: "bg-primary-600"
+            backgroundColor: "bg-indigo-600"
         },
         {
             id: "2",
@@ -51,7 +51,7 @@ const PatientStatus = async () => {
             value: "867",
             records: [38, 40, 72, 71, 99, 56, 44, 56],
             icon: <BiRun className="w-8 h-8" />,
-            backgroundColor: "bg-primary-600"
+            backgroundColor: "bg-indigo-600"
         },
         {
             id: "6",
@@ -87,7 +87,7 @@ const PatientStatus = async () => {
             value: "335.4°C",
             records: [96, 54, 55, 45, 77, 90, 87, 59],
             icon: <FiThermometer className="w-8 h-8" />,
-            backgroundColor: "bg-warning-600"
+            backgroundColor: "bg-amber-600"
         },
 
     ];

@@ -41,8 +41,8 @@ const LoginForm = () => {
                 email: values.email,
                 password: values.password,
             });
-            push("/");
             refresh()
+            push("/");
             toast({
                 title: "Login Success",
                 description: "You have successfully logged in!",
