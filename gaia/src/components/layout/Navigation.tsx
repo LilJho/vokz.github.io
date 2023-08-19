@@ -14,6 +14,13 @@ import { RiProfileLine, RiDashboardLine, RiArrowLeftLine } from 'react-icons/ri'
 const Navigation = () => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
     const user = useUserStore((state) => state.user)
+    const showNavigationLink = user?.role === "admin" ? user && user?.role === "admin" &&
+        <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
+            Patients
+        </NavLink> : user && user?.role === "patient" && <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
+            My Profile
+        </NavLink>
+
 
     return (
         <>
@@ -34,14 +41,12 @@ const Navigation = () => {
                         <NavLink href="/" icon={<RiDashboardLine className="w-5 h-5" />}>
                             Dashboard
                         </NavLink>
-                        {user && user?.role === "admin" && <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
-                            Patients
-                        </NavLink>}
-                        {user && user?.role === "patient" && <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
-                            My Profile
-                        </NavLink>}
+                        {showNavigationLink}
                         <NavLink href="/sample" icon={<FiLayers className="w-5 h-5" />}>
                             Sample Page
+                        </NavLink>
+                        <NavLink href="/pdf-viewer" icon={<FiLayers className="w-5 h-5" />}>
+                            PDF Viewer
                         </NavLink>
                     </ul>
                 </div>
@@ -51,4 +56,3 @@ const Navigation = () => {
 }
 
 export default Navigation
-
