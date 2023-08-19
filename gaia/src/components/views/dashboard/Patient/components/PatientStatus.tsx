@@ -16,7 +16,8 @@ import "swiper/css/navigation"; // Navigation module
 import { GrNext, GrPrevious } from "react-icons/gr";
 
 const PatientStatus = async () => {
-  const data = [
+  const [diagnosisData, setDiagnosisData] = useState<DataItem[]>([]);
+  const template = [
     {
       id: "1",
       title: "Pedometer",
@@ -109,40 +110,70 @@ const PatientStatus = async () => {
     },
   ];
 
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const diagnosis = await DailyDiagnosisService.getWhere('created_at', 'now()');
+        const diagnosis = await DailyDiagnosisService.getWhere('created_at::date', new Date().toISOString().split('T')[0]);
         console.log(diagnosis);
+
+        const sourceData: SourceDataItem[] = diagnosis;
+  
+        const updatedData = combineData(sourceData, template);
+        console.log(updatedData);
+        setDiagnosisData(updatedData);
+  
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
   
-    fetchData(); // Call the async function to fetch data when the component loads
-  
-    // Since we only want to call this once, we don't specify any dependencies array ([]).
+    fetchData();
   }, []);
+  
 
+  interface SourceDataItem {
+    report_id: string;
+    activity_id: string;
+    patient_id: string | null;
+    created_at: string;
+    diagnosis: string;
+    diagnosis_keyValue: string;
+    diagnosis_label: string;
+    diagnosis_value: string;
+    diagnosis_numeric: number | null;
+  }
+  
+  interface DataItem {
+    id: string;
+    title: string;
+    description: string;
+    value: string;
+    records: number[];
+    icon: JSX.Element;
+    backgroundColor: string;
+    chart: string;
+  }
+  
+  function combineData(sourceData: SourceDataItem[], data: DataItem[]): DataItem[] {
+    const diagnosisValueMap: { [key: string]: string } = {};
+  
+    sourceData.forEach((item) => {
+      diagnosisValueMap[item.diagnosis] = item.diagnosis_value;
+    });
+  
+    // Update the value in each object in the data array
+    data.forEach((item) => {
+      if (diagnosisValueMap[item.title]) {
+        item.value = diagnosisValueMap[item.title];
+      }
+    });
+  
+    return data;
+  }
 
   const [controlledSwiper, setControlledSwiper] = useState<any>(null);
 
   return (
-    // <div className="flex flex-col h-full gap-4 bg-white rounded-lg">
-    //   <div className="grid grid-cols-1 gap-3 md:grid-cols-2 3xl:grid-cols-3 ">
-    //     {data?.map((val, index) => (
-    //       <StatusCard
-    //         key={val.id}
-    //         title={val.title}
-    //         description={val.description}
-    //         value={val.value}
-    //         icon={val.icon}
-    //         backgroundColor={val.backgroundColor}
-    //         records={val.records}
-    //       />
-    //     ))}
-    //   </div>
-    // </div>
     <Swiper
       modules={[Controller, Navigation, Pagination]}
       spaceBetween={10}
@@ -152,7 +183,7 @@ useEffect(() => {
       controller={{ control: controlledSwiper }}
       className="w-[100%] "
     >
-      {data?.map((val: any, index: number) => (
+      {diagnosisData?.map((val: any, index: number) => (
         <SwiperSlide>
           <StatusCard
             key={val.id}
