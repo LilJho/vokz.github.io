@@ -30,6 +30,7 @@ const MainPageLayout = async ({ children }: ILayoutProps) => {
         last_name: data[0]?.last_name,
         middle_name: data[0]?.middle_name,
         id: data[0]?.id,
+        uuid: data[0]?.uuid
     }
 
     return (

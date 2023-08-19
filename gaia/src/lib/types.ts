@@ -35,6 +35,7 @@ export type UserDataType = {
   middle_name: string;
   last_name: string;
   role: string;
+  uuid: string;
 };
 
 export type PatientActivityType = z.infer<typeof PatientActivitySchema>;
