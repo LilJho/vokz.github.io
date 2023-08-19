@@ -15,11 +15,12 @@ import Mindfulnessllu from "@public/images/mind.svg"
 import Image from 'next/image'
 import { HiX } from 'react-icons/hi'
 import Link from 'next/link'
-import { useUserStore } from '@/lib/store/userStore';
+import userStore from '@/lib/store/userStore'
 
 const SubmitReport = () => {
     const [isOpen, toggle] = useToggle()
-    const user = useUserStore(state => state.user)
+    const user = userStore((state) => state.user)
+
     return (
         <HeadlessDialog
             isOpen={isOpen}

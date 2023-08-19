@@ -28,6 +28,15 @@ export interface IUserSessionData {
   created_at?: string;
 }
 
+export type UserDataType = {
+  id: number;
+  email: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  role: string;
+};
+
 export type PatientActivityType = z.infer<typeof PatientActivitySchema>;
 export type PatientOverviewType = z.infer<typeof PatientOverviewSchema>;
 

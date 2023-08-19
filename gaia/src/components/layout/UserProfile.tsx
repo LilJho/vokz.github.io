@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -13,10 +13,15 @@ import {
 } from "@/components/ui/FormControls/dropdown-menu"
 import { LuLogOut, LuSettings, LuUser } from 'react-icons/lu'
 import Logout from '../views/auth/Logout'
-import { useUserStore } from '@/lib/store/userStore'
+import userStore from '@/lib/store/userStore'
+import { UserDataType } from '@/lib/types'
 
-const UserProfile = () => {
-    const user = useUserStore((state) => state.user)
+interface IUserProfileProps {
+    data: UserDataType
+}
+
+const UserProfile = ({ data }: IUserProfileProps) => {
+    // const user = userStore((state) => state.user)
 
     return (
         <DropdownMenu>
@@ -29,7 +34,7 @@ const UserProfile = () => {
                         </AvatarFallback>
                     </Avatar>
                     <div className='flex flex-col items-start'>
-                        <h4 className='text-sm font-medium'>{`${user?.first_name ?? ""} ${user?.last_name ?? ""}`}</h4>
+                        <span className='text-sm font-medium'>{`${data?.first_name} ${data?.last_name}`}</span>
                         <span className='text-xs text-gray-600'>Doctor</span>
                     </div>
                 </button>
@@ -53,7 +58,6 @@ const UserProfile = () => {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-
     )
 }
 
