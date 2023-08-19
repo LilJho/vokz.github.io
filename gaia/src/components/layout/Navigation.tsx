@@ -6,18 +6,22 @@ import Logo from "@public/logo/gaia_logo.png"
 import { Button } from '../ui/button'
 import useToggleSidebar from '@/lib/store/useToggleSidebar'
 import { HiOutlineX } from 'react-icons/hi'
-import { useUserStore } from '@/lib/store/userStore'
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { FiLayers } from "react-icons/fi";
 import { RiProfileLine, RiDashboardLine, RiArrowLeftLine } from 'react-icons/ri'
+import { UserDataType } from '@/lib/types'
 
-const Navigation = () => {
+interface INavigationProps {
+    data: UserDataType
+}
+
+const Navigation = ({ data }: INavigationProps) => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
-    const user = useUserStore((state) => state.user)
-    const showNavigationLink = user?.role === "admin" ? user && user?.role === "admin" &&
+
+    const showNavigationLink = data?.role === "admin" ?
         <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
             Patients
-        </NavLink> : user && user?.role === "patient" && <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
+        </NavLink> : <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
             My Profile
         </NavLink>
 

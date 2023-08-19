@@ -1,43 +1,22 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { IUserSessionData } from "@/lib/types";
 
 interface AuthValues {
   email: string;
   password: string;
 }
 
-type AuthServiceResponse = { user: IUserSessionData } | { error: string };
-
-const authService = async ({
-  email,
-  password,
-}: AuthValues): Promise<AuthServiceResponse> => {
+const authService = async ({ email, password }: AuthValues) => {
   const supabase = createClientComponentClient();
-  const { data: authData, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
-    return { error: error.message };
+    throw new Error(error.message);
   }
 
-  const userData = authData.user;
-
-  let { data }: any = await supabase
-    .from("user_accounts")
-    .select("*")
-    .eq("uuid", userData.id);
-
-  const user = {
-    email: userData.email || "",
-    first_name: data[0].first_name || "",
-    last_name: data[0].last_name || "",
-    middle_name: data[0].middle_name || "",
-    role: data[0].role || "",
-  };
-
-  return { user };
+  return "login successful";
 };
 
 export { authService };

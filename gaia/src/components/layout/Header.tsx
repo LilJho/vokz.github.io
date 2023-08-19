@@ -2,11 +2,17 @@
 
 import { BiBell, BiSearch } from 'react-icons/bi'
 import { Button } from '@/components/ui/button'
-import UserProfile from '@/components/layout/UserProfile'
 import { FiMenu } from 'react-icons/fi'
 import useToggleSidebar from '@/lib/store/useToggleSidebar'
+import dynamic from 'next/dynamic'
+import { UserDataType } from '@/lib/types'
+import UserProfile from './UserProfile'
 
-const Header = () => {
+interface IHeaderProps {
+    data: UserDataType
+}
+
+const Header = ({ data }: IHeaderProps) => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
 
     return (
@@ -22,7 +28,7 @@ const Header = () => {
                 <Button size="square" variant="ghost">
                     <BiBell className='w-6 h-6' />
                 </Button>
-                <UserProfile />
+                <UserProfile data={data} />
             </div>
         </div>
     )

@@ -18,11 +18,13 @@ import { RiLoader5Line } from 'react-icons/ri';
 import { catchError } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
-import { useUserStore } from '@/lib/store/userStore';
+import { authService } from '@/services/authService';
 
-const LoginForm = () => {
-    const signIn = useUserStore((state) => state.signIn)
+interface LoginFormProps {
+    setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+const LoginForm = ({ setLoginSuccess }: LoginFormProps) => {
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -32,16 +34,16 @@ const LoginForm = () => {
     })
 
     const [loading, setLoading] = useState(false)
-    const { push, refresh } = useRouter()
+    const { push } = useRouter()
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         setLoading(true);
         try {
-            await signIn({
+            await authService({
                 email: values.email,
                 password: values.password,
             });
-            refresh()
+            setLoginSuccess(true);
             push("/");
             toast({
                 title: "Login Success",
