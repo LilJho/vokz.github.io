@@ -23,7 +23,7 @@ const SwiperSlider = ({ data }: any) => {
       pagination={{ clickable: true }}
       loop
       controller={{ control: controlledSwiper }}
-      className="w-[78%] "
+      className="w-[80%] "
     >
       {data?.map((val: any, index: number) => (
         <SwiperSlide>
