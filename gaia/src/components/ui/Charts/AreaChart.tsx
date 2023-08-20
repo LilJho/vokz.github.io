@@ -4,7 +4,7 @@ import React from 'react'
 import ApexChart from '../ApexChart';
 import { ApexOptions } from 'apexcharts';
 
-const AreaChart = ({ data, title, height }: any) => {
+const AreaChart = ({ data, title, height, type }: any) => {
     const series = data?.data
 
     var options: ApexOptions = {
@@ -47,8 +47,17 @@ const AreaChart = ({ data, title, height }: any) => {
     };
     return (
         <div className='p-4 bg-white rounded-md'>
-            <h2 className='text-lg font-semibold'>{title}</h2>
-            <ApexChart height={height} options={options} series={series} type="area" />
+            <div className="col-2">
+                <h2 className='text-lg font-semibold'>{title}</h2>
+            </div>
+            <div className="col-2">
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-outline-success">Left</button>
+                    <button type="button" className="btn btn-outline-success">Middle</button>
+                    <button type="button" className="btn btn-outline-success">Right</button>
+                </div>
+            </div>
+            <ApexChart height={height} options={options} series={series} type={type} />
         </div>
     )
 }

@@ -114,12 +114,10 @@ const PatientStatus = async () => {
     const fetchData = async () => {
       try {
         const diagnosis = await DailyDiagnosisService.getWhere('created_at::date', new Date().toISOString().split('T')[0]);
-        console.log(diagnosis);
 
         const sourceData: SourceDataItem[] = diagnosis;
   
         const updatedData = combineData(sourceData, template);
-        console.log(updatedData);
         setDiagnosisData(updatedData);
   
       } catch (error) {

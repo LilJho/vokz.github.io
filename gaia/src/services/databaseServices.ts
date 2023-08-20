@@ -32,6 +32,16 @@ class DatabaseServices {
     return data;
   };
 
+  getOneWhere = async (column: string, value: any, targetColumn: string) => {
+    console.log('submitted params',value); 
+
+    const { data, error } = await this.supabase.select(targetColumn).eq(column, value);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data; 
+  };
+
   create = async (insert: any) => {
     const { data, error } = await this.supabase.insert(insert).select();
 

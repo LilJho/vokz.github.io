@@ -13,7 +13,7 @@ import { getSleepHours } from '@/helper/getSleepHours'
 import { catchError } from '@/lib/utils'
 import usePostForm from '@/hooks/usePostForm';
 import axios from 'axios';
-import { useUserStore } from '@/lib/store/userStore'
+import userStore from '@/lib/store/userStore'
 
 const DailyMedicalForm = () => {
     const defaultValues = {
@@ -21,7 +21,7 @@ const DailyMedicalForm = () => {
         file: null as unknown as File,
     }
 
-    const user = useUserStore((state) => state.user);
+    const user = userStore((state) => state.user)
 
 
     // const { extractTextFromRegions, progress } = useExtractText();

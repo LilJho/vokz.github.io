@@ -242,7 +242,7 @@ const page = () => {
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Area chart</h4>
-          <AreaChart data={AreaChartData} title="Area Chart" height="300px" />
+          <AreaChart data={AreaChartData} title="Area Chart" height="300px" type="line"/>
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Basic Bar chart</h4>
