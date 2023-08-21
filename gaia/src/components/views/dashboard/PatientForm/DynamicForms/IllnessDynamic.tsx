@@ -1,3 +1,4 @@
+import SelectField from '@/components/ui/FormControls/SelectField'
 import { TextField } from '@/components/ui/FormControls/TextField'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
 import { Button } from '@/components/ui/button'
@@ -8,17 +9,17 @@ import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
 interface IChildrenDynamicForm extends IPersonalInformation {
     label: string
-    fieldName?: "allergies"
+    fieldName?: "cancerIllness" | "dementiaIllness" | "diabetesIllness" | "highBloodPressureIllness"
 }
 
-const IllnessDynamicForm = ({ form, label, fieldName = "allergies" }: IChildrenDynamicForm) => {
+const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChildrenDynamicForm) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: fieldName
+        name: `family_history.${fieldName}`
     });
 
     const handleAddField = () => {
-        append({ cause: '', reaction: '' })
+        append({ family_member: '', maternal_paternal: '' })
     }
 
     const handleRemoveField = (index: number) => {
@@ -33,25 +34,25 @@ const IllnessDynamicForm = ({ form, label, fieldName = "allergies" }: IChildrenD
                     return (
                         <div className='grid grid-cols-1 md:grid-cols-12 gap-8'>
                             <FormItem className='md:col-span-6'>
-                                <FormLabel>Medication Or Environmental Issue</FormLabel>
+                                <FormLabel>Family Member</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`${fieldName}[${index}].cause` as any}
+                                    name={`family_history[${fieldName}][${index}].cause` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='eg. Dust' {...field} />
+                                            <TextField placeholder='eg. Brother, Sister, Uncle' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
                             <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
-                                <FormLabel>Reaction</FormLabel>
+                                <FormLabel>If grandparent, maternal or paternal</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name={`${fieldName}[${index}].reaction` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='eg. Rhinitis' {...field} />
+                                            <SelectField data={[{ label: "Maternal", value: "Maternal" }, { label: "Paternal", value: "paternal" }]} {...field} />
                                         </FormControl>
                                     )}
                                 />

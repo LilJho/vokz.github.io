@@ -165,7 +165,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
 
                 <FormItem className="col-span-2">
                     <FormControl>
-                        <NameAgeDynamicForm fieldName="grandchildren" label="Grand children" form={form} />
+                        <NameAgeDynamicForm fieldName="grandchildren" label="Grandchildren" form={form} />
                     </FormControl>
                 </FormItem>
             </div>

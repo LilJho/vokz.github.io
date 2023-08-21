@@ -6,8 +6,8 @@ interface ISelectField {
         label: string
         value: string
     }[],
-    value: string
-    onChange: (value: string) => void
+    value?: string
+    onChange?: (value: string) => void
     defaultValue?: string
 }
 

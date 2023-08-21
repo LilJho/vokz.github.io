@@ -34,7 +34,7 @@ const cancerIllness = z.object({
   maternal_paternal: z.string().optional(),
 });
 
-const demantiaIllness = z.object({
+const dementiaIllness = z.object({
   family_member: z.string().optional(),
   maternal_paternal: z.string().optional(),
 });
@@ -50,8 +50,8 @@ const highBloodPressureIllness = z.object({
 });
 
 const family_history = z.object({
-  illness: z.array(cancerIllness).optional(),
-  demantiaIllness: z.array(demantiaIllness).optional(),
+  cancerIllness: z.array(cancerIllness).optional(),
+  dementiaIllness: z.array(dementiaIllness).optional(),
   diabetesIllness: z.array(diabetesIllness).optional(),
   highBloodPressureIllness: z.array(highBloodPressureIllness).optional(),
 });
@@ -99,5 +99,24 @@ export const PatientSchema = z.object({
   health_conditions: z.array(z.string()).optional(),
   surgeries: z.array(surgeries).optional(),
   vaccinations: z.array(vaccinations).optional(),
-  family_history: z.array(family_history).optional(),
+  family_history: family_history.optional(),
+  martial_status: z
+    .string()
+    .nonempty({ message: "Please select your marital status" }),
+  is_using_tobacco: z
+    .string()
+    .nonempty({ message: "Please select if yes or no" }),
+  tobacco_usage_frequency: z.string().optional(),
+  is_using_tobacco_in_past: z
+    .string()
+    .nonempty({ message: "Please select if yes or no" }),
+  tobacco_product_type: z.string().optional(),
+  years_of_using_tobacco: z.string().optional(),
+  year_of_tobacco_cessation: z.string().optional(),
+  drinking_alcohol: z.string().optional(),
+  alcohol_consumption_frequency: z.string().optional(),
+  is_using_recreational_drugs: z.string().optional(),
+  recreational_drug_type: z.string().optional(),
+  recreational_drug_usage_frequency: z.string().optional(),
+  additional_comment: z.string().optional(),
 });
