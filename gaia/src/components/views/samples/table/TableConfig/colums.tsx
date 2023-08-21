@@ -1,15 +1,15 @@
 import { LuArrowUpDown } from "react-icons/lu";
 import { ColumnDef } from "@tanstack/react-table";
-import { PatientOverviewType } from "@/lib/types";
+import { PatientActivityType, PatientOverviewType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { BiDownArrowAlt, BiUser } from "react-icons/bi";
 import { ReportIcon } from "@/config/reportSubmitted";
 import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<PatientOverviewType>[] = [
+export const columns: ColumnDef<PatientActivityType>[] = [
     {
-        id: "date",
-        accessorKey: "date",
+        id: "last_name",
+        accessorKey: "last_name",
         header: ({ column }) => {
             return (
                 <Button
@@ -17,55 +17,47 @@ export const columns: ColumnDef<PatientOverviewType>[] = [
                     className="px-0 hover:bg-transparent text-primary-600 font-semibold"
                     variant="ghost"
                 >
-                    Date
+                    Patient Name
                     <LuArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
         },
+        cell: ({ row }) => {
+            const { first_name, middle_name, last_name } = row.original;
+            const fullName = `${first_name} ${middle_name} ${last_name}`;
+            return <span>{fullName}</span>;
+        },
     },
     {
-        id: "report_submitted",
-        accessorKey: "report_submitted",
+        id: "email",
+        accessorKey: "email",
         header: ({ column }) => {
             return (
                 <span
                     className="px-0 hover:bg-transparent text-primary-600 font-semibold"
                 >
-                    Report Submitted
+                    Email Address
+                </span>
+            );
+        },
+    },
+    {
+        id: "mobile_number",
+        accessorKey: "mobile_number",
+        header: ({ column }) => {
+            return (
+                <span
+                    className="px-0 hover:bg-transparent text-primary-600 font-semibold"
+                >
+                    Mobile Number
                 </span>
             );
         },
         cell: ({ row }) => {
-            const Icon = ReportIcon[row.original.report_submitted]
+            return <span>{`(+63) ${row.original.mobile_number}`}</span>;
+        },
+    },
 
-            return (
-                <div className="flex items-center gap-2">
-                    <Icon className="text-primary-600" />
-                    <span>
-                        {row.original.report_submitted}
-                    </span>
-                </div>
-            );
-        },
-    },
-    {
-        id: "status",
-        accessorKey: "status",
-        header: ({ column }) => {
-            return (
-                <span
-                    className="px-0 hover:bg-transparent text-primary-600 font-semibold"
-                >
-                    Status
-                </span>
-            );
-        },
-        cell: ({ row }) => {
-            return (
-                <Badge variant="success">{row.original.status}</Badge>
-            );
-        },
-    },
     {
         id: "Actions",
         accessorKey: "actions",
@@ -78,14 +70,13 @@ export const columns: ColumnDef<PatientOverviewType>[] = [
         },
         cell: ({ row }: any) => {
             return <div className="flex gap-2">
-                <Button variant="light" color="gray" size="icon">
+                <Button variant="secondary" size="icon">
                     <BiUser className="w-5 h-5" />
                 </Button>
-                <Button variant="light" color="gray" size="icon">
+                <Button variant="secondary" size="icon">
                     <BiDownArrowAlt className="w-5 h-5" />
                 </Button>
             </div>;
         },
     },
-
 ];

@@ -24,9 +24,9 @@ const Navigation = ({ data }: INavigationProps) => {
 
     const showNavigationLink = data?.role === "admin" ?
         <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
-            Patients
+            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Patients</span>
         </NavLink> : <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
-            My Profile
+            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>My Profile</span>
         </NavLink>
 
     return (
@@ -51,14 +51,17 @@ const Navigation = ({ data }: INavigationProps) => {
                     <h6 className={`${isMinimized ? "group-hover:block hidden" : "block"} mb-1 font-medium ml-4 text-white text-sm`}>Navigation</h6>
                     <ul className='flex flex-col gap-1'>
                         <NavLink href="/" icon={<RiDashboardLine className="w-5 h-5" />}>
-                            Dashboard
+                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Dashboard</span>
                         </NavLink>
                         {showNavigationLink}
                         <NavLink href="/sample" icon={<FiLayers className="w-5 h-5" />}>
-                            Sample Page
+                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Sample Page</span>
                         </NavLink>
                         <NavLink href="/pdf-viewer" icon={<FiLayers className="w-5 h-5" />}>
-                            PDF Viewer
+                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>PDF Viewer</span>
+                        </NavLink>
+                        <NavLink href="/table-sample" icon={<FiLayers className="w-5 h-5" />}>
+                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Table Sample</span>
                         </NavLink>
                     </ul>
                 </div>

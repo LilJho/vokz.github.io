@@ -15,8 +15,8 @@ const page = () => {
 
 
     return (
-        <div className='flex flex-col md:flex-row gap-10'>
-            <div className='w-[500px]'>
+        <div className='flex flex-col lg:flex-row gap-10'>
+            <div className='w-full md:w-[500px]'>
                 <Dropzone className='max-h-max px-8 py-16 mb-4' onDrop={(file) => handleImageChange(file)} acceptedTypes={mime_types.PDF_MIME_TYPE} maxSize={10_000_000} />
             </div>
             <div className='flex-1'>

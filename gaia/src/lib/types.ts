@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { PatientSchema } from "./validations/patient";
+import { UseFormReturn } from "react-hook-form";
 
 export const PatientActivitySchema = z.object({
   patient_id: z.string(),
@@ -72,3 +74,7 @@ export type ToastTypes = {
   description: string;
   variant: "success" | "destructive" | "default";
 };
+
+export interface IPersonalInformation {
+  form: UseFormReturn<z.infer<typeof PatientSchema>>;
+}
