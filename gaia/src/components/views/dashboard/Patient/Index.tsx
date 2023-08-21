@@ -4,6 +4,7 @@ import AreaChart from "@/components/ui/Charts/AreaChart";
 import userStore from '@/lib/store/userStore'
 import { DailyActivitiesService } from '@/services/databaseServices'
 import { supabase } from "@/services/supabaseConfig";
+import { PostgrestSingleResponse } from '@supabase/supabase-js';
 
 const Index = () => {
     const user = userStore((state) => state.user);
@@ -76,21 +77,33 @@ const Index = () => {
     
     // const [stepsCategory, setSteps] = useState<[]>([]);
      
+    const [dateLabels, dateValues] = generateDateLabels('day'); // Get both date labels and values
+    let legendValues: any = [];
     useEffect(() => {
         async function fetchData() {
             try {
-                const [dateLabels, dateValues] = generateDateLabels('day'); // Get both date labels and values
                 // setSteps(dateLabels); // If needed, set the date labels in state
         
                 // Use Promise.all to fetch data for each date
                 const fetchPromises = dateValues.map(async (key) => {
                     try {
                         const result = await fetchSummary(key);
-                        console.log(result);
+                        // Check if there is data in the response
+                        if (result.data && result.data.length > 0) {
+                            // Access the first item in the data array
+                            const firstItem = result.data[0];
+
+                            // Access the "summary_data" array within the first item
+                            const summaryData = firstItem.summary_data;
+
+                            // Now, summaryData contains ["9378", "0.4"]
+                            legendValues.push(summaryData[0]);
+                            console.log('legendValues',legendValues); // Output: ["9378", "0.4"]
+                        }
                     } catch (error) {
                         console.error('Error fetching data for', key, ':', error);
                         throw error;
-                    }
+                    } 
                 });
         
                 await Promise.all(fetchPromises); // Wait for all fetch operations to complete
@@ -103,21 +116,21 @@ const Index = () => {
         fetchData();
           
     });
-    
     const AreaChartData = {
-        categories: [11, 0, 0, 0, 0, 0, 0],
+        categories: dateLabels,
         data: [
           {
             name: "Total Steps",
-            data: [11, 0, 0, 0, 0, 0, 0],
+            data: legendValues,
           },
           {
             name: "Total Sleep",
-            data: [11, 0, 0, 0, 0, 0, 0],
+            data: legendValues,
           },
         ],
         colors: ["#008FFB", "#00E396"],
       };
+
       
 
     return (

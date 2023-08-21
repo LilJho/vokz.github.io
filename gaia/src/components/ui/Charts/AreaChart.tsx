@@ -38,7 +38,7 @@ const AreaChart = ({ data, title, height, type }: any) => {
         },
         yaxis: {
             labels: {
-                show: false
+                show: true
             }
         },
         tooltip: {
