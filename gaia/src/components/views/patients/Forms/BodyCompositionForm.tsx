@@ -26,8 +26,23 @@ const BodyCompositionForm = () => {
             formData.append('record_file', values.file);  // Assuming 'yourFileInput' is your file input element
             formData.append('region_choice', 'bmi');  // values: dashboard, bmi, ring
             formData.append("file_type", "image") // values: image, pdf
-            const result = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData)
-            console.log({ result })
+            const response = await axios.post('http://127.0.0.1:5000/v1/extract-metrics', formData);
+
+            // const structuredDataArray = result.structured_data;
+            // console.log({ result });
+            const result = response.data; // Access the response data
+             const structuredDataArray = result.structured_data ;
+            
+            //   console.log("Result:", structuredDataArray[2]); getting structured data key
+
+            const summary_data = [structuredDataArray[0],structuredDataArray[1]];
+
+            const dailyActivities = {
+                report_type: "BMI Report",
+                summary_data: summary_data
+            }
+
+            const activity = await DailyActivitiesService.create(dailyActivities); // insert daily activity report
         } catch (error) {
             catchError(error);
         }

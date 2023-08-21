@@ -45,7 +45,8 @@ const DailyMedicalForm = () => {
 
             const dailyActivities = {
                 report_type: "Watch Report",
-                summary_data: summary_data
+                summary_data: summary_data,
+                patient_id: user?.uuid,
             }
 
             const activity = await DailyActivitiesService.create(dailyActivities); // insert daily activity report
