@@ -6,13 +6,12 @@ import { BsPersonBoundingBox, BsMic } from "react-icons/bs";
 
 import Index from "./Patient/Index";
 
-
 const tabs = [
   {
     title: "Daily Health Report",
     icon: <AiOutlineHome />,
     value: "Daily",
-    content: <Index/>,
+    content: <Index />,
   },
   {
     title: "Monthly Health Report",
@@ -59,8 +58,9 @@ const TabsSample = () => {
         className="p-4 rounded-md border bg-white "
       >
         <TabsList>
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <TabsTrigger
+              key={index}
               className={`flex items-center justify-center gap-1.5 data-[state=active]:bg-green-500 data-[state=active]:text-white rounded`}
               value={tab.value}
             >

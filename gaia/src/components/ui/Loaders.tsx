@@ -13,13 +13,15 @@ const spinnerVariants = cva(
                 success: "text-green-600",
                 warning: "text-yellow-600",
                 disabled: "text-gray-400",
-                black: "text-gray-800"
+                black: "text-gray-800",
+                primary: "text-primary-600"
             },
             size: {
                 default: "w-12 h-12",
                 xs: "w-8 h-8",
                 sm: "w-10 h-10",
                 lg: "w-14 h-14",
+                xl: "w-16 h-16",
             }
         },
         defaultVariants: {
@@ -39,13 +41,15 @@ const pingVariants = cva(
                 success: "bg-green-600",
                 warning: "bg-yellow-600",
                 disabled: "bg-gray-400",
-                black: "bg-gray-800"
+                black: "bg-gray-800",
+                primary: "text-primary-600"
             },
             size: {
                 default: "w-12 h-12",
                 xs: "w-8 h-8",
                 sm: "w-10 h-10",
                 lg: "w-14 h-14",
+                xl: "w-16 h-16",
             }
         },
         defaultVariants: {
@@ -57,8 +61,8 @@ const pingVariants = cva(
 
 interface ILoaderProps {
     type?: "spinner" | "ping"
-    variant?: "default" | "destructive" | "success" | "warning" | "disabled" | "black"
-    size?: "default" | "xs" | "sm" | "lg"
+    variant?: "default" | "destructive" | "success" | "warning" | "disabled" | "black" | "primary"
+    size?: "default" | "xs" | "sm" | "lg" | "xl"
     className?: string
 }
 
