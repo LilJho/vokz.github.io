@@ -9,7 +9,7 @@ import useToggleSidebar from '@/lib/store/useToggleSidebar'
 import { HiOutlineX } from 'react-icons/hi'
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import { FiLayers } from "react-icons/fi";
-import { RiProfileLine, RiDashboardLine, RiArrowLeftLine } from 'react-icons/ri'
+import { RiProfileLine, RiDashboardLine, RiArrowLeftLine, RiUserHeartLine } from 'react-icons/ri'
 import { UserDataType } from '@/lib/types'
 import useToggle from '@/hooks/useToggle'
 import useMinimized from '@/lib/store/useMinimized'
@@ -54,6 +54,9 @@ const Navigation = ({ data }: INavigationProps) => {
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Dashboard</span>
                         </NavLink>
                         {showNavigationLink}
+                        <NavLink href="/add-new-patient" icon={<RiUserHeartLine className="w-5 h-5" />}>
+                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>New Patient</span>
+                        </NavLink>
                         <NavLink href="/sample" icon={<FiLayers className="w-5 h-5" />}>
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Sample Page</span>
                         </NavLink>

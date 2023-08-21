@@ -79,7 +79,36 @@ const PatientForm = () => {
         vaccinations: [{
             vaccine: "",
             status: ""
-        }]
+        }],
+        family_history: {
+            cancerIllness: [{
+                family_member: "",
+                maternal_paternal: ""
+            }],
+            dementiaIllness: [{
+                family_member: "",
+                maternal_paternal: ""
+            }],
+            diabetesIllness: [{
+                family_member: "",
+                maternal_paternal: ""
+            }],
+            highBloodPressureIllness: [{
+                family_member: "",
+                maternal_paternal: ""
+            }]
+        },
+        marital_status: "",
+        is_using_tobacco: "",
+        tobacco_product_type: "",
+        years_of_using_tobacco: "",
+        year_of_tobacco_cessation: "",
+        drinking_alcohol: "",
+        alcohol_consumption_frequency: "",
+        is_using_recreational_drugs: "",
+        recreational_drug_type: "",
+        recreational_drug_usage_frequency: "",
+        additional_comment: ""
     };
 
     const handleFormSubmit = async (values: z.infer<typeof PatientSchema>) => {
@@ -155,12 +184,8 @@ const header = [
         details: 'Enter the patient’s medical history',
     },
     {
-        title: "Wellness Information",
+        title: "Wellness Information & PSQI",
         details: "Enter the patient’s wellness information",
-    },
-    {
-        title: "PSQI",
-        details: "PITTSBURG Sleep Quality Index",
     }
 ]
 
