@@ -144,7 +144,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading && <RiLoader5Line className={`animate-spin absolute  w-6 h-6 ${isLoading ? "opacity-100" : "opacity-0"}`} />}
-        <span className={`inline-flex ${isLoading ? "opacity-0" : "opacity-100"}`}>
+        <span className={`inline-flex items-center ${isLoading ? "opacity-0" : "opacity-100"}`}>
           {props.children}
         </span>
       </Comp>

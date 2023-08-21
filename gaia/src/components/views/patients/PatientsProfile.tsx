@@ -8,6 +8,13 @@ import React from 'react'
 import { BiMessageRoundedDetail } from 'react-icons/bi'
 import userStore from '@/lib/store/userStore'
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic'
+const PatientsInfo = dynamic(() => import('./PatientsInfo'), {
+  ssr: false, loading: () => <div className='flex items-center flex-col gap-2'>
+    <Skeleton className='w-44 h-8 rounded-md' />
+    <Skeleton className='w-32 h-4 rounded-sm' />
+  </div>
+})
 
 const PatientsProfile = () => {
   const user = userStore((state) => state.user)
@@ -26,12 +33,7 @@ const PatientsProfile = () => {
             <Skeleton className='w-28 h-28 rounded-full' />
           </AvatarFallback>
         </Avatar>
-        <div className='mt-2'>
-          <h2 className='text-2xl font-semibold'>{user?.first_name && user?.last_name
-            ? `${user.first_name} ${user.last_name}`
-            : 'Loading...'}</h2>
-          <span className='text-sm text-gray-500'>Lipa, Batangas</span>
-        </div>
+        <PatientsInfo />
         <Button className='gap-2 items-center mt-4'>
           <BiMessageRoundedDetail className="w-5 h-5" />
           Viber

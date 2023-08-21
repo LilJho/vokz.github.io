@@ -1,7 +1,5 @@
 import BreadcrumbsLayout from '@/components/layout/BreadcrumbsLayout'
-import OCRComponent from '@/components/ui/OCR'
 import DailyMedicalForm from '@/components/views/patients/Forms/DailyMedicalForm'
-import RecordForm from '@/components/views/patients/Forms/RecordForm'
 import React from 'react'
 
 const page = () => {

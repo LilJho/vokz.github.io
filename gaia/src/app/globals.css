@@ -139,3 +139,23 @@ input:-webkit-autofill:focus {
   background: none;
   z-index: 1;
 }
+
+.form-wizard::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+/* Track */
+.form-wizard::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.form-wizard::-webkit-scrollbar-thumb {
+  background: rgb(182, 182, 182);
+}
+
+/* Handle on hover */
+.form-wizard::-webkit-scrollbar-thumb:hover {
+  background: rgb(142, 142, 142);
+}
