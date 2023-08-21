@@ -17,6 +17,14 @@ import ProgressSample from "@/components/views/samples/ProgressSample";
 import TabsSample from "@/components/views/samples/TabsSample";
 import { Badge } from "@/components/ui/badge";
 import SwiperSlider from "@/components/ui/SwiperSlider";
+import { DateField } from "@/components/ui/FormControls/DateField";
+import DateRange from "@/components/ui/FormControls/DateRange";
+import dayjs from "dayjs";
+import DatePicker from "@/components/ui/FormControls/DatePicker";
+import { Label } from "@/components/ui/FormControls/label";
+import { HiOutlineMoon } from "react-icons/hi2";
+import GroupButton from "@/components/ui/GroupButton";
+import SelectField from "@/components/ui/FormControls/SelectField";
 // import SampleModal from "@/components/views/sample/SampleModal";
 
 const page = () => {
@@ -227,6 +235,47 @@ const page = () => {
     },
   ];
 
+  //DateField Sample
+  const [date, setDate] = useState();
+  //DateRange Sample
+  const [selectionRange, setSelectionRange] = useState({
+    startDate: dayjs(),
+    endDate: dayjs(),
+    key: 'selection',
+  })
+
+  //Group Button Sample
+  const groupButtonData = [
+    {
+      label: "1",
+      onClick: () => console.log("1"),
+    },
+    {
+      label: "2",
+      onClick: () => console.log("2"),
+    },
+    {
+      label: "3",
+      onClick: () => console.log("3"),
+    },
+  ]
+
+
+  //Select Sample Data
+  const [selectData, setSelectData] = useState("")
+  const selectFieldData = [
+    {
+      label: "January",
+      value: "1"
+    },
+    {
+      label: "February",
+      value: "2"
+    }
+  ]
+  console.log({ selectData })
+
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
@@ -242,7 +291,7 @@ const page = () => {
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Area chart</h4>
-          <AreaChart data={AreaChartData} title="Area Chart" height="300px" type="line"/>
+          <AreaChart data={AreaChartData} title="Area Chart" height="300px" type="line" />
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Basic Bar chart</h4>
@@ -286,6 +335,69 @@ const page = () => {
           <div className="flex gap-4">
             <Button>Hello</Button>
             <Button isLoading>loading</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="light">Light</Button>
+            <Button variant="outlined">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button color="blue">Hello</Button>
+            <Button isLoading color="blue">loading</Button>
+            <Button variant="ghost" color="blue">Ghost</Button>
+            <Button variant="light" color="blue">Light</Button>
+            <Button variant="outlined" color="blue">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button color="yellow">Hello</Button>
+            <Button isLoading color="yellow">loading</Button>
+            <Button variant="ghost" color="yellow">Ghost</Button>
+            <Button variant="light" color="yellow">Light</Button>
+            <Button variant="outlined" color="yellow">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button color="green">Hello</Button>
+            <Button isLoading color="green">loading</Button>
+            <Button variant="ghost" color="green">Ghost</Button>
+            <Button variant="light" color="green">Light</Button>
+            <Button variant="outlined" color="green">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button color="red">Hello</Button>
+            <Button isLoading color="red">loading</Button>
+            <Button variant="ghost" color="red">Ghost</Button>
+            <Button variant="light" color="red">Light</Button>
+            <Button variant="outlined" color="red">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button color="red">Hello</Button>
+            <Button isLoading color="red">loading</Button>
+            <Button variant="ghost" color="red">Ghost</Button>
+            <Button variant="light" color="red">Light</Button>
+            <Button variant="outlined" color="red">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button radius="rounded" >Hello</Button>
+            <Button isLoading radius="rounded">loading</Button>
+            <Button variant="ghost" radius="rounded">Ghost</Button>
+            <Button variant="light" radius="rounded">Light</Button>
+            <Button variant="outlined" radius="rounded">Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <Button>
+              <HiOutlineMoon className="mr-2 h-4 w-4" />
+              Hello
+            </Button>
+            <Button isLoading><HiOutlineMoon className="mr-2 h-4 w-4" />loading</Button>
+            <Button variant="ghost"><HiOutlineMoon className="mr-2 h-4 w-4" />Ghost</Button>
+            <Button variant="light"> <HiOutlineMoon className="mr-2 h-4 w-4" />Light</Button>
+            <Button variant="outlined"> <HiOutlineMoon className="mr-2 h-4 w-4" />Outline</Button>
+          </div>
+          <div className="flex gap-4">
+            <GroupButton data={groupButtonData} />
+            <GroupButton
+              data={groupButtonData}
+              variant="outlined" //options = default" | "outlined" | "light" | "ghost" | "unstyled"
+              color="yellow"  //options = "default" | "blue" | "green" | "gray" | "red" | "yellow"
+            />
           </div>
         </div>
         <div className="flex flex-col gap-4">
@@ -349,7 +461,7 @@ const page = () => {
         <div>
           <h4 className="mb-2 text-lg font-semibold">Tabs</h4>
 
-          <TabsSample />
+          {/* <TabsSample /> */}
         </div>
       </div>
       <div className="flex flex-col gap-4">
@@ -382,6 +494,29 @@ const page = () => {
       <div>
         <h4 className="mb-2 text-lg font-semibold">Slider</h4>
         <SwiperSlider data={data} />
+      </div>
+      <div className="my-10 flex flex-col">
+        <h4 className="mb-2 text-lg font-semibold">Date Field</h4>
+        <div className="flex gap-10">
+          <div>
+            <Label>Date Field</Label>
+            <DateField value={date} onChange={(e: any) => setDate(e.target.value)} />
+          </div>
+          <div>
+            <Label>Date Range</Label>
+            <DateRange selectionRange={selectionRange} setSelectionRange={setSelectionRange} />
+          </div>
+        </div>
+      </div>
+
+      <div className="my-10 flex flex-col">
+        <h4 className="mb-2 text-lg font-semibold">Select Field</h4>
+        <div className="flex gap-10">
+          <div>
+            <Label>Date Field</Label>
+            <SelectField data={selectFieldData} value={selectData} onChange={setSelectData} />
+          </div>
+        </div>
       </div>
     </>
   );

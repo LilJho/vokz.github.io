@@ -133,3 +133,9 @@ input:-webkit-autofill:focus {
     opacity: 1;
   }
 }
+
+.custom-input[type="date"]::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: none;
+  z-index: 1;
+}

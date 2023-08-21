@@ -1,11 +1,7 @@
 import PatientStatus from '@/components/views/patients/PatientStatus'
 import PatientsProfile from '@/components/views/patients/PatientsProfile'
 import PatientsRecord from '@/components/views/patients/PatientsRecord'
-import React from 'react'
 import PatientData from '@/data/patients_data.json'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import HeadlessDialog from '@/components/ui/modal/HeadlessDialog'
 import SubmitReport from '@/components/views/patients/SubmitReport'
 
 const PatientsPage = () => {
