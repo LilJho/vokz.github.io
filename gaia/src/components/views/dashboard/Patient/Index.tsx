@@ -4,29 +4,33 @@ import AreaChart from "@/components/ui/Charts/AreaChart";
 import userStore from '@/lib/store/userStore'
 import { DailyActivitiesService } from '@/services/databaseServices'
 import { supabase } from "@/services/supabaseConfig";
-import { PostgrestSingleResponse } from '@supabase/supabase-js';
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+
+//To prevent hydration error in nextjs when showing dynamic content in client side
+const PatientsName = dynamic(() => import("./PatientsName"), { ssr: false, loading: () => <Skeleton className="w-80 h-7" /> });
 
 const Index = () => {
     const user = userStore((state) => state.user);
 
     const fetchSummary = async (paramDate: any) => {
         try {
-          console.log('param',paramDate); 
-        //   const diagnosis = await DailyActivitiesService.getOneWhere('created_at', paramDate, 'summary_data');
-          const diagnosis = await supabase.from('daily_activities').select('summary_data').eq('created_at', paramDate);
-          console.log('fetch',diagnosis);
-          return diagnosis;
+            console.log('param', paramDate);
+            //   const diagnosis = await DailyActivitiesService.getOneWhere('created_at', paramDate, 'summary_data');
+            const diagnosis = await supabase.from('daily_activities').select('summary_data').eq('created_at', paramDate);
+            console.log('fetch', diagnosis);
+            return diagnosis;
         } catch (error) {
-          console.error('Error fetching data:', error);
-          throw error;
-        } 
-    };  
- 
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    };
+
     function generateDateLabels(interval = 'day') {
         const currentDate = new Date();
         const dateLabels = [];
         const dateValues = [];
-    
+
         switch (interval) {
             case 'day':
                 for (let i = 0; i < 7; i++) {
@@ -70,11 +74,11 @@ const Index = () => {
                     dateValues.push(nextDate.toISOString().split('T')[0]);
                 }
         }
-    
+
         return [dateLabels, dateValues];
     }
-    
-    
+
+
     // const [stepsCategory, setSteps] = useState<[]>([]);
      
     const [dateLabels, dateValues] = generateDateLabels('day'); // Get both date labels and values
@@ -83,7 +87,7 @@ const Index = () => {
         async function fetchData() {
             try {
                 // setSteps(dateLabels); // If needed, set the date labels in state
-        
+
                 // Use Promise.all to fetch data for each date
                 const fetchPromises = dateValues.map(async (key) => {
                     try {
@@ -105,16 +109,16 @@ const Index = () => {
                         throw error;
                     } 
                 });
-        
+
                 await Promise.all(fetchPromises); // Wait for all fetch operations to complete
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
-        
-          
+
+
         fetchData();
-          
+
     });
     const AreaChartData = {
         categories: dateLabels,
@@ -136,11 +140,11 @@ const Index = () => {
     return (
         <>
             <div className='flex flex-col gap-4 bg-white p-6 rounded-lg h-full'>
-                <h3 className="text-xl font-semibold">{user?.first_name} {user?.last_name}'s Daily Status</h3>
-                 <PatientStatus />
+                <PatientsName />
+                <PatientStatus />
                 <div className="grid grid-cols-2 gap-4">
-                    <AreaChart data={AreaChartData} title={"Daily Total Steps and Sleep"} height={"300px"} type="line"/>
-                    <AreaChart data={AreaChartData} title={"Daily Weight and Viceral Fats Progress"} height={"300px"} type="area"/>
+                    <AreaChart data={AreaChartData} title={"Daily Total Steps and Sleep"} height={"300px"} type="line" />
+                    <AreaChart data={AreaChartData} title={"Daily Weight and Viceral Fats Progress"} height={"300px"} type="area" />
                 </div>
             </div>
         </>

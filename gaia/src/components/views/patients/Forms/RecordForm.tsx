@@ -17,22 +17,20 @@ interface IRecordFormProps {
     handleSubmit: () => void
     title: string
     description: string
-    progress?: {
-        loading: number,
-        status: string
-    }
     isLoading: boolean
     form: UseFormReturn<z.infer<typeof RecordSchema>>
     acceptedTypes?: string[]
 }
 
-const RecordForm = ({ handleSubmit, title = "", description = "", progress, isLoading, form, acceptedTypes = mime_types.IMAGE_MIME_TYPE }: IRecordFormProps) => {
+const RecordForm = ({ handleSubmit, title = "", description = "", isLoading, form, acceptedTypes = mime_types.IMAGE_MIME_TYPE }: IRecordFormProps) => {
+
     const handleImageChange = (files: any) => {
         if (files) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 form.setValue("file", files);
                 form.setValue("preview", (e.target!).result as string);
+                form.setError("preview", ("" as any));
             };
             reader.readAsDataURL(files);
         }
@@ -47,24 +45,23 @@ const RecordForm = ({ handleSubmit, title = "", description = "", progress, isLo
     return (
         <>
             <Form {...form}>
-                <FormItem className='flex flex-col'>
-                    <FormControl>
-                        <div className='mx-auto max-w-3xl'>
-                            <h3 className='text-2xl font-bold text-center'>{title}</h3>
-                            <p className='max-w-md text-gray-500 mb-6 3xl:mb-10 text-center'>{description}</p>
+                <div className='mx-auto'>
+                    <h3 className='text-2xl font-bold text-center'>{title}</h3>
+                    <p className='max-w-md text-gray-500 mb-6 3xl:mb-10 text-center'>{description}</p>
+                    <FormItem className='flex flex-col max-w-3xl'>
+                        <FormControl>
                             <Dropzone className='px-8 py-16 mb-4' onDrop={(file) => handleImageChange(file)} acceptedTypes={acceptedTypes} maxSize={10_000_000} />
-                            <Label className=''>Preview</Label>
-                            <FilePreview className='mt-1' previewUrl={preview} fileName={file?.name} handleRemoveImage={handleRemoveImage} />
-                            <FormMessage className='mt-2'>
-                                {form.formState.errors.preview?.message}
-                            </FormMessage>
-                            <Button className='mt-10 w-full' onClick={handleSubmit}>
-                                {isLoading ? <RiLoader5Line className="animate-spin w-6 h-6 -mt-2" /> : "Upload Photo"}
-                            </Button>
-                        </div>
-                    </FormControl>
-
-                </FormItem>
+                        </FormControl>
+                        <Label className=''>Preview</Label>
+                        <FilePreview className='mt-1' previewUrl={preview} fileName={file?.name} handleRemoveImage={handleRemoveImage} />
+                        <FormMessage className='mt-2'>
+                            {form.formState.errors.preview?.message}
+                        </FormMessage>
+                    </FormItem>
+                    <Button className='mt-10 w-full' onClick={handleSubmit}>
+                        {isLoading ? <RiLoader5Line className="animate-spin w-6 h-6 -mt-2" /> : "Upload Photo"}
+                    </Button>
+                </div>
             </Form>
 
             {isLoading ? <div className='z-50 fixed flex flex-col gap-4 items-center justify-center w-full h-full inset-0 backdrop-blur-sm bg-gray-300/70'>
@@ -72,7 +69,6 @@ const RecordForm = ({ handleSubmit, title = "", description = "", progress, isLo
                     <Image src={UploadIllu} alt="Upload Illustration" className='w-52' />
                     <RiLoader5Line className="animate-spin w-20 h-20 text-primary-600" />
                     <h2 className='text-lg font-semibold mt-4'>Uploading photo</h2>
-                    {/* {progress?.status ? <p className='text-gray-400'>{progress?.status}</p> : null} */}
                 </div>
             </div> : null}
         </>

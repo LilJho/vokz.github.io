@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import LoginIllu from '@public/logo/green_logo.png'
 import LoginForm from './LoginForm'
+import Loaders from '@/components/ui/Loaders'
 
 const LoginPage = () => {
     const [loginSuccess, setLoginSuccess] = useState(false)
@@ -21,7 +22,7 @@ const LoginPage = () => {
                 <>
                     <Image src={LoginIllu} alt="Login Illustration" className='w-52 scale-in-center' />
                     <div className='mt-8 text-center fade-in '>
-                        <h2 className='text-xl font-bold tracking-wider text-primary-600'>Logging in <span className="animate-pulse">...</span></h2>
+                        <Loaders size='xl' variant='primary' />
                     </div>
                 </>
             }

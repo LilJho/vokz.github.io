@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from "zod";
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { UseFormReturn, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { ToastTypes } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'

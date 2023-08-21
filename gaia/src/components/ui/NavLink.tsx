@@ -20,7 +20,7 @@ const NavLink = ({ href, children, icon }: Props) => {
     <Link href={href}>
 
       <li
-        className={`relative flex gap-4 text-white hover:bg-gray-100/30 items-center min-h-10 py-3 px-4 transition-all duration-200 active:scale-95`}
+        className={`relative flex gap-4 text-white hover:bg-gray-100/30 items-center min-h-10 py-3 px-4 transition-all duration-200`}
       >
         {isActive && <div className="w-[2px] h-[24px] left-0 bg-white absolute my-auto"></div>}
         <div

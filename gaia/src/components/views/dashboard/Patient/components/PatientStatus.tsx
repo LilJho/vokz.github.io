@@ -15,7 +15,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation"; // Navigation module
 import { GrNext, GrPrevious } from "react-icons/gr";
 
-const PatientStatus = async () => {
+const PatientStatus = () => {
   const [diagnosisData, setDiagnosisData] = useState<DataItem[]>([]);
   const template = [
     {
@@ -116,18 +116,18 @@ const PatientStatus = async () => {
         const diagnosis = await DailyDiagnosisService.getWhere('created_at::date', new Date().toISOString().split('T')[0]);
 
         const sourceData: SourceDataItem[] = diagnosis;
-  
+
         const updatedData = combineData(sourceData, template);
         setDiagnosisData(updatedData);
-  
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
 
   interface SourceDataItem {
     report_id: string;
@@ -140,7 +140,7 @@ const PatientStatus = async () => {
     diagnosis_value: string;
     diagnosis_numeric: number | null;
   }
-  
+
   interface DataItem {
     id: string;
     title: string;
@@ -151,21 +151,21 @@ const PatientStatus = async () => {
     backgroundColor: string;
     chart: string;
   }
-  
+
   function combineData(sourceData: SourceDataItem[], data: DataItem[]): DataItem[] {
     const diagnosisValueMap: { [key: string]: string } = {};
-  
+
     sourceData.forEach((item) => {
       diagnosisValueMap[item.diagnosis] = item.diagnosis_value;
     });
-  
+
     // Update the value in each object in the data array
     data.forEach((item) => {
       if (diagnosisValueMap[item.title]) {
         item.value = diagnosisValueMap[item.title];
       }
     });
-  
+
     return data;
   }
 
