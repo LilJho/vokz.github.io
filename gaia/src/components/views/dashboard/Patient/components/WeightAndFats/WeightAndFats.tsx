@@ -117,7 +117,7 @@ const WeightAndFats: React.FC = () => {
 
     return (
         <>
-            <AreaChart data={AreaChartData} title={"Daily Weight and Visceral Fat Progress"} height={"300px"} type="area" />
+            <AreaChart data={AreaChartData} title={"Daily Weight and Visceral Fat Progress"} height={"300px"} type="bar" />
         </>
     )
 }

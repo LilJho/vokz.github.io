@@ -102,6 +102,13 @@ const OxygenLevelReport: React.FC = () => {
 
     const AreaChartData = {
         categories: dateLabels,
+        showForNullSeries: false,
+        showForZeroSeries: false,
+        chart: {
+            height: 350,
+            type: "line",
+            stacked: false
+          },
         data: [
           {
             name: "Oxygen Level",
@@ -117,11 +124,16 @@ const OxygenLevelReport: React.FC = () => {
           },
         ],
         colors: ["#008FFB","#f54254", "#00E396"],
+        plotOptions: {
+            bar: {
+                columnWidth: "20%"
+            }
+        }
       };
 
     return (
         <>
-            <AreaChart data={AreaChartData} title={"Oxygen Level Report"} height={"300px"} type="scatter" />
+            <AreaChart data={AreaChartData} title={"Oxygen Level Report"} height={"300px"}  />
         </>
     )
 }

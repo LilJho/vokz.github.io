@@ -24,7 +24,9 @@ const AreaChart = ({ data, title, height, type }: any) => {
             enabled: false
         },
         stroke: {
-            curve: 'smooth'
+            curve: 'smooth',
+
+            width: [4, 4]
         },
         fill: {
             type: 'solid',
