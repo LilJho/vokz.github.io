@@ -81,6 +81,7 @@ const BMI: React.FC = () => {
         var bmiLabels: any[] = [];
         var bmiValues: any[] = [];
         var bmiData: any[] = [];
+        var bmiArrayValues: any[] = [];
         async function fetchData() {
             try {
                 const fetchPromises = dateValues.map(async (key) => {
@@ -88,16 +89,20 @@ const BMI: React.FC = () => {
                         const result = await fetchSummary(key);
                         if (result.data && result.data.length > 0) {
                             for(var i=0;i<result.data.length;i++){
+                                if(bmiLabels.length < 16){
+                                    bmiLabels.push(result.data[i].diagnosis_label);
+                                }
 
-                                bmiLabels.push(result.data[i].diagnosis_label);
                                 bmiValues.push(extractNumericValue(result.data[i].diagnosis_value))
                             }
 
                             for (let i = 0; i < bmiLabels.length; i++) {
-                                bmiData.push({ name: bmiLabels[i], data: bmiValues[i] });
+                                bmiArrayValues.push(bmiValues[i]);
+                                bmiData.push({ name: bmiLabels[i], data: bmiArrayValues });
+                                bmiArrayValues = [];
                             }
 
-                            console.log(bmiData); 
+                            console.log('bmidata',bmiData); 
                             
                         }
                     } catch (error) {
@@ -127,68 +132,7 @@ const BMI: React.FC = () => {
             type: "area",
             stacked: false
         },
-        data: [
-            {
-                name: "Weight",
-                data: [143.8]
-            },
-            {
-                name: "Body Fat",
-                data: [13.4]
-            },
-            {
-                name: "BMI",
-                data: [21.3]
-            },
-            {
-                name: "Skeletal Muscle",
-                data: [55.9]
-            },
-            {
-                name: "Muscle Mass",
-                data: [118.2]
-            },
-            {
-                name: "Protein",
-                data: [19.7]
-            },
-            {
-                name: "BMR",
-                data: [1589]
-            },
-            {
-                name: "Fat Free Body Weight",
-                data: [124.4]
-            },
-            {
-                name: "Subcutaneous Fat",
-                data: [12.1]
-            },
-            {
-                name: "Visceral Fat",
-                data: [4]
-            },
-            {
-                name: "Body Water",
-                data: [62.5]
-            },
-            {
-                name: "Bone Mass",
-                data: [6.2]
-            },
-            {
-                name: "Heart Rate",
-                data: [72]
-            },
-            {
-                name: "Cardiac Index",
-                data: [2.8]
-            },
-            {
-                name: "Metabolic Age",
-                data: [48]
-            }
-        ], // Use the dynamic chartData here
+        data: chartData,
         colors: ["#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396"],
         plotOptions: {
             bar: {
