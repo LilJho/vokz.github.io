@@ -70,10 +70,10 @@ export const columns: ColumnDef<PatientActivityType>[] = [
         },
         cell: ({ row }: any) => {
             return <div className="flex gap-2">
-                <Button variant="secondary" size="icon">
+                <Button variant="light" color="gray" size="icon">
                     <BiUser className="w-5 h-5" />
                 </Button>
-                <Button variant="secondary" size="icon">
+                <Button variant="light" color="gray" size="icon">
                     <BiDownArrowAlt className="w-5 h-5" />
                 </Button>
             </div>;

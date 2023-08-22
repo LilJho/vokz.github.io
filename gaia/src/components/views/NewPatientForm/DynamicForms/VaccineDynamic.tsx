@@ -1,5 +1,6 @@
 import { DateField } from '@/components/ui/FormControls/DateField'
 import { NumberField } from '@/components/ui/FormControls/NumberField'
+import RadioSelectionGroup from '@/components/ui/FormControls/Selection'
 import { TextField } from '@/components/ui/FormControls/TextField'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
 import { Button } from '@/components/ui/button'
@@ -8,14 +9,14 @@ import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
-const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
+const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "surgeries"
+        name: "vaccinations"
     });
 
     const handleAddField = () => {
-        append({ procedure: '', date: '' })
+        append({ vaccine: '', status: '' })
     }
 
     const handleRemoveField = (index: number) => {
@@ -24,16 +25,16 @@ const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
 
     return (
         <div>
-            <FormLabel>Past Surgeries or Procedure</FormLabel>
+            <FormLabel>Where were your previous vaccines or immunization completed?</FormLabel>
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields?.map((item, index) => {
                     return (
-                        <div className='grid grid-cols-1 md:grid-cols-12 gap-8'>
-                            <FormItem className='md:col-span-6'>
-                                <FormLabel>Surgery or Procedure name</FormLabel>
+                        <div key={`${item}-${index}`} className='flex gap-4 md:gap-8'>
+                            <FormItem className={`flex-1`}>
+                                <FormLabel>Vaccination or Immunization name</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`surgeries[${index}].procedure` as any}
+                                    name={`vaccinations[${index}].vaccine` as any}
                                     render={({ field }) => (
                                         <FormControl>
                                             <TextField placeholder='First name' {...field} />
@@ -41,14 +42,14 @@ const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
                                     )}
                                 />
                             </FormItem>
-                            <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
-                                <FormLabel>Year done</FormLabel>
+                            <FormItem className={`md:col-span-4`}>
+                                <FormLabel>Status</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`surgeries[${index}].date` as any}
+                                    name={`vaccinations[${index}].status` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <DateField placeholder='Last name' {...field} />
+                                            <RadioSelectionGroup {...field} data={["Done", "Ongoing"]} />
                                         </FormControl>
                                     )}
                                 />
@@ -63,4 +64,4 @@ const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
     )
 }
 
-export default SurgeriesDynamicForm
+export default VaccineDynamicForm

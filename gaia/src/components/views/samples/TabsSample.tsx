@@ -44,8 +44,9 @@ const TabsSample = () => {
         className="w-[400px] p-4 rounded-md border bg-white "
       >
         <TabsList>
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <TabsTrigger
+              key={index}
               className={`flex items-center justify-center gap-1.5 data-[state=active]:bg-green-500 data-[state=active]:text-white rounded`}
               value={tab.value}
             >
@@ -54,8 +55,8 @@ const TabsSample = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {tabs.map((tab) => (
-          <TabsContent value={tab.value}>{tab.content}</TabsContent>
+        {tabs.map((tab, index) => (
+          <TabsContent key={index} value={tab.value}>{tab.content}</TabsContent>
         ))}
       </Tabs>
     </div>

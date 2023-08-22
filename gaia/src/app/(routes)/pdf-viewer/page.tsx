@@ -5,7 +5,7 @@ import PDFViewer from '@/components/ui/PDFViewer'
 import { mime_types } from '@/lib/utils';
 import React, { useState } from 'react'
 
-const page = () => {
+const PDFViewerPage = () => {
     const [pdfFile, setpdfFile] = useState<File | null>(null);
     const handleImageChange = (files: any) => {
         if (files) {
@@ -27,4 +27,4 @@ const page = () => {
     )
 }
 
-export default page
+export default PDFViewerPage

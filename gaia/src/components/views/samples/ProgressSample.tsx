@@ -28,8 +28,8 @@ const ProgressSample = () => {
   return (
     <div className="flex flex-col gap-2 p-4 bg-white">
       <h1>PROGRESS BAR</h1>
-      {barData.map((bar) => (
-        <Progress barColor={bar.barColor} value={bar.value} />
+      {barData.map((bar, index) => (
+        <Progress key={index} barColor={bar.barColor} value={bar.value} />
       ))}
     </div>
   );

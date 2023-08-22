@@ -26,7 +26,7 @@ const SwiperSlider = ({ data }: any) => {
       className="w-[80%] "
     >
       {data?.map((val: any, index: number) => (
-        <SwiperSlide>
+        <SwiperSlide key={index}>
           <StatusCard
             key={val.id}
             title={val.title}

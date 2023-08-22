@@ -1,4 +1,5 @@
-import SelectField from '@/components/ui/FormControls/SelectField'
+import { DateField } from '@/components/ui/FormControls/DateField'
+import { NumberField } from '@/components/ui/FormControls/NumberField'
 import { TextField } from '@/components/ui/FormControls/TextField'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
 import { Button } from '@/components/ui/button'
@@ -7,19 +8,14 @@ import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
-interface IChildrenDynamicForm extends IPersonalInformation {
-    label: string
-    fieldName?: "cancerIllness" | "dementiaIllness" | "diabetesIllness" | "highBloodPressureIllness"
-}
-
-const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChildrenDynamicForm) => {
+const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: `family_history.${fieldName}`
+        name: "surgeries"
     });
 
     const handleAddField = () => {
-        append({ family_member: '', maternal_paternal: '' })
+        append({ procedure: '', date: '' })
     }
 
     const handleRemoveField = (index: number) => {
@@ -28,31 +24,31 @@ const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChild
 
     return (
         <div>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel>Past Surgeries or Procedure</FormLabel>
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields?.map((item, index) => {
                     return (
-                        <div className='grid grid-cols-1 md:grid-cols-12 gap-8'>
+                        <div key={`${item}-${index}`} className='grid grid-cols-1 md:grid-cols-12 gap-8'>
                             <FormItem className='md:col-span-6'>
-                                <FormLabel>Family Member</FormLabel>
+                                <FormLabel>Surgery or Procedure name</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`family_history[${fieldName}][${index}].cause` as any}
+                                    name={`surgeries[${index}].procedure` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='eg. Brother, Sister, Uncle' {...field} />
+                                            <TextField placeholder='First name' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
                             <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
-                                <FormLabel>If grandparent, maternal or paternal</FormLabel>
+                                <FormLabel>Year done</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`${fieldName}[${index}].reaction` as any}
+                                    name={`surgeries[${index}].date` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <SelectField data={[{ label: "Maternal", value: "Maternal" }, { label: "Paternal", value: "paternal" }]} {...field} />
+                                            <DateField placeholder='Last name' {...field} />
                                         </FormControl>
                                     )}
                                 />
@@ -67,4 +63,4 @@ const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChild
     )
 }
 
-export default IllnessDynamicForm
+export default SurgeriesDynamicForm

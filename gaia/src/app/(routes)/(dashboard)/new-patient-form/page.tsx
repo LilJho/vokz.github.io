@@ -1,5 +1,5 @@
 import BreadcrumbsLayout from '@/components/layout/BreadcrumbsLayout'
-import PatientForm from '@/components/views/dashboard/PatientForm/PatientForm'
+import PatientForm from '@/components/views/NewPatientForm/PatientForm'
 import React from 'react'
 
 const page = () => {

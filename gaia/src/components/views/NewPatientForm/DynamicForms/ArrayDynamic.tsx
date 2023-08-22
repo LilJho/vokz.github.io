@@ -17,8 +17,6 @@ const ArrayDynamicForm = ({ form, fieldName, label }: ArrayDynamicProps) => {
         name: fieldName
     });
 
-    console.log({ fields })
-
     const handleAddField = () => {
         append(" ")
     }
@@ -33,7 +31,7 @@ const ArrayDynamicForm = ({ form, fieldName, label }: ArrayDynamicProps) => {
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields?.map((item, index) => {
                     return (
-                        <div className={`grid grid-cols-12 gap-8`}>
+                        <div key={`${item}-${index}`} className={`grid grid-cols-12 gap-8`}>
                             <FormItem className={`${fields.length > 1 ? "md:col-span-11" : "md:col-span-12"}`}>
                                 <FormLabel>Health Condition</FormLabel>
                                 <FormField

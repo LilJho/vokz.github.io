@@ -56,11 +56,14 @@ const family_history = z.object({
   highBloodPressureIllness: z.array(highBloodPressureIllness).optional(),
 });
 
+const survey_Questions = z.object({
+  question: z.string().optional(),
+  rating_answer: z.string().optional(),
+});
+
 export const PatientSchema = z.object({
   first_name: z.string().nonempty({ message: "Please enter your first name" }),
-  middle_name: z
-    .string()
-    .nonempty({ message: "Please enter your middle name" }),
+  middle_name: z.string(),
   last_name: z.string().nonempty({ message: "Please enter your last name" }),
   date_of_birth: z
     .string()
@@ -79,7 +82,7 @@ export const PatientSchema = z.object({
   relationship_status: z
     .string()
     .nonempty({ message: "Please select your relationship status" }),
-  currennt_address: z
+  current_address: z
     .string()
     .nonempty({ message: "Please enter your current address" }),
   currently_living_with: z.string().optional(),
@@ -91,16 +94,18 @@ export const PatientSchema = z.object({
   allergies: z.array(allergies).optional(),
   prescription_medication: z.array(currentMedications).optional(),
   over_the_counter_medication: z.array(currentMedications).optional(),
-  menses_began_at_age: z.string().optional(),
-  post_menopausal_last_period: z.string().optional(),
-  first_child_birth: z.string().optional(),
-  number_of_pregnancies: z.string().optional(),
-  miscarraiges: z.string().optional(),
+  women_data: z.object({
+    menses_began_at_age: z.string().optional(),
+    post_menopausal_last_period: z.string().optional(),
+    first_child_birth: z.string().optional(),
+    number_of_pregnancies: z.string().optional(),
+    miscarraiges: z.string().optional(),
+  }),
   health_conditions: z.array(z.string()).optional(),
   surgeries: z.array(surgeries).optional(),
   vaccinations: z.array(vaccinations).optional(),
   family_history: family_history.optional(),
-  martial_status: z
+  marital_status: z
     .string()
     .nonempty({ message: "Please select your marital status" }),
   is_using_tobacco: z
@@ -113,10 +118,28 @@ export const PatientSchema = z.object({
   tobacco_product_type: z.string().optional(),
   years_of_using_tobacco: z.string().optional(),
   year_of_tobacco_cessation: z.string().optional(),
-  drinking_alcohol: z.string().optional(),
+  drinking_alcohol: z
+    .string()
+    .nonempty({ message: "Please select if yes or no" }),
   alcohol_consumption_frequency: z.string().optional(),
   is_using_recreational_drugs: z.string().optional(),
-  recreational_drug_type: z.string().optional(),
+  recreational_drug_type: z
+    .string()
+    .nonempty({ message: "Please select if yes or no" }),
   recreational_drug_usage_frequency: z.string().optional(),
   additional_comment: z.string().optional(),
+  nutrition_problem: z
+    .string()
+    .nonempty({ message: "Please select if yes or no" }),
+  reason_for_participating: z.string().optional(),
+  motivation_survey: z.object({
+    survey_Questions: z.array(survey_Questions).nonempty({
+      message: "Please select an answer for this question.",
+    }),
+    additional_comment: z.string().optional(),
+  }),
+  pittsburge_sleep_quality_index: z.array(survey_Questions).nonempty({
+    message: "Please select or enter an answer for this question.",
+  }),
+  status: z.string().optional(),
 });
