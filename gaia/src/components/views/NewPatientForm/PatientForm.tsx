@@ -296,7 +296,7 @@ const PatientForm = () => {
 
     return (
         <div className='border rounded-lg bg-white w-full max-w-[1400px] mx-auto'>
-            <div className='flex py-4 px-6 overflow-x-auto form-wizard border-b'>
+            <div className='hidden lg:flex py-4 px-6 overflow-x-auto form-wizard border-b'>
                 {header.map((item, index) => {
                     return (
                         <Fragment key={index}>
@@ -306,7 +306,7 @@ const PatientForm = () => {
                     )
                 })}
             </div>
-            <div className="px-3.5 md:px-6 py-4">
+            <div className="px-6 py-4">
                 <Form {...formMethods}>
                     {formsPage[formSteps]}
                 </Form>
@@ -376,5 +376,5 @@ const FormTitle = ({ title, details, number, active = false }: FormTitleProps) =
 }
 
 const FormLine = () => (
-    <div className='h-[1px] w-full bg-gray-200 flex-1 min-w-[200px] my-auto last-of-type:hidden'></div>
+    <div className='h-[1px] w-full bg-gray-200 flex-1 min-w-[100px] lg:min-w-[200px] my-auto last-of-type:hidden'></div>
 )

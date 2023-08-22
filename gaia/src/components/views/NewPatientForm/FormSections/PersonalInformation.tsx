@@ -16,8 +16,10 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
 
     return (
         <>
-            <h2 className="text-xl font-semibold">Personal Information</h2>
-            <p className=''>Fill up all required patient&apos;s personal information</p>
+            <div className='my-2'>
+                <h2 className="text-xl font-semibold text-center lg:text-left">Personal Information</h2>
+                <p className='text-center lg:text-left'>Fill up all required patient&apos;s personal information</p>
+            </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">Personal Information</h3>
             {/* <div className='mt-2 mb-4 h-[2px] bg-gray-200'></div> */}

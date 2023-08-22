@@ -10,8 +10,10 @@ import { pittsburgOption1, pittsburgOption2, pittsburgOption3, pittsburgOption4,
 const WellnessInfo = ({ form }: IPersonalInformation) => {
     return (
         <>
-            <h2 className="text-xl font-semibold">Wellness Information & PSQI</h2>
-            <p>Fill up all required patient&apos;s nutrition, PSQI and other information</p>
+            <div className='my-2'>
+                <h2 className="text-xl font-semibold text-center lg:text-left">Wellness Information & PSQI</h2>
+                <p className='text-center lg:text-left'>Fill up all required patient&apos;s nutrition, PSQI and other information</p>
+            </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">Nutrition</h3>
             <div className='flex flex-col md:grid md:grid-cols-3 gap-y-4 gap-x-8'>
