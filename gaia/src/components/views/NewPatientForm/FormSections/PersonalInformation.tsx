@@ -4,12 +4,12 @@ import { DateField } from '@/components/ui/FormControls/DateField'
 import { NumberField } from '@/components/ui/FormControls/NumberField'
 import RadioSelectionGroup from '@/components/ui/FormControls/Selection'
 import { TextField } from '@/components/ui/FormControls/TextField'
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/FormControls/form'
 import React from 'react'
 import HeadLessComboBox from '@/components/ui/FormControls/HeadLessComboBox'
 import { racesData, relationshipData } from '@/config/formData'
-import NameAgeDynamicForm from '../DynamicForms/NameAgeDynamicForm'
 import { IPersonalInformation } from '@/lib/types'
+import NameAgeDynamicForm from '../DynamicForms/NameAgeDynamicForm'
 
 const PersonalInformation = ({ form }: IPersonalInformation) => {
     console.log(form.watch())
@@ -21,17 +21,20 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">Personal Information</h3>
             {/* <div className='mt-2 mb-4 h-[2px] bg-gray-200'></div> */}
-            <div className='flex flex-col md:grid md:grid-cols-3 gap-y-4 gap-x-8'>
+            <div className='flex flex-col md:grid md:grid-cols-3 gap-y-5 gap-x-8'>
                 <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                         <TextField placeholder='First name' {...form.register("first_name", { required: true })} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.first_name?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Middle Name</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Middle name' {...form.register("middle_name", { required: true })} />
+                        <TextField placeholder='Middle name' {...form.register("middle_name")} />
                     </FormControl>
                 </FormItem>
                 <FormItem>
@@ -39,6 +42,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormControl>
                         <TextField placeholder='Last name' {...form.register("last_name", { required: true })} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.last_name?.message}
+                    </FormMessage>
                 </FormItem>
 
 
@@ -47,18 +53,27 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormControl>
                         <DateField {...form.register("date_of_birth", { required: true })} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.date_of_birth?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Mailing Address</FormLabel>
                     <FormControl>
                         <TextField placeholder='Mailing Address' {...form.register("mailing_address", { required: true })} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.mailing_address?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
                         <TextField placeholder='City' {...form.register("city", { required: true })} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.city?.message}
+                    </FormMessage>
                 </FormItem>
 
                 <FormItem>
@@ -71,6 +86,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                             {...form.register("contact_number", { required: true })}
                         />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.contact_number?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Alternative Contact Number</FormLabel>
@@ -94,6 +112,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                             </FormControl>
                         )}
                     />
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.gender?.message}
+                    </FormMessage>
                 </FormItem>
 
                 <FormItem>
@@ -101,6 +122,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormControl>
                         <TextField placeholder='Email Address' {...form.register("email")} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.email?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Race</FormLabel>
@@ -113,6 +137,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                             </FormControl>
                         )}
                     />
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.race?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Relationship Status</FormLabel>
@@ -125,13 +152,19 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                             </FormControl>
                         )}
                     />
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.relationship_status?.message}
+                    </FormMessage>
                 </FormItem>
 
                 <FormItem className='col-span-2'>
                     <FormLabel>Current Address</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Current Address' {...form.register("currennt_address")} />
+                        <TextField placeholder='Current Address' {...form.register("current_address")} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.current_address?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Currently Living With</FormLabel>
@@ -145,6 +178,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormControl>
                         <TextField placeholder='Occupation' {...form.register("occupation")} />
                     </FormControl>
+                    <FormMessage className='mb-1'>
+                        {form.formState.errors.occupation?.message}
+                    </FormMessage>
                 </FormItem>
                 <FormItem>
                     <FormLabel>Work hours per week</FormLabel>

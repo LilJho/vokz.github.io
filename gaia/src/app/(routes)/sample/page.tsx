@@ -27,7 +27,7 @@ import GroupButton from "@/components/ui/GroupButton";
 import SelectField from "@/components/ui/FormControls/SelectField";
 // import SampleModal from "@/components/views/sample/SampleModal";
 
-const page = () => {
+const SamplePage = () => {
   const AreaChartData = {
     categories: [
       "January",
@@ -522,4 +522,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SamplePage;

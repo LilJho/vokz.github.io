@@ -20,7 +20,7 @@ const MainContent = ({ children, data }: IMainContentProps) => {
     return (
         <div className={`${isMinimized ? "lg:pl-[56px]" : "lg:pl-[320px]"} flex flex-col h-full`}>
             <Header data={data} />
-            <div className='p-6'>
+            <div className='px-4 py-6 md:p-6'>
                 {children}
             </div>
         </div>

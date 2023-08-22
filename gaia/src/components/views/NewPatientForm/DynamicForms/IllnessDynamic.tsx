@@ -1,6 +1,4 @@
-import { DateField } from '@/components/ui/FormControls/DateField'
-import { NumberField } from '@/components/ui/FormControls/NumberField'
-import RadioSelectionGroup from '@/components/ui/FormControls/Selection'
+import SelectField from '@/components/ui/FormControls/SelectField'
 import { TextField } from '@/components/ui/FormControls/TextField'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
 import { Button } from '@/components/ui/button'
@@ -9,14 +7,19 @@ import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
-const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
+interface IChildrenDynamicForm extends IPersonalInformation {
+    label: string
+    fieldName?: "cancerIllness" | "dementiaIllness" | "diabetesIllness" | "highBloodPressureIllness"
+}
+
+const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChildrenDynamicForm) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
-        name: "vaccinations"
+        name: `family_history.${fieldName}`
     });
 
     const handleAddField = () => {
-        append({ vaccine: '', status: '' })
+        append({ family_member: '', maternal_paternal: '' })
     }
 
     const handleRemoveField = (index: number) => {
@@ -25,31 +28,31 @@ const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
 
     return (
         <div>
-            <FormLabel>Where were your previous vaccines or immunization completed?</FormLabel>
+            <FormLabel>{label}</FormLabel>
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields?.map((item, index) => {
                     return (
-                        <div className='grid grid-cols-1 md:grid-cols-12 gap-8'>
-                            <FormItem className='md:col-span-8'>
-                                <FormLabel>Vaccination or Immunization name</FormLabel>
+                        <div key={index} className='grid grid-cols-1 md:grid-cols-12 gap-8'>
+                            <FormItem className='md:col-span-6'>
+                                <FormLabel>Family Member</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`vaccinations[${index}].vaccine` as any}
+                                    name={`family_history[${fieldName}][${index}].family_member` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='First name' {...field} />
+                                            <TextField placeholder='eg. Brother, Sister, Uncle' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            <FormItem className={`${fields.length > 1 ? "md:col-span-3" : "md:col-span-4"}`}>
-                                <FormLabel>Status</FormLabel>
+                            <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
+                                <FormLabel>If grandparent, maternal or paternal</FormLabel>
                                 <FormField
                                     control={form.control}
-                                    name={`vaccinations[${index}].status` as any}
+                                    name={`family_history[${fieldName}][${index}].maternal_paternal` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup {...field} data={["Done", "Ongoing"]} />
+                                            <SelectField data={[{ label: "Maternal", value: "Maternal" }, { label: "Paternal", value: "paternal" }]} {...field} />
                                         </FormControl>
                                     )}
                                 />
@@ -64,4 +67,4 @@ const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
     )
 }
 
-export default VaccineDynamicForm
+export default IllnessDynamicForm

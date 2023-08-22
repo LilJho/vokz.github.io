@@ -57,7 +57,7 @@ const AlertSample = () => {
     <div className="flex flex-col gap-2">
       <h1>ALERTS</h1>
       {data.map((val, index) => (
-        <Alert key={index} variant={val.variant}>
+        <Alert key={index} variant={val.variant as any}>
           <div className="flex items-center justify-between ">
             <div className="flex items-center justify-center gap-2">
               {icon[val.variant]}

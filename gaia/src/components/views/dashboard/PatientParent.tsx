@@ -69,8 +69,8 @@ const TabsSample = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {tabs.map((tab) => (
-          <TabsContent value={tab.value}>{tab.content}</TabsContent>
+        {tabs.map((tab, index) => (
+          <TabsContent key={index} value={tab.value}>{tab.content}</TabsContent>
         ))}
       </Tabs>
     </div>
