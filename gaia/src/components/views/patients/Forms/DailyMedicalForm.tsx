@@ -63,6 +63,7 @@ const DailyMedicalForm = () => {
                 const updatedDiagnosisItem = {
                     ...diagnosisItem, // Spread existing diagnosis item
                     activity_id: activity[0].activity_id,
+                    patient_id: user?.uuid,
                 };
                 return updatedDiagnosisItem;
             });

@@ -5,13 +5,14 @@ import { RecordSchema } from '@/lib/validations/records'
 import { v4 as uuidv4 } from 'uuid';
 import useExtractText from '@/hooks/useExtractText'
 
-import { DailyActivitiesService } from '@/services/databaseServices'
+import { DailyActivitiesService,DailyBMIService } from '@/services/databaseServices'
 
 import RecordForm from './RecordForm'
 import { CropRegionsType, ToastTypes } from '@/lib/types'
 import { catchError } from '@/lib/utils'
 import usePostForm from '@/hooks/usePostForm';
 import axios from "axios";
+import userStore from '@/lib/store/userStore'
 
 const BodyCompositionForm = () => {
     const defaultValues = {
@@ -19,6 +20,7 @@ const BodyCompositionForm = () => {
         file: "",
     }
     // const { extractTextFromRegions, progress } = useExtractText();
+    const user = userStore((state) => state.user)
 
     const handleFormSubmit = async (values: z.infer<typeof RecordSchema>) => {
         try {
@@ -39,10 +41,27 @@ const BodyCompositionForm = () => {
 
             const dailyActivities = {
                 report_type: "BMI Report",
-                summary_data: summary_data
+                summary_data: summary_data,
+                patient_id: user?.uuid,
             }
 
             const activity = await DailyActivitiesService.create(dailyActivities); // insert daily activity report
+            const bmiArray = result.structured_data[2] as Array<{
+                bmi_keyValue: string;
+                bmi_label: string;
+                bmi_value: string;
+              }>;
+
+            const bmiArrayWithActivityId = bmiArray.map(bmiItem => {
+                const updatedDiagnosisItem = {
+                    ...bmiItem, // Spread existing diagnosis item
+                    activity_id: activity[0].activity_id,
+                    patient_id: user?.uuid,
+                };
+                return updatedDiagnosisItem;
+            });
+
+            await DailyBMIService.create(bmiArrayWithActivityId); // insert diagnosis
         } catch (error) {
             catchError(error);
         }

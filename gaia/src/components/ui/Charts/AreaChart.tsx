@@ -6,6 +6,7 @@ import { ApexOptions } from 'apexcharts';
 
 const AreaChart = ({ data, title, height, type }: any) => {
     const series = data?.data
+    // console.log('please',data?.data);
 
     var options: ApexOptions = {
         chart: {

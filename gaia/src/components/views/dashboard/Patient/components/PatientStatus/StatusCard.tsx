@@ -40,8 +40,8 @@ const StatusCard = ({
       enabled: false,
     },
     stroke: {
-      width: 3,
-      curve: "smooth",
+      width: [4,4],
+      // curve: "smooth",
     },
     xaxis: {
       labels: {

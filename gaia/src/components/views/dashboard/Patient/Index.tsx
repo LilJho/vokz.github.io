@@ -3,6 +3,7 @@ import PatientStatus from './components/PatientStatus/PatientStatus'
 import StepAndSleep from "./components/StepsAndSleep/StepsAndSleep";
 import WeightAndFats from "./components/WeightAndFats/WeightAndFats";
 import OxygenLevelReport from "./components/OxygenLevelReport/OxygenLevelReport";
+import BMI from "./components/BMI/BMI";
 import AreaChart from "@/components/ui/Charts/AreaChart";
 import userStore from '@/lib/store/userStore'
 import { DailyActivitiesService } from '@/services/databaseServices'
@@ -27,6 +28,7 @@ const Index = () => {
                     <WeightAndFats/>
                 </div>
                 <OxygenLevelReport/>
+                <BMI/>
             </div>
         </>
     )

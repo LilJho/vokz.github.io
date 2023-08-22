@@ -7,6 +7,7 @@ import { FiActivity, FiDroplet, FiThermometer } from "react-icons/fi";
 import { DailyDiagnosisService } from '@/services/databaseServices'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Controller, Navigation, Pagination } from "swiper/modules";
+import userStore from '@/lib/store/userStore';
 
 // Import Swiper styles
 // Import Swiper styles
@@ -16,6 +17,8 @@ import "swiper/css/navigation"; // Navigation module
 import { GrNext, GrPrevious } from "react-icons/gr";
 
 const PatientStatus = () => {
+  const user = userStore((state) => state.user);
+
   const [diagnosisData, setDiagnosisData] = useState<DataItem[]>([]);
   const template = [
     {
@@ -36,7 +39,7 @@ const PatientStatus = () => {
       records: [91, 58, 30, 52, 59, 84, 92, 51],
       icon: <FiActivity className="w-8 h-8" />,
       backgroundColor: "bg-danger-600",
-      chart: "bar"
+      chart: "line"
     },
     {
       id: "3",
@@ -113,7 +116,7 @@ const PatientStatus = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const diagnosis = await DailyDiagnosisService.getWhere('created_at::date', new Date().toISOString().split('T')[0]);
+        const diagnosis = await DailyDiagnosisService.getWhere(['created_at::date','patient_id'], [new Date().toISOString().split('T')[0], user?.uuid]);
 
         const sourceData: SourceDataItem[] = diagnosis;
 

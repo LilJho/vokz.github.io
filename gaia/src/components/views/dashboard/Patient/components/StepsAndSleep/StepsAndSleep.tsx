@@ -10,7 +10,7 @@ const StepAndSleep: React.FC = () => {
 
     const fetchSummary = async (paramDate: any) => {
         try {
-            const diagnosis = await supabase.from('daily_activities').select('summary_data').eq('created_at', paramDate);
+            const diagnosis = await supabase.from('daily_activities').select('summary_data').eq('created_at', paramDate).eq('patient_id', user?.uuid);
             return diagnosis;
         } catch (error) {
             console.error('Error fetching data:', error);

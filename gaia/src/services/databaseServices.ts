@@ -15,12 +15,24 @@ class DatabaseServices {
     return data;
   };
 
-  getWhere = async (column: string, value: string) => {
-    const { data, error } = await this.supabase.select("*").eq(column, value);
-    if (error) {
-      throw new Error(error.message);
+  getWhere = async (columns: any[], values: any[]) => {
+    // Ensure that the length of the 'columns' array matches the length of the 'values' array
+    if (columns.length !== values.length) {
+      throw new Error('Columns and values arrays must have the same length.');
     }
-    return data;
+
+    try {
+
+      const { data, error } = await this.supabase.select('*').eq(columns[0],values[0]).eq(columns[1],values[1]);
+  
+      if (error) {
+        throw new Error(error.message);
+      }
+  
+      return data;
+    } catch (error: any) {
+      throw new Error('Error filtering data:', error.message);
+    }
   };
 
   getOne = async (column: string = "id", id: string) => {
@@ -81,6 +93,7 @@ export const PatientsActivityService = new DatabaseServices(
 export const DailyActivitiesService = new DatabaseServices("daily_activities");
 
 export const DailyDiagnosisService = new DatabaseServices("watch_report");
+export const DailyBMIService = new DatabaseServices("bmi_report");
 
 export const UserAccountsService = new DatabaseServices("user_accounts");
 
