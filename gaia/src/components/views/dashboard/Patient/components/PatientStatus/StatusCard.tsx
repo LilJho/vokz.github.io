@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 // import Chart from "react-apexcharts"
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: true });
 
 interface IStatusCardProps {
   title: string;
