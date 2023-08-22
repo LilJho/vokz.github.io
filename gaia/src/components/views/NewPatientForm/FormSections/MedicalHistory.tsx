@@ -21,8 +21,10 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
     const isUsingRecreational = form.watch().is_using_recreational_drugs
     return (
         <>
-            <h2 className="text-xl font-semibold">Medical Information</h2>
-            <p className=''>Fill up all required patient&apos;s medical information</p>
+            <div className='my-2'>
+                <h2 className="text-xl font-semibold text-center lg:text-left">Medical Information</h2>
+                <p className='text-center lg:text-left'>Fill up all required patient&apos;s medical information</p>
+            </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">Medical Problems</h3>
             {/* <div className='mt-2 mb-4 h-[2px] bg-gray-200'></div> */}
