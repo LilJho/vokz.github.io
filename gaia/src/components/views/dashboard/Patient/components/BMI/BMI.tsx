@@ -78,63 +78,67 @@ const BMI: React.FC = () => {
 
     useEffect(() => {
         var finalData: any[] = [];
-async function fetchData() {
-    try {
-        const fetchPromises = dateValues.map(async (key) => {
-            var bmiLabels: any[] = [];
-            var bmiData: any[] = [];
-
+        async function fetchData() {
             try {
-                const result = await fetchSummary(key);
-                if (result.data && result.data.length > 0) {
-                    for (var i = 0; i < result.data.length; i++) {
-                        const diagnosisLabel = result.data[i].diagnosis_label;
-                        const diagnosisValue = extractNumericValue(result.data[i].diagnosis_value);
+                const fetchPromises = dateValues.map(async (key) => {
+                    var bmiLabels: any[] = [];
+                    var bmiData: any[] = [];
 
-                        // Check if the label already exists in bmiLabels
-                        const existingLabelIndex = bmiLabels.findIndex((label) => label === diagnosisLabel);
+                    try {
+                        const result = await fetchSummary(key);
+                        if (result.data && result.data.length > 0) {
+                            for (var i = 0; i < result.data.length; i++) {
+                                const diagnosisLabel = result.data[i].diagnosis_label;
+                                const diagnosisValue = extractNumericValue(result.data[i].diagnosis_value);
 
-                        if (existingLabelIndex === -1) {
-                            // If label doesn't exist, add it to bmiLabels and create a new data array
-                            bmiLabels.push(diagnosisLabel);
-                            bmiData.push({ name: diagnosisLabel, data: [diagnosisValue] });
-                        } else {
-                            // If label already exists, add the value to the existing data array
-                            bmiData[existingLabelIndex].data.push(diagnosisValue);
+                                // Check if the label already exists in bmiLabels
+                                const existingLabelIndex = bmiLabels.findIndex((label) => label === diagnosisLabel);
+
+                                if (existingLabelIndex === -1) {
+                                    // If label doesn't exist, add it to bmiLabels and create a new data array
+                                    bmiLabels.push(diagnosisLabel);
+                                    bmiData.push({ name: diagnosisLabel, data: [diagnosisValue] });
+                                } else {
+                                    // If label already exists, add the value to the existing data array
+                                    bmiData[existingLabelIndex].data.push(diagnosisValue);
+                                }
+                            }
+
+                            // Push the unique bmiData to finalData
+                            for (const dataItem of bmiData) {
+                                const existingDataIndex = finalData.findIndex((item) => item.name === dataItem.name);
+                                if (existingDataIndex === -1) {
+                                    finalData.push(dataItem);
+                                } else {
+                                    // Merge the data arrays for items with the same name
+                                    finalData[existingDataIndex].data = finalData[existingDataIndex].data.concat(dataItem.data);
+                                }
+                            }
                         }
-                    }
-
-                    // Push the unique bmiData to finalData
-                    for (const dataItem of bmiData) {
-                        const existingDataIndex = finalData.findIndex((item) => item.name === dataItem.name);
-                        if (existingDataIndex === -1) {
-                            finalData.push(dataItem);
-                        } else {
-                            // Merge the data arrays for items with the same name
-                            finalData[existingDataIndex].data = finalData[existingDataIndex].data.concat(dataItem.data);
+                    
+                        else{
+                            setChartData([]);
                         }
-                    }
-                }
 
-                // console.log('bmidata' + key, bmiData);
+                        // console.log('bmidata' + key, bmiData);
+                    } catch (error) {
+                        console.error('Error fetching data for', key, ':', error);
+                        throw error;
+                    }
+                });
+
+                await Promise.all(fetchPromises);
+                setChartData(finalData);
             } catch (error) {
-                console.error('Error fetching data for', key, ':', error);
-                throw error;
+                console.error('Error fetching data:', error);
             }
-        });
-
-        await Promise.all(fetchPromises);
-        setChartData(finalData);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
+        }
 
 
         fetchData();
     }, []);
 
-    console.log(dateLabels)
+    // console.log(dateLabels)
 
     const AreaChartData = {
         categories: dateLabels,
@@ -145,7 +149,7 @@ async function fetchData() {
             type: "area",
             stacked: false
         },
-        data: chartData,
+        data: chartData ?? [],
         colors: ["#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396"],
         plotOptions: {
             bar: {
