@@ -25,6 +25,8 @@ import { Label } from "@/components/ui/FormControls/label";
 import { HiOutlineMoon } from "react-icons/hi2";
 import GroupButton from "@/components/ui/GroupButton";
 import SelectField from "@/components/ui/FormControls/SelectField";
+import sendEmail from "@/app/api/sendEmail";
+import axios from "axios";
 // import SampleModal from "@/components/views/sample/SampleModal";
 
 const SamplePage = () => {
@@ -241,8 +243,8 @@ const SamplePage = () => {
   const [selectionRange, setSelectionRange] = useState({
     startDate: dayjs(),
     endDate: dayjs(),
-    key: 'selection',
-  })
+    key: "selection",
+  });
 
   //Group Button Sample
   const groupButtonData = [
@@ -258,23 +260,46 @@ const SamplePage = () => {
       label: "3",
       onClick: () => console.log("3"),
     },
-  ]
-
+  ];
 
   //Select Sample Data
-  const [selectData, setSelectData] = useState("")
+  const [selectData, setSelectData] = useState("");
   const selectFieldData = [
     {
       label: "January",
-      value: "1"
+      value: "1",
     },
     {
       label: "February",
-      value: "2"
-    }
-  ]
-  console.log({ selectData })
+      value: "2",
+    },
+  ];
+  console.log({ selectData });
 
+  const info = {
+    firstName: "Jhonnel",
+    middleName: "Testigo",
+    lastName: "Garcia",
+    email: "jhonnelgarcia.dev@gmail.com",
+    link: "http://localhost:3000/register",
+  };
+
+  const handleSendLink = async () => {
+    console.log("yey");
+    try {
+      const res = await axios.post("http://localhost:3500/send-email", {
+        firstName: info.firstName,
+        middleName: info.middleName,
+        lastName: info.lastName,
+        email: info.email,
+        link: info.link,
+      });
+      console.log("done");
+      console.log(res);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
 
   return (
     <>
@@ -291,7 +316,12 @@ const SamplePage = () => {
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Area chart</h4>
-          <AreaChart data={AreaChartData} title="Area Chart" height="300px" type="line" />
+          <AreaChart
+            data={AreaChartData}
+            title="Area Chart"
+            height="300px"
+            type="line"
+          />
         </div>
         <div>
           <h4 className="mb-2 text-lg font-semibold">Basic Bar chart</h4>
@@ -341,62 +371,124 @@ const SamplePage = () => {
           </div>
           <div className="flex gap-4">
             <Button color="blue">Hello</Button>
-            <Button isLoading color="blue">loading</Button>
-            <Button variant="ghost" color="blue">Ghost</Button>
-            <Button variant="light" color="blue">Light</Button>
-            <Button variant="outlined" color="blue">Outline</Button>
+            <Button isLoading color="blue">
+              loading
+            </Button>
+            <Button variant="ghost" color="blue">
+              Ghost
+            </Button>
+            <Button variant="light" color="blue">
+              Light
+            </Button>
+            <Button variant="outlined" color="blue">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <Button color="yellow">Hello</Button>
-            <Button isLoading color="yellow">loading</Button>
-            <Button variant="ghost" color="yellow">Ghost</Button>
-            <Button variant="light" color="yellow">Light</Button>
-            <Button variant="outlined" color="yellow">Outline</Button>
+            <Button isLoading color="yellow">
+              loading
+            </Button>
+            <Button variant="ghost" color="yellow">
+              Ghost
+            </Button>
+            <Button variant="light" color="yellow">
+              Light
+            </Button>
+            <Button variant="outlined" color="yellow">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <Button color="green">Hello</Button>
-            <Button isLoading color="green">loading</Button>
-            <Button variant="ghost" color="green">Ghost</Button>
-            <Button variant="light" color="green">Light</Button>
-            <Button variant="outlined" color="green">Outline</Button>
+            <Button isLoading color="green">
+              loading
+            </Button>
+            <Button variant="ghost" color="green">
+              Ghost
+            </Button>
+            <Button variant="light" color="green">
+              Light
+            </Button>
+            <Button variant="outlined" color="green">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <Button color="red">Hello</Button>
-            <Button isLoading color="red">loading</Button>
-            <Button variant="ghost" color="red">Ghost</Button>
-            <Button variant="light" color="red">Light</Button>
-            <Button variant="outlined" color="red">Outline</Button>
+            <Button isLoading color="red">
+              loading
+            </Button>
+            <Button variant="ghost" color="red">
+              Ghost
+            </Button>
+            <Button variant="light" color="red">
+              Light
+            </Button>
+            <Button variant="outlined" color="red">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <Button color="red">Hello</Button>
-            <Button isLoading color="red">loading</Button>
-            <Button variant="ghost" color="red">Ghost</Button>
-            <Button variant="light" color="red">Light</Button>
-            <Button variant="outlined" color="red">Outline</Button>
+            <Button isLoading color="red">
+              loading
+            </Button>
+            <Button variant="ghost" color="red">
+              Ghost
+            </Button>
+            <Button variant="light" color="red">
+              Light
+            </Button>
+            <Button variant="outlined" color="red">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
-            <Button radius="rounded" >Hello</Button>
-            <Button isLoading radius="rounded">loading</Button>
-            <Button variant="ghost" radius="rounded">Ghost</Button>
-            <Button variant="light" radius="rounded">Light</Button>
-            <Button variant="outlined" radius="rounded">Outline</Button>
+            <Button radius="rounded">Hello</Button>
+            <Button isLoading radius="rounded">
+              loading
+            </Button>
+            <Button variant="ghost" radius="rounded">
+              Ghost
+            </Button>
+            <Button variant="light" radius="rounded">
+              Light
+            </Button>
+            <Button variant="outlined" radius="rounded">
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <Button>
-              <HiOutlineMoon className="mr-2 h-4 w-4" />
+              <HiOutlineMoon className="w-4 h-4 mr-2" />
               Hello
             </Button>
-            <Button isLoading><HiOutlineMoon className="mr-2 h-4 w-4" />loading</Button>
-            <Button variant="ghost"><HiOutlineMoon className="mr-2 h-4 w-4" />Ghost</Button>
-            <Button variant="light"> <HiOutlineMoon className="mr-2 h-4 w-4" />Light</Button>
-            <Button variant="outlined"> <HiOutlineMoon className="mr-2 h-4 w-4" />Outline</Button>
+            <Button isLoading>
+              <HiOutlineMoon className="w-4 h-4 mr-2" />
+              loading
+            </Button>
+            <Button variant="ghost">
+              <HiOutlineMoon className="w-4 h-4 mr-2" />
+              Ghost
+            </Button>
+            <Button variant="light">
+              {" "}
+              <HiOutlineMoon className="w-4 h-4 mr-2" />
+              Light
+            </Button>
+            <Button variant="outlined">
+              {" "}
+              <HiOutlineMoon className="w-4 h-4 mr-2" />
+              Outline
+            </Button>
           </div>
           <div className="flex gap-4">
             <GroupButton data={groupButtonData} />
             <GroupButton
               data={groupButtonData}
               variant="outlined" //options = default" | "outlined" | "light" | "ghost" | "unstyled"
-              color="yellow"  //options = "default" | "blue" | "green" | "gray" | "red" | "yellow"
+              color="yellow" //options = "default" | "blue" | "green" | "gray" | "red" | "yellow"
             />
           </div>
         </div>
@@ -463,6 +555,9 @@ const SamplePage = () => {
 
           {/* <TabsSample /> */}
         </div>
+        <div>
+          <Button onClick={handleSendLink}>Send Link</Button>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <h4 className="mb-2 text-lg font-semibold">Grid </h4>
@@ -495,26 +590,36 @@ const SamplePage = () => {
         <h4 className="mb-2 text-lg font-semibold">Slider</h4>
         <SwiperSlider data={data} />
       </div>
-      <div className="my-10 flex flex-col">
+      <div className="flex flex-col my-10">
         <h4 className="mb-2 text-lg font-semibold">Date Field</h4>
         <div className="flex gap-10">
           <div>
             <Label>Date Field</Label>
-            <DateField value={date} onChange={(e: any) => setDate(e.target.value)} />
+            <DateField
+              value={date}
+              onChange={(e: any) => setDate(e.target.value)}
+            />
           </div>
           <div>
             <Label>Date Range</Label>
-            <DateRange selectionRange={selectionRange} setSelectionRange={setSelectionRange} />
+            <DateRange
+              selectionRange={selectionRange}
+              setSelectionRange={setSelectionRange}
+            />
           </div>
         </div>
       </div>
 
-      <div className="my-10 flex flex-col">
+      <div className="flex flex-col my-10">
         <h4 className="mb-2 text-lg font-semibold">Select Field</h4>
         <div className="flex gap-10">
           <div>
             <Label>Date Field</Label>
-            <SelectField data={selectFieldData} value={selectData} onChange={setSelectData} />
+            <SelectField
+              data={selectFieldData}
+              value={selectData}
+              onChange={setSelectData}
+            />
           </div>
         </div>
       </div>

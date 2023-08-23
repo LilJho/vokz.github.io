@@ -9,8 +9,8 @@ interface IStatusCardProps {
   value: string;
   icon: React.ReactNode | any;
   backgroundColor: string;
-  records: number[];
-  chart: string;
+  records: number[] | any;
+  chart: string | any;
 }
 
 const StatusCard = ({
@@ -22,10 +22,11 @@ const StatusCard = ({
   records,
   chart,
 }: IStatusCardProps) => {
+
   const chartData: ApexOptions = {
     chart: {
       id: "basic-area",
-      type: "area",
+      type: chart,
       toolbar: {
         show: false,
       },
@@ -40,13 +41,14 @@ const StatusCard = ({
       enabled: false,
     },
     stroke: {
-      width: [4,4],
+      width: [4, 4],
       // curve: "smooth",
     },
-    xaxis: {
+    xaxis: { 
       labels: {
         show: true,
       },
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
     },
     yaxis: {
       show: false,
@@ -91,7 +93,7 @@ const StatusCard = ({
       data: records,
     },
   ];
-
+ 
   return (
     <div className={`card  flex-1 rounded-lg ${backgroundColor}`}>
       <div className="flex items-center justify-between p-4 text-white">
@@ -106,7 +108,7 @@ const StatusCard = ({
         <Chart options={chartData} series={series} type={chart} height="50px" />
       </div>
     </div>
-  );
+  )
 };
 
 export default StatusCard;
