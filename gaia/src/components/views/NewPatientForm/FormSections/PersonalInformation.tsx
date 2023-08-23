@@ -11,7 +11,11 @@ import { racesData, relationshipData } from '@/config/formData'
 import { IPersonalInformation } from '@/lib/types'
 import NameAgeDynamicForm from '../DynamicForms/NameAgeDynamicForm'
 
-const PersonalInformation = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const PersonalInformation = ({ form, readOnly = true }: PersonalInfoExtends) => {
     return (
         <>
             <div className='my-2'>
@@ -24,7 +28,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel required>First Name</FormLabel>
                     <FormControl>
-                        <TextField placeholder='First name' {...form.register("first_name", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='First name' {...form.register("first_name", { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.first_name?.message}
@@ -33,13 +37,13 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel>Middle Name</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Middle name' {...form.register("middle_name")} />
+                        <TextField readOnly={readOnly} placeholder='Middle name' {...form.register("middle_name")} />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormLabel required>Last Name</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Last name' {...form.register("last_name", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Last name' {...form.register("last_name", { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.last_name?.message}
@@ -50,7 +54,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel required>Date of Birth</FormLabel>
                     <FormControl>
-                        <DateField {...form.register("date_of_birth", { required: true })} />
+                        <DateField readOnly={readOnly}  {...form.register("date_of_birth", { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.date_of_birth?.message}
@@ -59,7 +63,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel required>Mailing Address</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Mailing Address' {...form.register("mailing_address", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Mailing Address' {...form.register("mailing_address", { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.mailing_address?.message}
@@ -68,7 +72,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel required>City</FormLabel>
                     <FormControl>
-                        <TextField placeholder='City' {...form.register("city", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='City' {...form.register("city", { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.city?.message}
@@ -79,6 +83,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormLabel required>Contact Number</FormLabel>
                     <FormControl>
                         <NumberField
+                            readOnly={readOnly}
                             placeholder='0000000000'
                             leftIcon="+63"
                             maxLength={10}
@@ -93,6 +98,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     <FormLabel>Alternative Contact Number</FormLabel>
                     <FormControl>
                         <NumberField
+                            readOnly={readOnly}
                             placeholder='0000000000'
                             leftIcon="+63"
                             maxLength={10}
@@ -107,7 +113,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                         name="gender"
                         render={({ field }) => (
                             <FormControl>
-                                <RadioSelectionGroup {...field} data={["Male", "Female"]} />
+                                <RadioSelectionGroup readOnly={readOnly} {...field} data={["Male", "Female"]} />
                             </FormControl>
                         )}
                     />
@@ -119,7 +125,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel required>Email Address</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Email Address' {...form.register("email")} />
+                        <TextField readOnly={readOnly} placeholder='Email Address' {...form.register("email")} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.email?.message}
@@ -132,7 +138,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                         name="race"
                         render={({ field }) => (
                             <FormControl>
-                                <HeadLessComboBox data={racesData} {...field} />
+                                <HeadLessComboBox readOnly={readOnly} data={racesData} {...field} />
                             </FormControl>
                         )}
                     />
@@ -147,7 +153,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                         name="relationship_status"
                         render={({ field }) => (
                             <FormControl>
-                                <HeadLessComboBox {...field} data={relationshipData} />
+                                <HeadLessComboBox readOnly={readOnly}  {...field} data={relationshipData} />
                             </FormControl>
                         )}
                     />
@@ -159,7 +165,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem className='col-span-2'>
                     <FormLabel required>Current Address</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Current Address' {...form.register("current_address")} />
+                        <TextField readOnly={readOnly} placeholder='Current Address' {...form.register("current_address")} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.current_address?.message}
@@ -168,14 +174,14 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel>Currently Living With</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Currently Living With' {...form.register("currently_living_with")} />
+                        <TextField readOnly={readOnly} placeholder='Currently Living With' {...form.register("currently_living_with")} />
                     </FormControl>
                 </FormItem>
 
                 <FormItem className='col-span-2'>
                     <FormLabel required>Occupation</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Occupation' {...form.register("occupation")} />
+                        <TextField readOnly={readOnly} placeholder='Occupation' {...form.register("occupation")} />
                     </FormControl>
                     <FormMessage className='mb-1'>
                         {form.formState.errors.occupation?.message}
@@ -184,7 +190,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 <FormItem>
                     <FormLabel>Work hours per week</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Work hours per week' {...form.register("work_hours_per_week")} />
+                        <TextField readOnly={readOnly} placeholder='Work hours per week' {...form.register("work_hours_per_week")} />
                     </FormControl>
                 </FormItem>
             </div>
@@ -194,13 +200,13 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
             <div className='flex flex-col gap-4'>
                 <FormItem className="col-span-2">
                     <FormControl>
-                        <NameAgeDynamicForm fieldName="children" label="Children" form={form} />
+                        <NameAgeDynamicForm readOnly={readOnly} fieldName="children" label="Children" form={form} />
                     </FormControl>
                 </FormItem>
 
                 <FormItem className="col-span-2">
                     <FormControl>
-                        <NameAgeDynamicForm fieldName="grandchildren" label="Grandchildren" form={form} />
+                        <NameAgeDynamicForm readOnly={readOnly} fieldName="grandchildren" label="Grandchildren" form={form} />
                     </FormControl>
                 </FormItem>
             </div>

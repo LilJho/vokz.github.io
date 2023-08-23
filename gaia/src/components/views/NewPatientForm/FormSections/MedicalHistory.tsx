@@ -12,7 +12,11 @@ import VaccineDynamicForm from '../DynamicForms/VaccineDynamic'
 import IllnessDynamicForm from '../DynamicForms/IllnessDynamic'
 import MedicationDynamicForm from '../DynamicForms/MedicationDynamicForm'
 
-const MedicalHistory = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const MedicalHistory = ({ form, readOnly }: PersonalInfoExtends) => {
     const isUsingTobacco = form.watch().is_using_tobacco
     const isUsingTobaccoPast = form.watch().is_using_tobacco_in_past
     const isDrinkingAlcohol = form.watch().drinking_alcohol
@@ -30,13 +34,13 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                 <FormItem className='col-span-3'>
                     <FormLabel>Reason for Establishing Care - Current/Past Medical Problems</FormLabel>
                     <FormControl>
-                        <Textarea rows={6} placeholder='Reason for Establishing Care - Current/Past Medical Problems' {...form.register("reason_for_care")} />
+                        <Textarea readOnly={readOnly} rows={6} placeholder='Reason for Establishing Care - Current/Past Medical Problems' {...form.register("reason_for_care")} />
                     </FormControl>
                 </FormItem>
 
                 <FormItem className="col-span-3">
                     <FormControl>
-                        <AllergyDynamicForm label="Allergy" form={form} />
+                        <AllergyDynamicForm readOnly={readOnly} label="Allergy" form={form} />
                     </FormControl>
                 </FormItem>
             </div>
@@ -45,12 +49,12 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
             <div className='flex flex-col md:grid md:grid-cols-3 gap-y-5 gap-x-8'>
                 <FormItem className="col-span-3">
                     <FormControl>
-                        <MedicationDynamicForm fieldName='prescription_medication' label="Prescription Medications" form={form} />
+                        <MedicationDynamicForm readOnly={readOnly} fieldName='prescription_medication' label="Prescription Medications" form={form} />
                     </FormControl>
                 </FormItem>
                 <FormItem className="col-span-3">
                     <FormControl>
-                        <MedicationDynamicForm fieldName="over_the_counter_medication" label="Non-prescription (over-the-counter) Medications" form={form} />
+                        <MedicationDynamicForm readOnly={readOnly} fieldName="over_the_counter_medication" label="Non-prescription (over-the-counter) Medications" form={form} />
                     </FormControl>
                 </FormItem>
             </div>
@@ -60,33 +64,33 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                 <FormItem className='col-span-3'>
                     <FormLabel>Age when menses began</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Age when menses began' {...form.register("women_data.menses_began_at_age", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Age when menses began' {...form.register("women_data.menses_began_at_age", { required: true })} />
                     </FormControl>
                 </FormItem>
                 <FormItem className='col-span-3'>
                     <FormLabel>If post-menopausal, when was your last period?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Age when menses began' {...form.register("women_data.post_menopausal_last_period", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Age when menses began' {...form.register("women_data.post_menopausal_last_period", { required: true })} />
                     </FormControl>
                 </FormItem>
 
                 <FormItem className='col-span-2'>
                     <FormLabel>At what age did you have you first child?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Age when menses began' {...form.register("women_data.first_child_birth", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Age when menses began' {...form.register("women_data.first_child_birth", { required: true })} />
                     </FormControl>
                 </FormItem>
 
                 <FormItem className='col-span-2'>
                     <FormLabel>Total number of pregnancies</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Age when menses began' {...form.register("women_data.number_of_pregnancies", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Age when menses began' {...form.register("women_data.number_of_pregnancies", { required: true })} />
                     </FormControl>
                 </FormItem>
                 <FormItem className='col-span-2'>
                     <FormLabel>Miscarriages?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Age when menses began' {...form.register("women_data.miscarraiges", { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Age when menses began' {...form.register("women_data.miscarraiges", { required: true })} />
                     </FormControl>
                 </FormItem>
             </div>
@@ -95,17 +99,17 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
             <div className='flex flex-col md:grid md:grid-cols-1 gap-y-5 gap-x-8'>
                 <FormItem>
                     <FormControl>
-                        <ArrayDynamicForm fieldName='health_conditions' form={form} label="Health Conditions/Concerns" />
+                        <ArrayDynamicForm readOnly={readOnly} fieldName='health_conditions' form={form} label="Health Conditions/Concerns" />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormControl>
-                        <SurgeriesDynamicForm form={form} />
+                        <SurgeriesDynamicForm readOnly={readOnly} form={form} />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormControl>
-                        <VaccineDynamicForm form={form} />
+                        <VaccineDynamicForm readOnly={readOnly} form={form} />
                     </FormControl>
                 </FormItem>
             </div>
@@ -114,22 +118,22 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
             <div className='flex flex-col md:grid md:grid-cols-1 gap-y-5 gap-x-8'>
                 <FormItem>
                     <FormControl>
-                        <IllnessDynamicForm fieldName='cancerIllness' form={form} label="Cancer - Type?" />
+                        <IllnessDynamicForm readOnly={readOnly} fieldName='cancerIllness' form={form} label="Cancer - Type?" />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormControl>
-                        <IllnessDynamicForm fieldName='dementiaIllness' form={form} label="Dementia" />
+                        <IllnessDynamicForm readOnly={readOnly} fieldName='dementiaIllness' form={form} label="Dementia" />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormControl>
-                        <IllnessDynamicForm fieldName='diabetesIllness' form={form} label="Diabetes - Type?" />
+                        <IllnessDynamicForm readOnly={readOnly} fieldName='diabetesIllness' form={form} label="Diabetes - Type?" />
                     </FormControl>
                 </FormItem>
                 <FormItem>
                     <FormControl>
-                        <IllnessDynamicForm fieldName='highBloodPressureIllness' form={form} label="High Blood Pressure" />
+                        <IllnessDynamicForm readOnly={readOnly} fieldName='highBloodPressureIllness' form={form} label="High Blood Pressure" />
                     </FormControl>
                 </FormItem>
             </div>
@@ -144,7 +148,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                             name="marital_status"
                             render={({ field }) => (
                                 <FormControl>
-                                    <RadioSelectionGroup {...field} data={relationshipData} />
+                                    <RadioSelectionGroup readOnly={readOnly}  {...field} data={relationshipData} />
                                 </FormControl>
                             )}
                         />
@@ -163,7 +167,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                                 name="is_using_tobacco"
                                 render={({ field }) => (
                                     <FormControl>
-                                        <RadioSelectionGroup {...field} data={["Yes", "No"]} />
+                                        <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Yes", "No"]} />
                                     </FormControl>
                                 )}
                             />
@@ -181,7 +185,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                                 name="is_using_tobacco_in_past"
                                 render={({ field }) => (
                                     <FormControl>
-                                        <RadioSelectionGroup {...field} data={["Yes", "No"]} />
+                                        <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Yes", "No"]} />
                                     </FormControl>
                                 )}
                             />
@@ -194,7 +198,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                     {isUsingTobacco === "Yes" && <FormItem className='col-span-3'>
                         <FormLabel>Frequency</FormLabel>
                         <FormControl>
-                            <TextField placeholder='Frequency' {...form.register("tobacco_usage_frequency")} />
+                            <TextField readOnly={readOnly} placeholder='Frequency' {...form.register("tobacco_usage_frequency")} />
                         </FormControl>
                     </FormItem>}
                 </div>
@@ -207,7 +211,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                             name="tobacco_product_type"
                             render={({ field }) => (
                                 <FormControl>
-                                    <RadioSelectionGroup {...field} data={["Cigarette", "Vape", "Smokeless", "Chewing Tobacco"]} />
+                                    <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Cigarette", "Vape", "Smokeless", "Chewing Tobacco"]} />
                                 </FormControl>
                             )}
                         />
@@ -218,13 +222,13 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                         <FormItem className='flex-1'>
                             <FormLabel>Years of using tobacco products?</FormLabel>
                             <FormControl>
-                                <TextField placeholder='Years of using tobacco' {...form.register("years_of_using_tobacco")} />
+                                <TextField readOnly={readOnly} placeholder='Years of using tobacco' {...form.register("years_of_using_tobacco")} />
                             </FormControl>
                         </FormItem>
                         <FormItem className='flex-1'>
                             <FormLabel>When did you quit using tobacco products?</FormLabel>
                             <FormControl>
-                                <TextField placeholder='When did you quit using tobacco products?' {...form.register("year_of_tobacco_cessation")} />
+                                <TextField readOnly={readOnly} placeholder='When did you quit using tobacco products?' {...form.register("year_of_tobacco_cessation")} />
                             </FormControl>
                         </FormItem>
                     </div>
@@ -239,7 +243,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                             name="drinking_alcohol"
                             render={({ field }) => (
                                 <FormControl>
-                                    <RadioSelectionGroup {...field} data={["Yes", "No"]} />
+                                    <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Yes", "No"]} />
                                 </FormControl>
                             )}
                         />
@@ -252,7 +256,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                 {isDrinkingAlcohol === "Yes" && <FormItem className='col-span-3'>
                     <FormLabel>How much/frequency?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='How much/frequency' {...form.register("alcohol_consumption_frequency")} />
+                        <TextField readOnly={readOnly} placeholder='How much/frequency' {...form.register("alcohol_consumption_frequency")} />
                     </FormControl>
                 </FormItem>}
             </div>
@@ -266,7 +270,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                             name="is_using_recreational_drugs"
                             render={({ field }) => (
                                 <FormControl>
-                                    <RadioSelectionGroup {...field} data={["Yes", "No"]} />
+                                    <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Yes", "No"]} />
                                 </FormControl>
                             )}
                         />
@@ -279,21 +283,21 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                 {isUsingRecreational === "Yes" && <FormItem className='col-span-3'>
                     <FormLabel>Type</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Type' {...form.register("recreational_drug_type")} />
+                        <TextField readOnly={readOnly} placeholder='Type' {...form.register("recreational_drug_type")} />
                     </FormControl>
                 </FormItem>}
 
                 {isUsingRecreational === "Yes" && <FormItem className='col-span-3'>
                     <FormLabel>How much/frequency?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='How much/frequency' {...form.register("recreational_drug_usage_frequency")} />
+                        <TextField readOnly={readOnly} placeholder='How much/frequency' {...form.register("recreational_drug_usage_frequency")} />
                     </FormControl>
                 </FormItem>}
             </div>
             <FormItem className='w-full'>
                 <FormLabel>Additional Comments</FormLabel>
                 <FormControl>
-                    <Textarea placeholder='Additional comments' {...form.register("additional_comment")} />
+                    <Textarea readOnly={readOnly} placeholder='Additional comments' {...form.register("additional_comment")} />
                 </FormControl>
             </FormItem>
         </>

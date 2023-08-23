@@ -12,34 +12,25 @@ import { PatientsInformationService } from '@/services/databaseServices';
 interface IEditPatientForm {
     isPatient?: boolean
     defaultValue: PatientInformationType
+    readOnly?: boolean
 }
 
-const EditPatientForm = ({ isPatient, defaultValue }: IEditPatientForm) => {
-    const formattedDefaultValue = {
-        ...defaultValue,
-        contact_number: parseInt(defaultValue.contact_number),
-        alt_contact_number: parseInt(defaultValue.alt_contact_number!)
-    }
-
-    const defaultValues = formattedDefaultValue ?? formDefaultData;
+const EditPatientForm = ({ isPatient, defaultValue, readOnly }: IEditPatientForm) => {
+    const defaultValues = defaultValue ?? formDefaultData;
 
     async function handleFormSubmit(values: z.infer<typeof PatientSchema>) {
         const processedData = cleanData(values)
-        const updatedData = {
-            ...processedData,
-            contact_number: (defaultValue.contact_number).toString(),
-            alt_contact_number: (defaultValue.alt_contact_number!).toString()
-        }
         const res = await PatientsInformationService.update({
             id: defaultValue.id!,
             columnName: "id",
-            update: updatedData,
+            update: processedData,
         })
+        console.log({ res })
     }
 
     const { onSubmit, isLoading, formMethods } = usePostForm({
         handleFormSubmit,
-        queryKey: ["patients-record"],
+        queryKey: ["patients-information"],
         successMessage,
         errorMessage,
         schema: PatientSchema,
@@ -53,6 +44,7 @@ const EditPatientForm = ({ isPatient, defaultValue }: IEditPatientForm) => {
             form={formMethods}
             type="edit"
             isPatient={isPatient}
+            readOnly={isPatient || readOnly}
         />
     )
 }
@@ -60,8 +52,8 @@ const EditPatientForm = ({ isPatient, defaultValue }: IEditPatientForm) => {
 export default EditPatientForm
 
 const successMessage: ToastTypes = {
-    title: "New Patient Added",
-    description: "New Patient has been added successfully",
+    title: "Information Updated",
+    description: "Patient information has been updated successfully!",
     variant: "success"
 }
 

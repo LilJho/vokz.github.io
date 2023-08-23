@@ -45,12 +45,6 @@ export function cleanData(data: Data): Data {
     }
   });
 
-  // Remove objects with rating_answer === "N/A"
-  data.pittsburge_sleep_quality_index =
-    data.pittsburge_sleep_quality_index.filter(
-      (item: any) => item.rating_answer !== "N/A"
-    );
-
   // Clean health_conditions array
   if (data.health_conditions && data.health_conditions.length > 0) {
     const trimmedValue = data.health_conditions[0].trim(); // Remove leading space

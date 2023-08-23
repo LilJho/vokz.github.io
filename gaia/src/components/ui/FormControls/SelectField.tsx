@@ -9,14 +9,16 @@ interface ISelectField {
     value?: string
     onChange?: (value: string) => void
     defaultValue?: string
+    readOnly?: boolean
 }
 
-const SelectField = ({ value, onChange, defaultValue, data }: ISelectField) => {
+const SelectField = ({ value, onChange, defaultValue, data, readOnly }: ISelectField) => {
     return (
         <Select
             value={value}
             onValueChange={onChange}
             defaultValue={defaultValue}
+            disabled={readOnly}
         >
             <SelectTrigger className="w-full">
                 <SelectValue placeholder={value} />

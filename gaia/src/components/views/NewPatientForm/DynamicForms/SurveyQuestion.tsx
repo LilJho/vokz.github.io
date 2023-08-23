@@ -5,7 +5,11 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import RadioSelectionGroup from '@/components/ui/FormControls/Selection';
 import { Textarea } from '@/components/ui/FormControls/TextArea';
 
-const SurveyQuestion = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const SurveyQuestion = ({ form, readOnly }: PersonalInfoExtends) => {
 
     const { fields: fieldsQuestion } = useFieldArray({
         control: form.control,
@@ -24,7 +28,7 @@ const SurveyQuestion = ({ form }: IPersonalInformation) => {
                                     name={`motivation_survey.survey_Questions[${index}].rating_answer` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup type="rating" {...field} data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]} />
+                                            <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]} />
                                         </FormControl>
                                     )}
                                 />
@@ -40,7 +44,7 @@ const SurveyQuestion = ({ form }: IPersonalInformation) => {
             <FormItem className='mt-2 w-full'>
                 <FormLabel>Additional comments or notes from you answer above</FormLabel>
                 <FormControl>
-                    <Textarea rows={6} placeholder='Write your additional comments here, if any.' {...form.register("motivation_survey.additional_comment")} />
+                    <Textarea readOnly={readOnly} rows={6} placeholder='Write your additional comments here, if any.' {...form.register("motivation_survey.additional_comment")} />
                 </FormControl>
             </FormItem>
         </>

@@ -14,9 +14,10 @@ interface PatientFormProps extends IPersonalInformation {
     isLoading: boolean
     type?: "add" | "edit"
     isPatient?: boolean
+    readOnly?: boolean
 }
 
-const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = false }: PatientFormProps) => {
+const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = false, readOnly = false }: PatientFormProps) => {
     const scrollToTop = () => {
         window.scrollTo({ top: 100, behavior: 'smooth' }); // Scrolls to the top smoothly
     };
@@ -25,14 +26,15 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
 
     const handlePrevPage = () => {
         setFormSteps(prev => prev - 1)
-        // scrollToTop()
+        scrollToTop()
     }
 
     const handleNextPage = () => {
         setFormSteps(prev => prev + 1)
-        // scrollToTop()
+        scrollToTop()
     }
-
+    console.log("form.formState.errors:", form.formState.errors);
+    console.log(form.watch())
     const handleErrorToast = () => {
         console.log("form.formState.errors:", form.formState.errors);
         if (form.formState.errors && Object.keys(form.formState.errors).length > 0) {
@@ -45,9 +47,9 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
     }
 
     const formsPage: formSteps = {
-        0: <PersonalInformation form={form} />,
-        1: <MedicalHistory form={form} />,
-        2: <WellnessInfo form={form} />,
+        0: <PersonalInformation readOnly={readOnly} form={form} />,
+        1: <MedicalHistory readOnly={readOnly} form={form} />,
+        2: <WellnessInfo readOnly={readOnly} form={form} />,
     }
 
     return (
@@ -69,7 +71,7 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
                     <div className='flex gap-4 mt-14 mb-6'>
                         {formSteps > 0 && <Button type="button" color={header.length - 2 ? "gray" : "default"} onClick={handlePrevPage}>Previous</Button>}
                         {formSteps < header.length - 1 && <Button type="button" onClick={handleNextPage}>Next</Button>}
-                        {!isPatient && formSteps === header.length - 1 && <Button isLoading={isLoading} type={isLoading ? "button" : "submit"} onClick={handleErrorToast}>{type === "add" ? "Add New Patient" : "Update Record"}</Button>}
+                        {!isPatient && !readOnly && formSteps === header.length - 1 && <Button isLoading={isLoading} type={isLoading ? "button" : "submit"} onClick={handleErrorToast}>{type === "add" ? "Add New Patient" : "Update Record"}</Button>}
                     </div>
                 </form>
             </Form>

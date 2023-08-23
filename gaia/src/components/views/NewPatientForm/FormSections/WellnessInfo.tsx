@@ -6,8 +6,51 @@ import { IPersonalInformation } from "@/lib/types"
 import SurveyQuestion from "../DynamicForms/SurveyQuestion"
 import { Label } from "@/components/ui/FormControls/label"
 import { pittsburgOption1, pittsburgOption2, pittsburgOption3, pittsburgOption4, pittsburgOption5 } from "@/config/formData"
+import { useEffect } from "react"
 
-const WellnessInfo = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const WellnessInfo = ({ form, readOnly }: PersonalInfoExtends) => {
+    const watchSleepingProblem = form.watch().pittsburge_sleep_quality_index?.sleeping_optional?.question
+    const watchPartner = form.watch().pittsburge_sleep_quality_index?.partner_optional?.question
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout | null = null;
+        const debounceTime = 500; // in milliseconds
+
+        if (!watchSleepingProblem) {
+            timeoutId = setTimeout(() => {
+                form.setValue('pittsburge_sleep_quality_index.sleeping_optional.rating_answer', '');
+            }, debounceTime);
+        }
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [watchSleepingProblem, form]);
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout | null = null;
+        const debounceTime = 500; // in milliseconds
+
+        if (!watchPartner) {
+            timeoutId = setTimeout(() => {
+                form.setValue('pittsburge_sleep_quality_index.partner_optional.rating_answer', '');
+            }, debounceTime);
+        }
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [watchPartner, form]);
+
+
     return (
         <>
             <div className='my-2'>
@@ -25,7 +68,7 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                             name="nutrition_problem"
                             render={({ field }) => (
                                 <FormControl>
-                                    <RadioSelectionGroup {...field} data={["Yes", "No"]} />
+                                    <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Yes", "No"]} />
                                 </FormControl>
                             )}
                         />
@@ -41,53 +84,57 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                 <FormItem className='col-span-3 w-full'>
                     <FormLabel>What specific goals or outcomes are you looking to achieve by participating in House of Gaia&apos;s longevity program?</FormLabel>
                     <FormControl>
-                        <Textarea rows={6} placeholder='eg. Weight loss and longevity' {...form.register("reason_for_participating")} />
+                        <Textarea readOnly={readOnly} rows={6} placeholder='eg. Weight loss and longevity' {...form.register("reason_for_participating")} />
                     </FormControl>
                 </FormItem>
             </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">On a scale of 1-10 (with 10 being the highest level of satisfaction)</h3>
             <div className='flex flex-col gap-y-4 gap-x-8'>
-                <SurveyQuestion form={form} />
+                <SurveyQuestion readOnly={readOnly} form={form} />
             </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">PITTSBURG Sleep Quality Index (PSQI)</h3>
             <Label>The following question relate to your usual sleep habits during the <span className="font-medium">past month only</span>. Your answers should indicate the most accurate reply for the majority of days and nights in the past month</Label>
             <div className='mt-2 flex flex-col gap-y-4 gap-x-8'>
+
                 <FormItem>
                     <FormLabel required>During the past month, what time have you usually gone to bed at night?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index[0].rating_answer` as any, { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index.given_question[0].rating_answer` as any, { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
-                        {form.formState.errors?.pittsburge_sleep_quality_index?.[0]?.rating_answer?.message}
+                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[0]?.rating_answer?.message}
                     </FormMessage>
                 </FormItem>
+
                 <FormItem>
                     <FormLabel required>During the past month, how long (in minutes) has it usually taken you to fall asleep each night?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index[1].rating_answer` as any, { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index.given_question[1].rating_answer` as any, { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
-                        {form.formState.errors?.pittsburge_sleep_quality_index?.[1]?.rating_answer?.message}
+                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[1]?.rating_answer?.message}
                     </FormMessage>
                 </FormItem>
+
                 <FormItem>
                     <FormLabel required>During the past month, what time have you usually gotten up in the morning?</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index[2].rating_answer` as any, { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index.given_question[2].rating_answer` as any, { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
-                        {form.formState.errors?.pittsburge_sleep_quality_index?.[2]?.rating_answer?.message}
+                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[2]?.rating_answer?.message}
                     </FormMessage>
                 </FormItem>
+
                 <FormItem>
                     <FormLabel required>During the past month, how many hours of <span className="font-medium">actual sleep</span> did you get at night? (This may be different than the number of hours you spent in bed)</FormLabel>
                     <FormControl>
-                        <TextField placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index[3].rating_answer` as any, { required: true })} />
+                        <TextField readOnly={readOnly} placeholder='Enter your answer here' {...form.register(`pittsburge_sleep_quality_index.given_question[3].rating_answer` as any, { required: true })} />
                     </FormControl>
                     <FormMessage className='mb-1'>
-                        {form.formState.errors?.pittsburge_sleep_quality_index?.[3]?.rating_answer?.message}
+                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[3]?.rating_answer?.message}
                     </FormMessage>
                 </FormItem>
 
@@ -102,16 +149,16 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                                         <FormField
                                             control={form.control}
                                             rules={{ required: true }}
-                                            name={`pittsburge_sleep_quality_index[${index + 4}].rating_answer` as any}
+                                            name={`pittsburge_sleep_quality_index.given_question[${index + 4}].rating_answer` as any}
                                             render={({ field }) => (
                                                 <FormControl>
-                                                    <RadioSelectionGroup type="rating" {...field} data={pittsburgOption1} />
+                                                    <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption1} />
                                                 </FormControl>
                                             )}
                                         />
                                     </FormControl>
                                     <FormMessage className='mb-1'>
-                                        {form.formState.errors?.pittsburge_sleep_quality_index?.[index + 4]?.rating_answer?.message}
+                                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[index + 4]?.rating_answer?.message}
                                     </FormMessage>
                                 </FormItem>
                             )
@@ -121,22 +168,22 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                             <FormItem className="max-w-sm">
                                 <FormLabel>Other reasons(s). Please describe:</FormLabel>
                                 <FormControl>
-                                    <TextField placeholder='Enter your other reason' {...form.register(`pittsburge_sleep_quality_index[${13}].question` as any)} />
+                                    <TextField readOnly={readOnly} placeholder='Enter your other reason' {...form.register(`pittsburge_sleep_quality_index.sleeping_optional.question` as any)} />
                                 </FormControl>
                             </FormItem>
-                            <FormItem>
+                            {watchSleepingProblem && <FormItem>
                                 <FormControl>
                                     <FormField
                                         control={form.control}
-                                        name={`pittsburge_sleep_quality_index[${13}].rating_answer` as any}
+                                        name={`pittsburge_sleep_quality_index.sleeping_optional.rating_answer` as any}
                                         render={({ field }) => (
                                             <FormControl>
-                                                <RadioSelectionGroup type="rating" {...field} data={pittsburgOption1} />
+                                                <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption1} />
                                             </FormControl>
                                         )}
                                     />
                                 </FormControl>
-                            </FormItem>
+                            </FormItem>}
                         </div>
                     </div>
 
@@ -148,16 +195,16 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                                     <FormControl>
                                         <FormField
                                             control={form.control}
-                                            name={`pittsburge_sleep_quality_index[${index + 14}].rating_answer` as any}
+                                            name={`pittsburge_sleep_quality_index.given_question[${index + 13}].rating_answer` as any}
                                             render={({ field }) => (
                                                 <FormControl>
-                                                    <RadioSelectionGroup type="rating" {...field} data={pittsburgOption1} />
+                                                    <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption1} />
                                                 </FormControl>
                                             )}
                                         />
                                     </FormControl>
                                     <FormMessage className='mb-1'>
-                                        {form.formState.errors?.pittsburge_sleep_quality_index?.[index + 14]?.rating_answer?.message}
+                                        {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[index + 13]?.rating_answer?.message}
                                     </FormMessage>
                                 </FormItem>
                             )
@@ -168,16 +215,16 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                             <FormControl>
                                 <FormField
                                     control={form.control}
-                                    name={`pittsburge_sleep_quality_index[16].rating_answer` as any}
+                                    name={`pittsburge_sleep_quality_index.given_question[15].rating_answer` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup type="rating" {...field} data={pittsburgOption2} />
+                                            <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption2} />
                                         </FormControl>
                                     )}
                                 />
                             </FormControl>
                             <FormMessage className='mb-1'>
-                                {form.formState.errors?.pittsburge_sleep_quality_index?.[16]?.rating_answer?.message}
+                                {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[15]?.rating_answer?.message}
                             </FormMessage>
                         </FormItem>
 
@@ -186,16 +233,16 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                             <FormControl>
                                 <FormField
                                     control={form.control}
-                                    name={`pittsburge_sleep_quality_index[17].rating_answer` as any}
+                                    name={`pittsburge_sleep_quality_index.given_question[16].rating_answer` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup type="rating" {...field} data={pittsburgOption3} />
+                                            <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption3} />
                                         </FormControl>
                                     )}
                                 />
                             </FormControl>
                             <FormMessage className='mb-1'>
-                                {form.formState.errors?.pittsburge_sleep_quality_index?.[17]?.rating_answer?.message}
+                                {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[16]?.rating_answer?.message}
                             </FormMessage>
                         </FormItem>
 
@@ -204,16 +251,16 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                             <FormControl>
                                 <FormField
                                     control={form.control}
-                                    name={`pittsburge_sleep_quality_index[18].rating_answer` as any}
+                                    name={`pittsburge_sleep_quality_index.given_question[17].rating_answer` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup type="rating" {...field} data={pittsburgOption4} />
+                                            <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption4} />
                                         </FormControl>
                                     )}
                                 />
                             </FormControl>
                             <FormMessage className='mb-1'>
-                                {form.formState.errors?.pittsburge_sleep_quality_index?.[18]?.rating_answer?.message}
+                                {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[17]?.rating_answer?.message}
                             </FormMessage>
                         </FormItem>
                     </div>
@@ -228,17 +275,17 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                                         <FormControl>
                                             <FormField
                                                 control={form.control}
-                                                name={`pittsburge_sleep_quality_index[${index + 19}].rating_answer` as any}
+                                                name={`pittsburge_sleep_quality_index.given_question[${index + 18}].rating_answer` as any}
                                                 rules={{ required: true }}
                                                 render={({ field }) => (
                                                     <FormControl>
-                                                        <RadioSelectionGroup type="rating" {...field} data={pittsburgOption5} />
+                                                        <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption5} />
                                                     </FormControl>
                                                 )}
                                             />
                                         </FormControl>
                                         <FormMessage className='mb-1'>
-                                            {form.formState.errors?.pittsburge_sleep_quality_index?.[index + 19]?.rating_answer?.message}
+                                            {form.formState.errors?.pittsburge_sleep_quality_index?.given_question?.[index + 18]?.rating_answer?.message}
                                         </FormMessage>
                                     </FormItem>
                                 )
@@ -248,20 +295,20 @@ const WellnessInfo = ({ form }: IPersonalInformation) => {
                                 <FormItem className="max-w-sm">
                                     <FormLabel>Other restlessness while you sleep, please describe:</FormLabel>
                                     <FormControl>
-                                        <TextField placeholder='Enter your other reason' {...form.register(`pittsburge_sleep_quality_index[${23}].question` as any)} />
+                                        <TextField readOnly={readOnly} placeholder='Enter your other reason' {...form.register(`pittsburge_sleep_quality_index.partner_optional.question` as any)} />
                                     </FormControl>
                                 </FormItem>
-                                <FormItem>
+                                {watchPartner && <FormItem>
                                     <FormControl>
                                         <FormField
                                             control={form.control}
-                                            name={`pittsburge_sleep_quality_index[${23}].rating_answer` as any}
+                                            name={`pittsburge_sleep_quality_index.partner_optional.rating_answer` as any}
                                             render={({ field }) => (
-                                                <RadioSelectionGroup type="rating" {...field} data={pittsburgOption5} />
+                                                <RadioSelectionGroup readOnly={readOnly} type="rating" {...field} data={pittsburgOption5} />
                                             )}
                                         />
                                     </FormControl>
-                                </FormItem>
+                                </FormItem>}
                             </div>
                         </div>
                     </div>

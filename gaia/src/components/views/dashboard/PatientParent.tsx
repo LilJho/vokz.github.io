@@ -1,52 +1,54 @@
 "use client";
 import React, { useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs/tabs-modified";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPersonBoundingBox, BsMic } from "react-icons/bs";
 
 import Index from "./Patient/Index";
+import { TbReportMedical } from "react-icons/tb";
+import { RiCalendarCheckFill, RiDraftLine, RiHeartAddFill, RiOpenArmFill, RiPsychotherapyLine, RiUserHeartLine } from "react-icons/ri";
+import ViewPDF from "./ViewPDF";
 
 const tabs = [
   {
     title: "Daily Health Report",
-    icon: <AiOutlineHome />,
+    icon: <TbReportMedical className="relative w-5 h-5 mr-2 -top-[1px]" />,
     value: "Daily",
     content: <Index />,
   },
   {
     title: "Monthly Health Report",
-    icon: <BsPersonBoundingBox />,
+    icon: <RiCalendarCheckFill className="relative w-5 h-5 mr-2 -top-[1px]" />,
     value: "Monthly",
     content:
       "expedita aperiam officia, ipsum, inventore quidem aliquam possimus! Ut laboriosam laborum obcaecati! Quas fuga nisi eius quae, consequuntur corporis hic nulla exercitationem natus quasi repellat placeat dolore!",
   },
   {
     title: "Medical Record",
-    icon: <BsMic />,
-    value: "contact",
-    content:
-      "sit amet consectetur, adipisicing elit. Excepturi quo corporis tempora recusandae iusto dolorum dolorem esse blanditiis modi veniam ipsa officiis saepe,",
+    icon: <RiDraftLine className="relative w-5 h-5 mr-2 -top-[1px]" />,
+    value: "medical-record",
+    content: <ViewPDF />,
   },
   {
     title: "Nutrition",
-    icon: <BsMic />,
-    value: "contact",
+    icon: <RiUserHeartLine className="relative w-5 h-5 mr-2 -top-[1px]" />,
+    value: "nutrition",
     content:
-      "sit amet consectetur, adipisicing elit. Excepturi quo corporis tempora recusandae iusto dolorum dolorem esse blanditiis modi veniam ipsa officiis saepe,",
+      <ViewPDF />,
   },
   {
     title: "Pain Management, strength and Conditioning",
-    icon: <BsMic />,
-    value: "contact",
+    icon: <RiOpenArmFill className="relative w-5 h-5 mr-2 -top-[1px]" />,
+    value: "pain",
     content:
-      "sit amet consectetur, adipisicing elit. Excepturi quo corporis tempora recusandae iusto dolorum dolorem esse blanditiis modi veniam ipsa officiis saepe,",
+      <ViewPDF />,
   },
   {
     title: "Mindfulness",
-    icon: <BsMic />,
-    value: "contact",
+    icon: <RiPsychotherapyLine className="relative w-5 h-5 mr-2 -top-[1px]" />,
+    value: "mind",
     content:
-      "sit amet consectetur, adipisicing elit. Excepturi quo corporis tempora recusandae iusto dolorum dolorem esse blanditiis modi veniam ipsa officiis saepe,",
+      <ViewPDF />,
   },
 ];
 
@@ -55,13 +57,11 @@ const TabsSample = () => {
     <div className="grid grid-cols-1">
       <Tabs
         defaultValue="Daily"
-        className="p-4 rounded-md border bg-white "
       >
-        <TabsList>
+        <TabsList className='mb-4'>
           {tabs.map((tab, index) => (
             <TabsTrigger
               key={index}
-              className={`flex items-center justify-center gap-1.5 data-[state=active]:bg-green-500 data-[state=active]:text-white rounded`}
               value={tab.value}
             >
               {tab.icon}

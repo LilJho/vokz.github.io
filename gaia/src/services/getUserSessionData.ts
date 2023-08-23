@@ -1,5 +1,6 @@
 import { UserDataType } from "@/lib/types";
 import { createServerSupabaseClient } from "@/services/supabaseServer";
+import { redirect } from "next/navigation";
 
 const getUserSessionData = async () => {
   const supabase = createServerSupabaseClient();
@@ -8,6 +9,10 @@ const getUserSessionData = async () => {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (!session) {
+    redirect("/auth/sign-in");
+  }
+
   let { data }: any = await supabase
     .from("user_accounts")
     .select("*")
@@ -15,7 +20,7 @@ const getUserSessionData = async () => {
 
   const userData: UserDataType = {
     email: session?.user.email!,
-    role: data[0]?.role,
+    role: data?.[0]?.role,
     first_name: data[0]?.first_name,
     last_name: data[0]?.last_name,
     middle_name: data[0]?.middle_name,

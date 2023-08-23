@@ -10,11 +10,7 @@ interface ILayoutProps {
 }
 
 const MainPageLayout = async ({ children }: ILayoutProps) => {
-    const { session, userData } = await getUserSessionData()
-
-    if (!session) {
-        redirect("/auth/sign-in")
-    }
+    const { userData } = await getUserSessionData()
 
     return (
         <div className='min-h-screen'>

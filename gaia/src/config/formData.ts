@@ -230,111 +230,113 @@ export const formDefaultData = {
     ],
     additional_comment: "",
   },
-  pittsburge_sleep_quality_index: [
-    {
-      question:
-        "During the past month, what time have you usually gone to bed at night?",
-      rating_answer: "",
-    },
-    {
-      question:
-        "During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
-      rating_answer: "",
-    },
-    {
-      question:
-        "During the past month, what time have you usually gotten up in the morning?",
-      rating_answer: "",
-    },
-    {
-      question:
-        "During the past month, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spent in bed)",
-      rating_answer: "",
-    },
-    {
-      question: "Cannot get to sleep with 30 minutes.",
-      rating_answer: "",
-    },
-    {
-      question: "Wake up in the middle of the night or early morning.",
-      rating_answer: "",
-    },
-    {
-      question: "Have to get up to use the bathroom.",
-      rating_answer: "",
-    },
-    {
-      question: "Cannot breathe comfortably.",
-      rating_answer: "",
-    },
-    {
-      question: "Cough or snore loudly.",
-      rating_answer: "",
-    },
-    {
-      question: "Feel too cold.",
-      rating_answer: "",
-    },
-    {
-      question: "Feel too hot.",
-      rating_answer: "",
-    },
-    {
-      question: "Have bad dreams.",
-      rating_answer: "",
-    },
-    {
-      question: "Have pain.",
-      rating_answer: "",
-    },
-    {
+  pittsburge_sleep_quality_index: {
+    given_question: [
+      {
+        question:
+          "During the past month, what time have you usually gone to bed at night?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, what time have you usually gotten up in the morning?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spent in bed)",
+        rating_answer: "",
+      },
+      {
+        question: "Cannot get to sleep with 30 minutes.",
+        rating_answer: "",
+      },
+      {
+        question: "Wake up in the middle of the night or early morning.",
+        rating_answer: "",
+      },
+      {
+        question: "Have to get up to use the bathroom.",
+        rating_answer: "",
+      },
+      {
+        question: "Cannot breathe comfortably.",
+        rating_answer: "",
+      },
+      {
+        question: "Cough or snore loudly.",
+        rating_answer: "",
+      },
+      {
+        question: "Feel too cold.",
+        rating_answer: "",
+      },
+      {
+        question: "Feel too hot.",
+        rating_answer: "",
+      },
+      {
+        question: "Have bad dreams.",
+        rating_answer: "",
+      },
+      {
+        question: "Have pain.",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how often have you taken medicine to help you sleep (prescribed or &quot;over the counter&quot;)?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how often have you had trouble staying awake while driving, eating meals, or engaging in social activity?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how much of a problem has it been for you to keep up enthusiasm to get things done?",
+        rating_answer: "",
+      },
+      {
+        question:
+          "During the past month, how would you rate your sleep quality overall?",
+        rating_answer: "",
+      },
+      {
+        question: "Do you have a bed parter or room mate?",
+        rating_answer: "",
+      },
+      {
+        question: "Loud snoring",
+        rating_answer: "",
+      },
+      {
+        question: "Long pauses in breathing while asleep",
+        rating_answer: "",
+      },
+      {
+        question: "Legs twitching or jerking while asleep",
+        rating_answer: "",
+      },
+      {
+        question: "Episodes of disorientation or confusion during the night",
+        rating_answer: "",
+      },
+    ],
+    sleeping_optional: {
       question: "",
-      rating_answer: "N/A",
-    },
-    {
-      question:
-        "During the past month, how often have you taken medicine to help you sleep (prescribed or &quot;over the counter&quot;)?",
       rating_answer: "",
     },
-    {
-      question:
-        "During the past month, how often have you had trouble staying awake while driving, eating meals, or engaging in social activity?",
-      rating_answer: "",
-    },
-    {
-      question:
-        "During the past month, how much of a problem has it been for you to keep up enthusiasm to get things done?",
-      rating_answer: "",
-    },
-    {
-      question:
-        "During the past month, how would you rate your sleep quality overall?",
-      rating_answer: "",
-    },
-    {
-      question: "Do you have a bed parter or room mate?",
-      rating_answer: "",
-    },
-    {
-      question: "Loud snoring",
-      rating_answer: "",
-    },
-    {
-      question: "Long pauses in breathing while asleep",
-      rating_answer: "",
-    },
-    {
-      question: "Legs twitching or jerking while asleep",
-      rating_answer: "",
-    },
-    {
-      question: "Episodes of disorientation or confusion during the night",
-      rating_answer: "",
-    },
-    {
+    partner_optional: {
       question: "",
-      rating_answer: "N/A",
+      rating_answer: "",
     },
-  ],
+  },
   status: "unauthorized",
 };

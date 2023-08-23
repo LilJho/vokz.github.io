@@ -7,12 +7,14 @@ import { IPersonalInformation } from '@/lib/types'
 import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
+
 interface IChildrenDynamicForm extends IPersonalInformation {
   label: string
   fieldName: "children" | "grandchildren"
+  readOnly?: boolean
 }
 
-const ChildrenDynamicForm = ({ form, label, fieldName }: IChildrenDynamicForm) => {
+const ChildrenDynamicForm = ({ form, label, fieldName, readOnly }: IChildrenDynamicForm) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: fieldName
@@ -43,7 +45,7 @@ const ChildrenDynamicForm = ({ form, label, fieldName }: IChildrenDynamicForm) =
                   name={`${fieldName}[${index}].first_name` as any}
                   render={({ field }) => (
                     <FormControl>
-                      <TextField placeholder='First name' {...field} />
+                      <TextField readOnly={readOnly} placeholder='First name' {...field} />
                     </FormControl>
                   )}
                 />
@@ -55,29 +57,29 @@ const ChildrenDynamicForm = ({ form, label, fieldName }: IChildrenDynamicForm) =
                   name={`${fieldName}[${index}].last_name` as any}
                   render={({ field }) => (
                     <FormControl>
-                      <TextField placeholder='Last name' {...field} />
+                      <TextField readOnly={readOnly} placeholder='Last name' {...field} />
                     </FormControl>
                   )}
                 />
               </FormItem>
-              <FormItem className={`${fields.length > 1 ? "md:col-span-3" : "md:col-span-4"}`}>
+              <FormItem className={`${!readOnly && fields.length > 1 ? "md:col-span-3" : "md:col-span-4"}`}>
                 <FormLabel>Age</FormLabel>
                 <FormField
                   control={form.control}
                   name={`${fieldName}[${index}].age` as any}
                   render={({ field }) => (
                     <FormControl>
-                      <NumberField placeholder='Age' {...field} />
+                      <NumberField readOnly={readOnly} placeholder='Age' {...field} />
                     </FormControl>
                   )}
                 />
               </FormItem>
-              {fields.length > 1 && (<Button className='hidden md:flex self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+              {!readOnly && fields.length > 1 && (<Button className='hidden md:flex self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
             </div>
           )
         }) :
-          <NoDataFound />}
-        <Button className='md:mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
+          <NoDataFound readOnly={readOnly} />}
+        {!readOnly && <Button className='md:mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>}
       </div>
     </div>
   )

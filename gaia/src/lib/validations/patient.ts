@@ -64,9 +64,14 @@ const survey_Questions = z.object({
 });
 
 const survey_Questions_PSQI = z.object({
-  question: z.string().optional(),
-  rating_answer: z.string().nonempty({
-    message: "This field is required. Please provide an answer.",
+  given_question: z.array(survey_Questions),
+  sleeping_optional: z.object({
+    question: z.string().optional(),
+    rating_answer: z.string().optional(),
+  }),
+  partner_optional: z.object({
+    question: z.string().optional(),
+    rating_answer: z.string().optional(),
   }),
 });
 
@@ -146,6 +151,6 @@ export const PatientSchema = z.object({
     survey_Questions: z.array(survey_Questions),
     additional_comment: z.string().optional(),
   }),
-  pittsburge_sleep_quality_index: z.array(survey_Questions_PSQI),
+  pittsburge_sleep_quality_index: survey_Questions_PSQI,
   status: z.string().optional(),
 });

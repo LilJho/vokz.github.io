@@ -10,7 +10,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 interface IPDFViewerProps {
-    pdf: File | null;
+    pdf: File | null | string;
     pdfHeight?: number;
     containerHeight?: string;
 }
@@ -69,15 +69,6 @@ const PDFViewer = ({ pdf, pdfHeight = 1000, containerHeight }: IPDFViewerProps) 
                     )
                 )}
             </Document>
-            {/* {pdfFile &&
-                    <div className='flex items-center justify-between mt-2'>
-                        <span> Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}</span>
-                        <div className='flex gap-4'>
-                            <Button size="sm" onClick={previousPage} disabled={pageNumber <= 1}>Prev</Button>
-                            <Button size="sm" onClick={nextPage} disabled={pageNumber >= numPages!}>Next</Button>
-                        </div>
-                    </div>
-                } */}
         </div>
     )
 }

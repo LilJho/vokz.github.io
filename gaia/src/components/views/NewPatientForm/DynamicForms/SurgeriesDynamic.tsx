@@ -9,7 +9,11 @@ import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
-const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const SurgeriesDynamicForm = ({ form, readOnly }: PersonalInfoExtends) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "surgeries"
@@ -37,28 +41,28 @@ const SurgeriesDynamicForm = ({ form }: IPersonalInformation) => {
                                     name={`surgeries[${index}].procedure` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='First name' {...field} />
+                                            <TextField readOnly={readOnly} placeholder='First name' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
+                            <FormItem className={`${!readOnly && fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
                                 <FormLabel>Year done</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name={`surgeries[${index}].date` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <DateField placeholder='Last name' {...field} />
+                                            <DateField readOnly={readOnly} placeholder='Last name' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            {fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
-                }) : <NoDataFound />}
-                <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
+                }) : <NoDataFound readOnly={readOnly} />}
+                {!readOnly && <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>}
             </div>
         </div>
     )
