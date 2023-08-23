@@ -13,7 +13,7 @@ const AreaChart = ({ data, title, height, type }: any) => {
             toolbar: {
                 show: false
             },
-            stacked: true,
+            stacked: false,
             events: {
                 selection: function (chart, e) {
                     console.log(new Date(e.xaxis.min))
