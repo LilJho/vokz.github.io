@@ -103,7 +103,7 @@ const OxygenLevelReport: React.FC = () => {
         showForZeroSeries: false,
         chart: {
             height: 350,
-            type: "line",
+            type: "area",
             stacked: false
           },
         data: [
