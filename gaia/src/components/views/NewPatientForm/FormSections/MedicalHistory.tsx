@@ -13,8 +13,6 @@ import IllnessDynamicForm from '../DynamicForms/IllnessDynamic'
 import MedicationDynamicForm from '../DynamicForms/MedicationDynamicForm'
 
 const MedicalHistory = ({ form }: IPersonalInformation) => {
-    console.log(form.watch())
-
     const isUsingTobacco = form.watch().is_using_tobacco
     const isUsingTobaccoPast = form.watch().is_using_tobacco_in_past
     const isDrinkingAlcohol = form.watch().drinking_alcohol
@@ -139,7 +137,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
             <h3 className="mt-8 mb-2 text-lg font-semibold">Social History</h3>
             <div className='flex flex-col gap-y-5 gap-x-8'>
                 <FormItem className='col-span-12'>
-                    <FormLabel>Marital Status</FormLabel>
+                    <FormLabel required>Marital Status</FormLabel>
                     <FormControl>
                         <FormField
                             control={form.control}
@@ -158,7 +156,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
 
                 <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
                     <FormItem className='col-span-3'>
-                        <FormLabel>Do you use tobacco products?</FormLabel>
+                        <FormLabel required>Do you use tobacco products?</FormLabel>
                         <FormControl>
                             <FormField
                                 control={form.control}
@@ -176,7 +174,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
                     </FormItem>
 
                     <FormItem className='col-span-3'>
-                        <FormLabel>Did you use tobacco products in the past?</FormLabel>
+                        <FormLabel required>Did you use tobacco products in the past?</FormLabel>
                         <FormControl>
                             <FormField
                                 control={form.control}
@@ -234,7 +232,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
             </div>
             <div className='flex flex-col md:flex-row my-4 gap-y-5 gap-x-8'>
                 <FormItem className='col-span-3'>
-                    <FormLabel>Do you drink alcohol?</FormLabel>
+                    <FormLabel required>Do you drink alcohol?</FormLabel>
                     <FormControl>
                         <FormField
                             control={form.control}
@@ -261,7 +259,7 @@ const MedicalHistory = ({ form }: IPersonalInformation) => {
 
             <div className='flex flex-col lg:flex-row my-4 gap-y-5 gap-x-8'>
                 <FormItem className='col-span-3'>
-                    <FormLabel>Do you use recreational drug?</FormLabel>
+                    <FormLabel required>Do you use recreational drug?</FormLabel>
                     <FormControl>
                         <FormField
                             control={form.control}

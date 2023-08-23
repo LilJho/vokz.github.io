@@ -135,12 +135,13 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, color, size, radius, isLoading = false, asChild = false, ...props }, ref) => {
+  ({ className, variant, color, size, radius, type = "button", isLoading = false, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ size, radius, className }), VariantDefault(variant, color))}
         ref={ref}
+        type={type}
         {...props}
       >
         {isLoading && <RiLoader5Line className={`animate-spin absolute  w-6 h-6 ${isLoading ? "opacity-100" : "opacity-0"}`} />}

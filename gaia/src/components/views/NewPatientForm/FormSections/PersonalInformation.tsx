@@ -12,8 +12,6 @@ import { IPersonalInformation } from '@/lib/types'
 import NameAgeDynamicForm from '../DynamicForms/NameAgeDynamicForm'
 
 const PersonalInformation = ({ form }: IPersonalInformation) => {
-    console.log(form.watch())
-
     return (
         <>
             <div className='my-2'>
@@ -22,10 +20,9 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
             </div>
 
             <h3 className="mt-8 mb-2 text-lg font-semibold">Personal Information</h3>
-            {/* <div className='mt-2 mb-4 h-[2px] bg-gray-200'></div> */}
             <div className='flex flex-col md:grid md:grid-cols-3 gap-y-5 gap-x-8'>
                 <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel required>First Name</FormLabel>
                     <FormControl>
                         <TextField placeholder='First name' {...form.register("first_name", { required: true })} />
                     </FormControl>
@@ -40,7 +37,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormControl>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel required>Last Name</FormLabel>
                     <FormControl>
                         <TextField placeholder='Last name' {...form.register("last_name", { required: true })} />
                     </FormControl>
@@ -51,7 +48,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
 
 
                 <FormItem>
-                    <FormLabel>Date of Birth</FormLabel>
+                    <FormLabel required>Date of Birth</FormLabel>
                     <FormControl>
                         <DateField {...form.register("date_of_birth", { required: true })} />
                     </FormControl>
@@ -60,7 +57,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormMessage>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>Mailing Address</FormLabel>
+                    <FormLabel required>Mailing Address</FormLabel>
                     <FormControl>
                         <TextField placeholder='Mailing Address' {...form.register("mailing_address", { required: true })} />
                     </FormControl>
@@ -69,7 +66,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormMessage>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>City</FormLabel>
+                    <FormLabel required>City</FormLabel>
                     <FormControl>
                         <TextField placeholder='City' {...form.register("city", { required: true })} />
                     </FormControl>
@@ -79,7 +76,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 </FormItem>
 
                 <FormItem>
-                    <FormLabel>Contact Number</FormLabel>
+                    <FormLabel required>Contact Number</FormLabel>
                     <FormControl>
                         <NumberField
                             placeholder='0000000000'
@@ -104,7 +101,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormControl>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>Gender</FormLabel>
+                    <FormLabel required>Gender</FormLabel>
                     <FormField
                         control={form.control}
                         name="gender"
@@ -120,7 +117,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 </FormItem>
 
                 <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel required>Email Address</FormLabel>
                     <FormControl>
                         <TextField placeholder='Email Address' {...form.register("email")} />
                     </FormControl>
@@ -129,7 +126,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormMessage>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>Race</FormLabel>
+                    <FormLabel required>Race</FormLabel>
                     <FormField
                         control={form.control}
                         name="race"
@@ -144,7 +141,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                     </FormMessage>
                 </FormItem>
                 <FormItem>
-                    <FormLabel>Relationship Status</FormLabel>
+                    <FormLabel required>Relationship Status</FormLabel>
                     <FormField
                         control={form.control}
                         name="relationship_status"
@@ -160,7 +157,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 </FormItem>
 
                 <FormItem className='col-span-2'>
-                    <FormLabel>Current Address</FormLabel>
+                    <FormLabel required>Current Address</FormLabel>
                     <FormControl>
                         <TextField placeholder='Current Address' {...form.register("current_address")} />
                     </FormControl>
@@ -176,7 +173,7 @@ const PersonalInformation = ({ form }: IPersonalInformation) => {
                 </FormItem>
 
                 <FormItem className='col-span-2'>
-                    <FormLabel>Occupation</FormLabel>
+                    <FormLabel required>Occupation</FormLabel>
                     <FormControl>
                         <TextField placeholder='Occupation' {...form.register("occupation")} />
                     </FormControl>

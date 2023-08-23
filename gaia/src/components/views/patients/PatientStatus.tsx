@@ -6,7 +6,7 @@ import { BiRun } from 'react-icons/bi'
 import { FiActivity, FiDroplet, FiThermometer } from 'react-icons/fi'
 // import { DailyDiagnosisService } from '@/services/databaseServices'
 
-const PatientStatus = async () => {
+const PatientStatus = () => {
     const data = [
         {
             id: "1",

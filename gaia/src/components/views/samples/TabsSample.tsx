@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs/tabs";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPersonBoundingBox, BsMic } from "react-icons/bs";
 
