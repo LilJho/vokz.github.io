@@ -18,54 +18,51 @@ const OxygenLevelReport: React.FC = () => {
         }
     };
 
-    function generateDateLabels(interval = 'day') {
-        const currentDate = new Date();
-        const dateLabels = [];
-        const dateValues = [];
-
+    function generateDateLabels(interval: 'day' | 'week' | 'month' | 'days' = 'day'): [string[], string[]] {
+        const currentDate: Date = new Date();
+        const dateLabels: string[] = [];
+        const dateValues: string[] = [];
+    
         switch (interval) {
-            case 'day':
-                for (let i = 0; i < 7; i++) {
-                    const nextDate = new Date(currentDate);
-                    nextDate.setDate(currentDate.getDate() + i);
-                    dateLabels.push(nextDate.toISOString().split('T')[0]);
-                    dateValues.push(nextDate.toISOString().split('T')[0]);
-                }
-                break;
-            case '5days':
-                for (let i = 0; i < 7; i += 5) {
-                    const nextDate = new Date(currentDate);
-                    nextDate.setDate(currentDate.getDate() + i);
-                    dateLabels.push(nextDate.toISOString().split('T')[0]);
-                    dateValues.push(nextDate.toISOString().split('T')[0]);
-                }
-                break;
             case 'week':
-                for (let i = 0; i < 7; i++) {
-                    const nextDate = new Date(currentDate);
-                    nextDate.setDate(currentDate.getDate() + i * 7);
+                const currentDayOfWeek: number = currentDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
+                const daysUntilMonday: number = (7 - currentDayOfWeek + 1) % 7;
+                const startOfWeek: Date = new Date(currentDate);
+                startOfWeek.setDate(currentDate.getDate() + daysUntilMonday);
+    
+                for (let iWeek: number = 0; iWeek < 7; iWeek++) {
+                    const nextDate: Date = new Date(startOfWeek);
+                    nextDate.setDate(startOfWeek.getDate() + iWeek);
                     dateLabels.push(nextDate.toISOString().split('T')[0]);
                     dateValues.push(nextDate.toISOString().split('T')[0]);
                 }
                 break;
             case 'month':
-                for (let i = 0; i < 7; i++) {
-                    const nextMonth = new Date(currentDate);
-                    nextMonth.setMonth(currentDate.getMonth() + i);
-                    const monthName = nextMonth.toLocaleString('default', { month: 'long' });
+                for (let iMonth: number = 0; iMonth < 12; iMonth++) { // Generate labels for 12 months starting from January
+                    const nextMonth: Date = new Date(currentDate);
+                    nextMonth.setMonth(iMonth);
+                    const monthName: string = nextMonth.toLocaleString('default', { month: 'long' });
                     dateLabels.push(monthName);
                     dateValues.push(nextMonth.toISOString().split('T')[0]);
                 }
                 break;
+            case 'days':
             default:
-                for (let i = 0; i < 7; i++) {
-                    const nextDate = new Date(currentDate);
-                    nextDate.setDate(currentDate.getDate() + i);
+                const currentDay: number = currentDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
+                const daysUntilSunday: number = (7 - currentDay) % 7;
+                const startOfWeekDays: Date = new Date(currentDate);
+                startOfWeekDays.setDate(currentDate.getDate() - currentDay);
+    
+                for (let iDays: number = 0; iDays < 7; iDays++) {
+                    const nextDate: Date = new Date(startOfWeekDays);
+                    nextDate.setDate(startOfWeekDays.getDate() + iDays);
                     dateLabels.push(nextDate.toISOString().split('T')[0]);
                     dateValues.push(nextDate.toISOString().split('T')[0]);
                 }
+                break;
         }
-
+    
+    
         return [dateLabels, dateValues];
     }
 

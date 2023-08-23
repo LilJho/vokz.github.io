@@ -15,7 +15,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation"; // Navigation module
 import { GrNext, GrPrevious } from "react-icons/gr";
-import { fetchSummary } from "@/helper/chartHelper";
 
 const PatientStatus = () => {
   const user = userStore((state) => state.user);
@@ -27,17 +26,17 @@ const PatientStatus = () => {
       title: "Pedometer",
       description: "Maximum Steps",
       value: "867",
-      records: [0],
+      records: [38, 40, 72, 71, 99, 56, 44, 56],
       icon: <BiRun className="w-8 h-8" />,
       backgroundColor: "bg-primary-600",
-      chart: "line"
+      chart: "area"
     },
     {
       id: "2",
       title: "Heart Rate",
       description: "Latest 01:05 PM",
       value: "73bmp",
-      records: [0],
+      records: [91, 58, 30, 52, 59, 84, 92, 51],
       icon: <FiActivity className="w-8 h-8" />,
       backgroundColor: "bg-danger-600",
       chart: "line"
@@ -47,17 +46,17 @@ const PatientStatus = () => {
       title: "Blood Glucose",
       description: "Latest",
       value: "92 mg/dL",
-      records: [0],
+      records: [96, 47, 83, 40, 66, 31, 42, 68],
       icon: <FiDroplet className="w-8 h-8" />,
       backgroundColor: "bg-accent-600",
-      chart: "line"
+      chart: "bar"
     },
     {
       id: "4",
       title: "Sleep",
       description: "Latest",
       value: "335.4°C",
-      records: [0],
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
       icon: <FiThermometer className="w-8 h-8" />,
       backgroundColor: "bg-warning-600",
       chart: "bar"
@@ -67,7 +66,7 @@ const PatientStatus = () => {
       title: "Blood Pressure",
       description: "Maximum Steps",
       value: "867",
-      records: [0],
+      records: [38, 40, 72, 71, 99, 56, 44, 56],
       icon: <BiRun className="w-8 h-8" />,
       backgroundColor: "bg-primary-600",
       chart: "bar"
@@ -77,7 +76,7 @@ const PatientStatus = () => {
       title: "Blood Oxygen",
       description: "Latest 01:05 PM",
       value: "73bmp",
-      records: [0],
+      records: [91, 58, 30, 52, 59, 84, 92, 51],
       icon: <FiActivity className="w-8 h-8" />,
       backgroundColor: "bg-danger-600",
       chart: "bar"
@@ -87,7 +86,7 @@ const PatientStatus = () => {
       title: "HRV",
       description: "Latest",
       value: "92 mg/dL",
-      records: [0],
+      records: [96, 47, 83, 40, 66, 31, 42, 68],
       icon: <FiDroplet className="w-8 h-8" />,
       backgroundColor: "bg-accent-600",
       chart: "bar"
@@ -97,7 +96,7 @@ const PatientStatus = () => {
       title: "ECG",
       description: "Latest",
       value: "335.4°C",
-      records: [0],
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
       icon: <FiThermometer className="w-8 h-8" />,
       backgroundColor: "bg-warning-600",
       chart: "line"
@@ -107,75 +106,28 @@ const PatientStatus = () => {
       title: "Body Temperature",
       description: "Latest",
       value: "335.4°C",
-      records: [0],
+      records: [96, 54, 55, 45, 77, 90, 87, 59],
       icon: <FiThermometer className="w-8 h-8" />,
       backgroundColor: "bg-warning-600",
       chart: "bar"
     },
   ];
 
-  const fetchDailyData = async () => {
-    const currentDate = new Date()
-
-    // Pedometer
-    const Pedometer = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[0].records = Pedometer
-
-    // Heart Rate 
-    const HeartRate = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[1].records = HeartRate
-
-    // Blood Glucose
-    const BloodGlucose = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[2].records = BloodGlucose
-
-    // Sleep
-    const Sleep = await fetchSummary('watch_report', 'diagnosis_numeric', 'Sleep', currentDate.toLocaleDateString(), user?.uuid)
-    template[3].records = Sleep
-
-    // Blood Pressure
-    const BloodPressure = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[4].records = BloodPressure
-
-    // Blood Oxygen
-    const BloodOxygen = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[5].records = BloodOxygen
-
-    // HRV
-    const HRV = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[6].records = HRV
-
-    // ECG
-    const ECG = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[7].records = ECG
-
-    // Body Temperature
-    const BodyTemperature = await fetchSummary('watch_report', 'diagnosis_numeric', 'Pedometer', currentDate.toLocaleDateString(), user?.uuid)
-    template[8].records = BodyTemperature
-
-
-  }
-
-  const [sample, setSample] = useState<[]>([])
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-
-        await fetchDailyData();
-        const diagnosis = await DailyDiagnosisService.getWhere(['created_at::date', 'patient_id'], [new Date().toISOString().split('T')[0], user?.uuid]);
+        const diagnosis = await DailyDiagnosisService.getWhere(['created_at::date','patient_id'], [new Date().toISOString().split('T')[0], user?.uuid]);
 
         const sourceData: SourceDataItem[] = diagnosis;
 
-        const updatedData = await combineData(sourceData, template);
-
+        const updatedData = combineData(sourceData, template);
         setDiagnosisData(updatedData);
-        console.log(diagnosisData)
 
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -197,7 +149,7 @@ const PatientStatus = () => {
     title: string;
     description: string;
     value: string;
-    records: number[] | any;
+    records: number[];
     icon: JSX.Element;
     backgroundColor: string;
     chart: string;
@@ -216,7 +168,6 @@ const PatientStatus = () => {
         item.value = diagnosisValueMap[item.title];
       }
     });
-
 
     return data;
   }

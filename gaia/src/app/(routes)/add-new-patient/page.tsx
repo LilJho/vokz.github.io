@@ -1,3 +1,4 @@
+import AddPatientForm from '@/components/views/NewPatientForm/AddPatientForm'
 import PatientForm from '@/components/views/NewPatientForm/PatientForm'
 import React from 'react'
 
@@ -9,7 +10,7 @@ const page = () => {
                     Patient Form
                 </h2>
             </div>
-            <PatientForm />
+            <AddPatientForm />
         </div>
 
     )

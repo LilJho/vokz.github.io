@@ -18,40 +18,46 @@ class DatabaseServices {
   getWhere = async (columns: any[], values: any[]) => {
     // Ensure that the length of the 'columns' array matches the length of the 'values' array
     if (columns.length !== values.length) {
-      throw new Error('Columns and values arrays must have the same length.');
+      throw new Error("Columns and values arrays must have the same length.");
     }
 
     try {
+      const { data, error } = await this.supabase
+        .select("*")
+        .eq(columns[0], values[0])
+        .eq(columns[1], values[1]);
 
-      const { data, error } = await this.supabase.select('*').eq(columns[0],values[0]).eq(columns[1],values[1]);
-  
       if (error) {
         throw new Error(error.message);
       }
-  
+
       return data;
     } catch (error: any) {
-      throw new Error('Error filtering data:', error.message);
+      throw new Error("Error filtering data:", error.message);
     }
   };
 
-  getOne = async (column: string = "id", id: string) => {
+  getOne = async (column: string = "id", id: string | number) => {
+    console.log({ column, id });
     const { data, error } = await this.supabase.select("*").eq(column, id);
 
     if (error) {
+      console.log(error);
       throw new Error(error.message);
     }
     return data;
   };
 
   getOneWhere = async (column: string, value: any, targetColumn: string) => {
-    console.log('submitted params',value); 
+    console.log("submitted params", value);
 
-    const { data, error } = await this.supabase.select(targetColumn).eq(column, value);
+    const { data, error } = await this.supabase
+      .select(targetColumn)
+      .eq(column, value);
     if (error) {
       throw new Error(error.message);
     }
-    return data; 
+    return data;
   };
 
   create = async (insert: any) => {
@@ -64,7 +70,15 @@ class DatabaseServices {
     return data;
   };
 
-  update = async (id: string, update: any, columnName = "id") => {
+  update = async ({
+    id,
+    update,
+    columnName = "id",
+  }: {
+    id: string | number;
+    update: any;
+    columnName: string;
+  }) => {
     const { data, error } = await this.supabase
       .update(update)
       .eq(columnName, id)
@@ -96,4 +110,6 @@ export const DailyDiagnosisService = new DatabaseServices("watch_report");
 export const DailyBMIService = new DatabaseServices("bmi_report");
 
 export const UserAccountsService = new DatabaseServices("user_accounts");
-
+export const PatientsInformationService = new DatabaseServices(
+  "patients_information"
+);
