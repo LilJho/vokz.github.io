@@ -18,7 +18,7 @@ const SurveyQuestion = ({ form }: IPersonalInformation) => {
                     return (
                         <div key={`${item}-${index}`} className=''>
                             <FormItem className='md:col-span-8'>
-                                <FormLabel>{item.question}</FormLabel>
+                                <FormLabel required>{item.question}</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name={`motivation_survey.survey_Questions[${index}].rating_answer` as any}
@@ -28,12 +28,16 @@ const SurveyQuestion = ({ form }: IPersonalInformation) => {
                                         </FormControl>
                                     )}
                                 />
+                                {form.formState.errors.motivation_survey?.survey_Questions?.[index]?.rating_answer?.message &&
+                                    <FormMessage className='mb-1'>
+                                        {`${form.formState.errors.motivation_survey?.survey_Questions?.[index]?.rating_answer?.message}`}
+                                    </FormMessage>}
                             </FormItem>
                         </div>
                     )
                 })}
             </div>
-            <FormItem className=' w-full'>
+            <FormItem className='mt-2 w-full'>
                 <FormLabel>Additional comments or notes from you answer above</FormLabel>
                 <FormControl>
                     <Textarea rows={6} placeholder='Write your additional comments here, if any.' {...form.register("motivation_survey.additional_comment")} />

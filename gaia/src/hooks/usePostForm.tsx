@@ -25,7 +25,6 @@ const usePostForm = <T,>({ handleFormSubmit, queryKey, successMessage, errorMess
         defaultValues
     });
 
-
     const { isLoading, mutateAsync } = useMutation(handleFormSubmit, {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey });

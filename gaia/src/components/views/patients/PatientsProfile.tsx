@@ -7,10 +7,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 import React from 'react'
 import { BiMessageRoundedDetail } from 'react-icons/bi'
 import userStore from '@/lib/store/userStore'
-import { useEffect } from 'react';
+
 import dynamic from 'next/dynamic'
+//To prevent hydration error
 const PatientsInfo = dynamic(() => import('./PatientsInfo'), {
-  ssr: false, loading: () => <div className='flex items-center flex-col gap-2'>
+  ssr: false, loading: () => <div className='mt-2 flex items-center flex-col gap-2'>
     <Skeleton className='w-44 h-8 rounded-md' />
     <Skeleton className='w-32 h-4 rounded-sm' />
   </div>
@@ -18,11 +19,6 @@ const PatientsInfo = dynamic(() => import('./PatientsInfo'), {
 
 const PatientsProfile = () => {
   const user = userStore((state) => state.user)
-
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
 
   return (
     <div className='p-6 border rounded-lg min-w-[400px] bg-white'>

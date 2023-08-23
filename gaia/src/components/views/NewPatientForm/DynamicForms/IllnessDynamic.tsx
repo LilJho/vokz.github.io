@@ -1,6 +1,7 @@
 import SelectField from '@/components/ui/FormControls/SelectField'
 import { TextField } from '@/components/ui/FormControls/TextField'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/FormControls/form'
+import NoDataFound from '@/components/ui/NoDataFound'
 import { Button } from '@/components/ui/button'
 import { IPersonalInformation } from '@/lib/types'
 import React from 'react'
@@ -30,7 +31,7 @@ const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChild
         <div>
             <FormLabel>{label}</FormLabel>
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
-                {fields?.map((item, index) => {
+                {fields.length > 0 ? fields?.map((item, index) => {
                     return (
                         <div key={index} className='grid grid-cols-1 md:grid-cols-12 gap-8'>
                             <FormItem className='md:col-span-6'>
@@ -60,7 +61,7 @@ const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChild
                             {fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
-                })}
+                }) : <NoDataFound />}
                 <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
             </div>
         </div>

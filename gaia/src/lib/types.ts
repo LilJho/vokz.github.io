@@ -78,3 +78,5 @@ export type ToastTypes = {
 export interface IPersonalInformation {
   form: UseFormReturn<z.infer<typeof PatientSchema>>;
 }
+
+export type PatientInformationType = z.infer<typeof PatientSchema>;

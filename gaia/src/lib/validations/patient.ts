@@ -58,10 +58,20 @@ const family_history = z.object({
 
 const survey_Questions = z.object({
   question: z.string().optional(),
-  rating_answer: z.string().optional(),
+  rating_answer: z.string().nonempty({
+    message: "This field is required. Please provide an answer.",
+  }),
+});
+
+const survey_Questions_PSQI = z.object({
+  question: z.string().optional(),
+  rating_answer: z.string().nonempty({
+    message: "This field is required. Please provide an answer.",
+  }),
 });
 
 export const PatientSchema = z.object({
+  id: z.string().optional(),
   first_name: z.string().nonempty({ message: "Please enter your first name" }),
   middle_name: z.string(),
   last_name: z.string().nonempty({ message: "Please enter your last name" }),
@@ -122,24 +132,20 @@ export const PatientSchema = z.object({
     .string()
     .nonempty({ message: "Please select if yes or no" }),
   alcohol_consumption_frequency: z.string().optional(),
-  is_using_recreational_drugs: z.string().optional(),
-  recreational_drug_type: z
+  is_using_recreational_drugs: z
     .string()
     .nonempty({ message: "Please select if yes or no" }),
-  recreational_drug_usage_frequency: z.string().optional(),
+  recreational_drug_type: z.string().optional(),
+  recreational_drug_usage_frequency: z.string(),
   additional_comment: z.string().optional(),
   nutrition_problem: z
     .string()
     .nonempty({ message: "Please select if yes or no" }),
   reason_for_participating: z.string().optional(),
   motivation_survey: z.object({
-    survey_Questions: z.array(survey_Questions).nonempty({
-      message: "Please select an answer for this question.",
-    }),
+    survey_Questions: z.array(survey_Questions),
     additional_comment: z.string().optional(),
   }),
-  pittsburge_sleep_quality_index: z.array(survey_Questions).nonempty({
-    message: "Please select or enter an answer for this question.",
-  }),
+  pittsburge_sleep_quality_index: z.array(survey_Questions_PSQI),
   status: z.string().optional(),
 });
