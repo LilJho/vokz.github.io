@@ -116,8 +116,8 @@ const WeightAndFats: React.FC = () => {
 
     const AreaChartData = {
         categories: dateLabels,
-        showForNullSeries: true,
-        showForZeroSeries: true,
+        showForNullSeries: false,
+        showForZeroSeries: false,
         data: [
           {
             name: "Weight",

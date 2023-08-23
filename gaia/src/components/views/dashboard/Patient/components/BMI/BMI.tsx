@@ -77,73 +77,149 @@ const BMI: React.FC = () => {
     const [chartData, setChartData] = useState<any[]>([]);
 
     useEffect(() => {
-        var finalData: any[] = [];
-        async function fetchData() {
-            try {
-                const fetchPromises = dateValues.map(async (key) => {
-                    var bmiLabels: any[] = [];
-                    var bmiData: any[] = [];
+        // var finalData: any[] = [];
+        // async function fetchData() {
+        //     try {
+        //         const fetchPromises = dateValues.map(async (key) => {
+        //             var bmiLabels: any[] = [];
+        //             var bmiData: any[] = [];
 
-                    try {
-                        const result = await fetchSummary(key);
-                        if (result.data && result.data.length > 0) {
-                            for (var i = 0; i < result.data.length; i++) {
-                                const diagnosisLabel = result.data[i].diagnosis_label;
-                                const diagnosisValue = extractNumericValue(result.data[i].diagnosis_value);
+        //             try {
+        //                 const result = await fetchSummary(key);
+        //                 if (result.data && result.data.length > 0) {
+        //                     for (var i = 0; i < result.data.length; i++) {
+        //                         const diagnosisLabel = result.data[i].diagnosis_label;
+        //                         const diagnosisValue = extractNumericValue(result.data[i].diagnosis_value);
 
-                                // Check if the label already exists in bmiLabels
-                                const existingLabelIndex = bmiLabels.findIndex((label) => label === diagnosisLabel);
+        //                         // Check if the label already exists in bmiLabels
+        //                         const existingLabelIndex = bmiLabels.findIndex((label) => label === diagnosisLabel);
 
-                                if (existingLabelIndex === -1) {
-                                    // If label doesn't exist, add it to bmiLabels and create a new data array
-                                    bmiLabels.push(diagnosisLabel);
-                                    bmiData.push({ name: diagnosisLabel, data: [diagnosisValue] });
-                                } else {
-                                    // If label already exists, add the value to the existing data array
-                                    bmiData[existingLabelIndex].data.push(diagnosisValue);
-                                }
-                            }
+        //                         if (existingLabelIndex === -1) {
+        //                             // If label doesn't exist, add it to bmiLabels and create a new data array
+        //                             bmiLabels.push(diagnosisLabel);
+        //                             bmiData.push({ name: diagnosisLabel, data: [diagnosisValue] });
+        //                         } else {
+        //                             // If label already exists, add the value to the existing data array
+        //                             bmiData[existingLabelIndex].data.push(diagnosisValue);
+        //                         }
+        //                     }
 
-                            // Push the unique bmiData to finalData
-                            for (const dataItem of bmiData) {
-                                const existingDataIndex = finalData.findIndex((item) => item.name === dataItem.name);
-                                if (existingDataIndex === -1) {
-                                    finalData.push(dataItem);
-                                } else {
-                                    // Merge the data arrays for items with the same name
-                                    finalData[existingDataIndex].data = finalData[existingDataIndex].data.concat(dataItem.data);
-                                }
-                            }
-                        }
+        //                 }  else {
+        //                     // If no data is returned for the current date, add 0 values to bmiData
+        //                     for (const label of bmiLabels) {
+        //                         // Check if the label already exists in bmiData
+        //                         const existingDataIndex = bmiData.findIndex((item) => item.name === label);
+        //                         if (existingDataIndex !== -1) {
+        //                             // Add 0 to the data array for this label
+        //                             bmiData[existingDataIndex].data.push(0);
+        //                         }
+        //                     }
+        //                 }
+                
+        //                 // Add 0 values for labels that are in dateValues but not present in result
+        //                 const missingLabels = bmiLabels.filter(label => !result?.data?.some(item => item.diagnosis_label === label));
+        //                 for (const missingLabel of missingLabels) {
+        //                     const missingLabelIndex = bmiData.findIndex(item => item.name === missingLabel);
+        //                     if (missingLabelIndex !== -1) {
+        //                         bmiData[missingLabelIndex].data.push(0);
+        //                     }
+        //                 }
+
+        //                 // Push the unique bmiData to finalData
+        //                 for (const dataItem of bmiData) {
+        //                     const existingDataIndex = finalData.findIndex((item) => item.name === dataItem.name);
+        //                     if (existingDataIndex === -1) {
+        //                         finalData.push(dataItem);
+        //                     } else {
+        //                         // Merge the data arrays for items with the same name
+        //                         finalData[existingDataIndex].data = finalData[existingDataIndex].data.concat(dataItem.data);
+        //                     }
+        //                 }
+
+                        
                     
-                        else{
-                            setChartData([]);
-                        }
 
-                        // console.log('bmidata' + key, bmiData);
-                    } catch (error) {
-                        console.error('Error fetching data for', key, ':', error);
-                        throw error;
+        //                 // console.log('bmidata' + key, bmiData);
+        //             } catch (error) {
+        //                 console.error('Error fetching data for', key, ':', error);
+        //                 throw error;
+        //             }
+        //         });
+
+        //         await Promise.all(fetchPromises);
+        //         setChartData(finalData);
+        //     } catch (error) {
+        //         console.error('Error fetching data:', error);
+        //     }
+        // }
+
+        var finalData: any[] = [];
+async function fetchData() {
+    try {
+        const fetchPromises = dateValues.map(async (key) => {
+            var bmiLabels: any[] = [];
+            var bmiData: any[] = [];
+
+            try {
+                const result = await fetchSummary(key);
+
+                // Populate the bmiLabels array with unique diagnosis labels
+                result?.data?.forEach((item) => {
+                    if (!bmiLabels.includes(item.diagnosis_label)) {
+                        bmiLabels.push(item.diagnosis_label);
                     }
                 });
 
-                await Promise.all(fetchPromises);
-                setChartData(finalData);
+                // Initialize data arrays for each label with zeros
+                bmiLabels.forEach((label) => {
+                    const dataArray = dateValues.map((date) => {
+                        const value = result?.data?.find((item) => item.diagnosis_label === label && item.created_at === date);
+                        return value ? extractNumericValue(value.diagnosis_value) || 0 : 0;
+                    });
+
+                    bmiData.push({
+                        name: label,
+                        data: dataArray,
+                    });
+                });
+
+                // Push the unique bmiData to finalData
+                for (const dataItem of bmiData) {
+                    const existingDataIndex = finalData.findIndex((item) => item.name === dataItem.name);
+                    if (existingDataIndex === -1) {
+                        finalData.push(dataItem);
+                    } else {
+                        // Merge the data arrays for items with the same name
+                        finalData[existingDataIndex].data = finalData[existingDataIndex].data.map((value: any, index: any) => {
+                            return value + dataItem.data[index];
+                        });
+                    }
+                }
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching data for', key, ':', error);
+                throw error;
             }
-        }
+        });
+
+        await Promise.all(fetchPromises);
+        setChartData(finalData);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
 
 
         fetchData();
     }, []);
 
-    // console.log(dateLabels)
+    console.log(dateLabels);
+    console.log(chartData);
 
     const AreaChartData = {
-        categories: dateLabels,
-        showForNullSeries: false,
-        showForZeroSeries: false,
+        categories: dateValues,
+        showForNullSeries: true,
+        showForZeroSeries: true,
         chart: {
             height: 350,
             type: "area",
