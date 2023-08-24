@@ -8,6 +8,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 const BMI: React.FC = () => {
     const user = userStore((state) => state.user);
 
+    // For filtering group button
+    const [childData, setChildData] = useState<any>('');
+    // Function to receive data from child component
+    const receiveDataFromChild = (data: string) => {
+        setChildData(data);
+    };
+
     const fetchSummary = async (paramDate: any,range: string) => {
         try {
             if(range=='week'){
@@ -85,7 +92,7 @@ const BMI: React.FC = () => {
         return match ? parseFloat(match[0]) : null; // Convert the matched value to a float
     };
 
-    const [dateLabels, dateValues] = generateDateLabels('week');
+    const [dateLabels, dateValues] = generateDateLabels(childData ?? '');
     const [chartData, setChartData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -98,8 +105,8 @@ const BMI: React.FC = () => {
                     var bmiData: any[] = [];
 
                     try {
-                        const result = await fetchSummary(key,'week');
-                        const wk = 'week';
+                        const result = await fetchSummary(key,childData ?? '');
+                        const wk = childData ?? '';
 
                         // Populate the bmiLabels array with unique diagnosis labels
                         result?.data?.forEach((item:any) => {
@@ -122,7 +129,7 @@ const BMI: React.FC = () => {
                                     const matchingData = result.data?.filter((item) => item.diagnosis_label === label && new Date(item.created_at) >= startDate && new Date(item.created_at) <= endDate);
                             
                                     // Find the latest value for the label within the date range
-                                    const latestValue = matchingData.reduce((latest, item) => {
+                                    const latestValue = matchingData?.reduce((latest, item) => {
                                         const value = extractNumericValue(item.diagnosis_value);
                                         if (value !== null && value > latest) {
                                             return value;
@@ -207,7 +214,7 @@ const BMI: React.FC = () => {
 
     return (
         <>
-            <AreaChart data={AreaChartData} title={"BMI Status Report"} height={"300px"} type="bar"/>
+            <AreaChart data={AreaChartData} title={"BMI Status Report"} height={"300px"} type="bar" sendDataToParent={receiveDataFromChild} />
         </>
     )
 }

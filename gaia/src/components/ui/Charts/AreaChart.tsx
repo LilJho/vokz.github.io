@@ -5,7 +5,11 @@ import ApexChart from '../ApexChart';
 import { ApexOptions } from 'apexcharts';
 import GroupButton from "@/components/ui/GroupButton";
 
-const AreaChart = ({ data, title, height, type }: any) => {
+interface ChildProps {
+    sendDataToParent: (data: string) => void;
+}
+
+const AreaChart: React.FC<ChildProps> = ({ data, title, height, type, sendDataToParent  }: any) => {
     const series = data?.data
     // console.log('please',data?.data);
 
@@ -54,23 +58,23 @@ const AreaChart = ({ data, title, height, type }: any) => {
     const groupButtonData = [
         {
         label: "Daily",
-        onClick: () => console.log("1"),
+        onClick: () => sendDataToParent('days'),
         },
         {
         label: "Weekly",
-        onClick: () => console.log("2"),
+        onClick: () => sendDataToParent('week'),
         },
         {
         label: "Monthly",
-        onClick: () => console.log("3"),
+        onClick: () => sendDataToParent('month'),
         },
     ];
 
     return (
         <div className='p-4 bg-white rounded-md'>
-            <div className="col-1">
-                <h2 className='text-lg font-semibold col-2'>{title}</h2>
-                <GroupButton data={groupButtonData} className='col-2'/>
+            <div className="grid grid-cols-4 gap-0">
+                <div className="h-10 col-span-3 "><h2 className='text-lg font-semibold col-2'>{title}</h2></div>
+                <div className="h-10 "><GroupButton data={groupButtonData} /></div>
             </div>
             <ApexChart height={height} options={options} series={series} type={type} />
         </div>
