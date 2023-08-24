@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from './button'
 import { cn } from '@/lib/utils'
 
@@ -14,16 +14,24 @@ interface GroupButtonProps {
     color?: string
 }
 
-const GroupButton = ({ orientation = "vertical", data, variant = "default", color = "default" }: GroupButtonProps) => {
+const GroupButton = ({ orientation = "vertical", data, color = "default" }: GroupButtonProps) => {
+
+    const [active, setActive] = useState(0)
+
+    const handleClick = (index: number, onClick: any) => {
+        setActive(index)
+        onClick()
+    }
+
     return (
         <div className={cn(`flex ${orientation === "vertical" ? "flex-row" : "flex-col"}`)}>
             {data.map((item, index) => (
                 <Button
                     key={index}
-                    variant={variant as any}
+                    variant={active === index ? "default" : "outlined"}
                     color={color as any}
-                    onClick={item.onClick}
-                    className={cn(`${variant === "outlined" && orientation === "vertical" && "even:border-x-0"} rounded-none first-of-type:rounded-l-lg last-of-type:rounded-r-lg`)}>
+                    onClick={() => handleClick(index, item.onClick)}
+                    className={cn(`${active !== index && "even:border-x-0"} rounded-none first-of-type:rounded-l-lg last-of-type:rounded-r-lg`)}>
                     {item.label}
                 </Button>
             ))}
