@@ -15,7 +15,7 @@ const PatientsFormTab = ({ userData, response }: PatientsFormTabProps) => {
     const [enabled, setEnabled] = useState(false)
     return (
         <div className='flex flex-col gap-4 items-end ml-auto'>
-            <SwitchToggle enabled={enabled} setEnabled={setEnabled} className='mr-4' label="Enable Editing" />
+            <SwitchToggle enabled={enabled} setEnabled={setEnabled} className='mr-4' label={enabled ? "Disable Editing" : "Enable Editing"} />
             <EditPatientForm isPatient={userData.role === "patient"} defaultValue={response} readOnly={!enabled} />
         </div>
     )

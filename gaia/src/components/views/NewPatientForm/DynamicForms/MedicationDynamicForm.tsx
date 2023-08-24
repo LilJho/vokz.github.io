@@ -25,9 +25,6 @@ const MedicationDynamicForm = ({ form, label, fieldName = "prescription_medicati
         append({ medication_name: '', dosage: '', purpose: "", start_date: "", remarks: "" })
     }
 
-    const handleRemoveField = (index: number) => {
-        remove(index);
-    };
 
     return (
         <div>
@@ -35,7 +32,7 @@ const MedicationDynamicForm = ({ form, label, fieldName = "prescription_medicati
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields.length > 0 ? fields?.map((item, index) => {
                     return (
-                        <div key={index} className='flex flex-col md:grid md:grid-cols-12 gap-8'>
+                        <div key={item.id} className='flex flex-col md:grid md:grid-cols-12 gap-8'>
                             <FormItem className={`${!readOnly && fields.length > 1 ? "md:col-span-3" : "md:col-span-4"}`}>
                                 <FormLabel>Medication Name</FormLabel>
                                 <FormField
@@ -96,7 +93,7 @@ const MedicationDynamicForm = ({ form, label, fieldName = "prescription_medicati
                                     )}
                                 />
                             </FormItem>
-                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => remove(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
                 }) : <NoDataFound readOnly={readOnly} />}

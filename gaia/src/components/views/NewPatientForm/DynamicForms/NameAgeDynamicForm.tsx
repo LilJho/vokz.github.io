@@ -24,19 +24,15 @@ const ChildrenDynamicForm = ({ form, label, fieldName, readOnly }: IChildrenDyna
     append({ first_name: '', last_name: '', age: '' })
   }
 
-  const handleRemoveField = (index: number) => {
-    remove(index);
-  };
-
   return (
     <div>
       <FormLabel>{label}</FormLabel>
       <div className='mt-1 flex flex-col gap-4 md:gap-2 md:border md:p-4 rounded-md'>
         {fields.length > 0 ? fields?.map((item, index) => {
           return (
-            <div key={`${item}-${index}`} className='relative border p-3 rounded-md md:p-0 md:border-none grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8'>
+            <div key={`${item.id}`} className='relative border p-3 rounded-md md:p-0 md:border-none grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8'>
               {fields.length > 1 && <Button variant="unstyled" size="square" className='block md:hidden p-0.5 absolute right-2 top-2'>
-                <RiCloseLine className="text-red-600 w-6 h-6" onClick={() => handleRemoveField(index)} />
+                <RiCloseLine className="text-red-600 w-6 h-6" onClick={() => remove(index)} />
               </Button>}
               <FormItem className='md:col-span-4'>
                 <FormLabel>First Name</FormLabel>
@@ -74,7 +70,7 @@ const ChildrenDynamicForm = ({ form, label, fieldName, readOnly }: IChildrenDyna
                   )}
                 />
               </FormItem>
-              {!readOnly && fields.length > 1 && (<Button className='hidden md:flex self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+              {!readOnly && fields.length > 1 && (<Button className='hidden md:flex self-end max-w-max' color="red" size="square" onClick={() => remove(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
             </div>
           )
         }) :

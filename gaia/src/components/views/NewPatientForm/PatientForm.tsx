@@ -33,8 +33,7 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
         setFormSteps(prev => prev + 1)
         scrollToTop()
     }
-    console.log("form.formState.errors:", form.formState.errors);
-    console.log(form.watch())
+
     const handleErrorToast = () => {
         console.log("form.formState.errors:", form.formState.errors);
         if (form.formState.errors && Object.keys(form.formState.errors).length > 0) {
@@ -53,7 +52,7 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
     }
 
     return (
-        <div className='border rounded-lg bg-white w-full max-w-[1400px] mx-auto'>
+        <div className='border rounded-lg bg-white w-full mx-auto'>
             <div className='hidden lg:flex py-4 px-6 overflow-x-auto form-wizard border-b'>
                 {header.map((item, index) => {
                     return (

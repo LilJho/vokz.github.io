@@ -153,4 +153,8 @@ export const PatientSchema = z.object({
   }),
   pittsburge_sleep_quality_index: survey_Questions_PSQI,
   status: z.string().optional(),
+  account_status: z.string().optional(),
+  date_of_application: z.string().nonempty({
+    message: "Please enter the date of application",
+  }),
 });

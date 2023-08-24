@@ -8,6 +8,7 @@ import * as z from "zod";
 import PatientForm from './PatientForm';
 import { cleanData } from '@/helper/cleanData';
 import { PatientsInformationService } from '@/services/databaseServices';
+import axios from 'axios';
 
 const AddPatientForm = () => {
     const defaultValues = formDefaultData;
@@ -15,6 +16,13 @@ const AddPatientForm = () => {
     async function handleFormSubmit(values: z.infer<typeof PatientSchema>) {
         const processedData = cleanData(values)
         await PatientsInformationService.create(processedData)
+        await axios.post("http://localhost:3500/D-email", {
+            firstName: values.first_name,
+            middleName: values.middle_name,
+            lastName: values.last_name,
+            email: values.email,
+            link: "http://localhost:3000/register",
+        });
     }
 
     const { onSubmit, isLoading, formMethods } = usePostForm({
