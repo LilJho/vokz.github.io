@@ -165,7 +165,7 @@ const NumberField = forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         {leftIcon !== "" && (
-          <div className="z-20 left-5 pointer-events-none">
+          <div className="left-5 pointer-events-none">
             <span className={`[&>*]:w-4 [&>*]:h-4 text-sm text-inherit`}>
               {leftIcon}
             </span>
@@ -184,7 +184,7 @@ const NumberField = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {rightIcon !== "" && (
-          <div className="z-20 right-5 pointer-events-none">
+          <div className="right-5 pointer-events-none">
             <span className={`[&>*]:w-4 [&>*]:h-4 text-sm text-inherit`}>
               {rightIcon}
             </span>

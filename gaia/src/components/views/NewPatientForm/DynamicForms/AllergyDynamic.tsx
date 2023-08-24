@@ -10,9 +10,10 @@ import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 interface IChildrenDynamicForm extends IPersonalInformation {
   label: string
   fieldName?: "allergies"
+  readOnly?: boolean
 }
 
-const AllergyDynamicForm = ({ form, label, fieldName = "allergies" }: IChildrenDynamicForm) => {
+const AllergyDynamicForm = ({ form, label, fieldName = "allergies", readOnly }: IChildrenDynamicForm) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: fieldName
@@ -40,28 +41,28 @@ const AllergyDynamicForm = ({ form, label, fieldName = "allergies" }: IChildrenD
                   name={`${fieldName}[${index}].cause` as any}
                   render={({ field }) => (
                     <FormControl>
-                      <TextField placeholder='eg. Dust' {...field} />
+                      <TextField readOnly={readOnly} placeholder='eg. Dust' {...field} />
                     </FormControl>
                   )}
                 />
               </FormItem>
-              <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
+              <FormItem className={`${!readOnly && fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
                 <FormLabel>Reaction</FormLabel>
                 <FormField
                   control={form.control}
                   name={`${fieldName}[${index}].reaction` as any}
                   render={({ field }) => (
                     <FormControl>
-                      <TextField placeholder='eg. Rhinitis' {...field} />
+                      <TextField readOnly={readOnly} placeholder='eg. Rhinitis' {...field} />
                     </FormControl>
                   )}
                 />
               </FormItem>
-              {fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+              {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
             </div>
           )
-        }) : <NoDataFound />}
-        <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
+        }) : <NoDataFound readOnly={readOnly} />}
+        {!readOnly && <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>}
       </div>
     </div>
   )

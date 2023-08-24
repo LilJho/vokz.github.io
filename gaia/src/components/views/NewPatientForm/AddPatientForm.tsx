@@ -19,7 +19,7 @@ const AddPatientForm = () => {
 
     const { onSubmit, isLoading, formMethods } = usePostForm({
         handleFormSubmit,
-        queryKey: ["patients-record"],
+        queryKey: ["patients-information"],
         successMessage,
         errorMessage,
         schema: PatientSchema,

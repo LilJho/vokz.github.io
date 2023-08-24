@@ -45,7 +45,7 @@ class DatabaseServices {
       console.log(error);
       throw new Error(error.message);
     }
-    return data;
+    return data[0];
   };
 
   getOneWhere = async (column: string, value: any, targetColumn: string) => {

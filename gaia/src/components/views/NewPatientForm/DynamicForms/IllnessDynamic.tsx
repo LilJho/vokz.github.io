@@ -11,9 +11,10 @@ import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 interface IChildrenDynamicForm extends IPersonalInformation {
     label: string
     fieldName?: "cancerIllness" | "dementiaIllness" | "diabetesIllness" | "highBloodPressureIllness"
+    readOnly?: boolean
 }
 
-const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChildrenDynamicForm) => {
+const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness", readOnly }: IChildrenDynamicForm) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: `family_history.${fieldName}`
@@ -41,28 +42,28 @@ const IllnessDynamicForm = ({ form, label, fieldName = "cancerIllness" }: IChild
                                     name={`family_history[${fieldName}][${index}].family_member` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='eg. Brother, Sister, Uncle' {...field} />
+                                            <TextField readOnly={readOnly} placeholder='eg. Brother, Sister, Uncle' {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            <FormItem className={`${fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
+                            <FormItem className={`${!readOnly && fields.length > 1 ? "md:col-span-5" : "md:col-span-6"}`}>
                                 <FormLabel>If grandparent, maternal or paternal</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name={`family_history[${fieldName}][${index}].maternal_paternal` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <SelectField data={[{ label: "Maternal", value: "Maternal" }, { label: "Paternal", value: "paternal" }]} {...field} />
+                                            <SelectField readOnly={readOnly} data={[{ label: "Maternal", value: "Maternal" }, { label: "Paternal", value: "paternal" }]} {...field} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            {fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
-                }) : <NoDataFound />}
-                <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
+                }) : <NoDataFound readOnly={readOnly} />}
+                {!readOnly && <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>}
             </div>
         </div>
     )

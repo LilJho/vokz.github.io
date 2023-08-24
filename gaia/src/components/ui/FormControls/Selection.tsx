@@ -6,11 +6,12 @@ interface IRadioGroupData {
     label?: string
     data: string[]
     type?: "option" | "rating"
+    readOnly?: boolean
 }
 
-const RadioSelectionGroup = ({ value, onChange, label = "", data, type = "option" }: IRadioGroupData) => {
+const RadioSelectionGroup = ({ readOnly, value, onChange, label = "", data, type = "option" }: IRadioGroupData) => {
     return (
-        <RadioGroup value={value} onChange={onChange}>
+        <RadioGroup disabled={readOnly} value={value} onChange={onChange}>
             <RadioGroup.Label className="sr-only">label</RadioGroup.Label>
             <div className="flex flex-wrap gap-4">
                 {data?.map((item) => (

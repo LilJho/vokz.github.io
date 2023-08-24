@@ -10,7 +10,11 @@ import React from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { RiAddFill, RiCloseLine } from 'react-icons/ri'
 
-const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
+interface PersonalInfoExtends extends IPersonalInformation {
+    readOnly?: boolean
+}
+
+const VaccineDynamicForm = ({ form, readOnly }: PersonalInfoExtends) => {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "vaccinations"
@@ -38,7 +42,7 @@ const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
                                     name={`vaccinations[${index}].vaccine` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <TextField placeholder='First name' {...field} />
+                                            <TextField readOnly={readOnly} placeholder='First name' {...field} />
                                         </FormControl>
                                     )}
                                 />
@@ -50,16 +54,16 @@ const VaccineDynamicForm = ({ form }: IPersonalInformation) => {
                                     name={`vaccinations[${index}].status` as any}
                                     render={({ field }) => (
                                         <FormControl>
-                                            <RadioSelectionGroup {...field} data={["Done", "Ongoing"]} />
+                                            <RadioSelectionGroup readOnly={readOnly}  {...field} data={["Done", "Ongoing"]} />
                                         </FormControl>
                                     )}
                                 />
                             </FormItem>
-                            {fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
-                }) : <NoDataFound />}
-                <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>
+                }) : <NoDataFound readOnly={readOnly} />}
+                {!readOnly && <Button className='mt-2 mx-auto' size="sm" variant='light' onClick={handleAddField}><RiAddFill className="w-5 h-5 mr-2" /> Add new field</Button>}
             </div>
         </div>
     )

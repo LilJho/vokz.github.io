@@ -12,6 +12,7 @@ type IComboBoxProps<T = any> = {
   value?: T;
   onChange?: (value: T) => void;
   className?: string;
+  readOnly?: boolean;
 };
 
 type OptionValue = string | { [key: string]: any };
@@ -24,6 +25,7 @@ const HeadLessComboBox: FC<IComboBoxProps> = ({
   value = "",
   onChange,
   className = "",
+  readOnly
 }) => {
   const [query, setQuery] = useState("");
 
@@ -60,7 +62,7 @@ const HeadLessComboBox: FC<IComboBoxProps> = ({
         }`}
     >
 
-      <Combobox value={value} onChange={onChange}>
+      <Combobox disabled={readOnly} value={value} onChange={onChange}>
         <div className="relative">
           <div
             style={{ minWidth: fullWidth ? getWidth : "" }}
