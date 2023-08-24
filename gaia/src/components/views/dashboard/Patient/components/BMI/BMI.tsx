@@ -187,7 +187,7 @@ const BMI: React.FC = () => {
         }
 
         fetchData();
-    }, []);
+    }, [childData]);
 
     console.log(dateValues);
     console.log(chartData); 
@@ -199,7 +199,7 @@ const BMI: React.FC = () => {
         chart: {
             height: 350,
             type: "area",
-            stacked: true
+            stacked: false
         },
         data: chartData ?? [],
         colors: ["#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396","#008FFB", "#f54254", "#00E396"],

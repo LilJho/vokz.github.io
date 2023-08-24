@@ -6,12 +6,31 @@ import { ApexOptions } from 'apexcharts';
 import GroupButton from "@/components/ui/GroupButton";
 
 interface ChildProps {
+    data: {
+        categories: string[];
+        showForNullSeries: boolean;
+        showForZeroSeries: boolean;
+        chart: {
+            height: number;
+            type: string;
+            stacked: boolean;
+        };
+        data: any[];
+        colors: string[];
+        plotOptions: {
+            bar: {
+                columnWidth: string;
+            };
+        };
+    };
+    title: string;
+    height: string;
+    type: string;
     sendDataToParent: (data: string) => void;
 }
 
 const AreaChart: React.FC<ChildProps> = ({ data, title, height, type, sendDataToParent  }: any) => {
     const series = data?.data
-    // console.log('please',data?.data);
 
     var options: ApexOptions = {
         chart: {
@@ -32,7 +51,7 @@ const AreaChart: React.FC<ChildProps> = ({ data, title, height, type, sendDataTo
         stroke: {
             curve: 'smooth',
 
-            width: [4, 4]
+            // width: [4, 4]
         },
         fill: {
             type: 'solid',
@@ -51,6 +70,9 @@ const AreaChart: React.FC<ChildProps> = ({ data, title, height, type, sendDataTo
         },
         tooltip: {
             theme: 'dark',
+        },
+        noData: {
+            text: 'Loading...'
         }
     };
 
@@ -58,15 +80,15 @@ const AreaChart: React.FC<ChildProps> = ({ data, title, height, type, sendDataTo
     const groupButtonData = [
         {
         label: "Daily",
-        onClick: () => sendDataToParent('days'),
+            onClick: () => sendDataToParent('days'),
         },
         {
         label: "Weekly",
-        onClick: () => sendDataToParent('week'),
+            onClick: () => sendDataToParent('week'),
         },
         {
         label: "Monthly",
-        onClick: () => sendDataToParent('month'),
+            onClick: () => sendDataToParent('month'),
         },
     ];
 
