@@ -485,11 +485,8 @@ const SamplePage = () => {
           </div>
           <div className="flex gap-4">
             <GroupButton data={groupButtonData} />
-            <GroupButton
-              data={groupButtonData}
-              variant="outlined" //options = default" | "outlined" | "light" | "ghost" | "unstyled"
-              color="yellow" //options = "default" | "blue" | "green" | "gray" | "red" | "yellow"
-            />
+            <GroupButton data={groupButtonData} color="yellow" />
+            <GroupButton data={groupButtonData} color="red" />
           </div>
         </div>
         <div className="flex flex-col gap-4">
