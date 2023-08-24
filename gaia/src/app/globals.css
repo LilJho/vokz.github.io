@@ -145,17 +145,29 @@ input:-webkit-autofill:focus {
   height: 8px;
 }
 
+.tabs-container::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
 /* Track */
-.form-wizard::-webkit-scrollbar-track {
+.slim-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-.form-wizard::-webkit-scrollbar-thumb {
+.slim-scrollbar::-webkit-scrollbar-thumb {
   background: rgb(182, 182, 182);
 }
 
 /* Handle on hover */
-.form-wizard::-webkit-scrollbar-thumb:hover {
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgb(142, 142, 142);
+}
+
+input:checked + div {
+  @apply border-primary-500 bg-primary-500;
+}
+input:checked + div svg {
+  @apply block;
 }

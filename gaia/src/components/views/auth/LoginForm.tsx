@@ -20,6 +20,7 @@ import { catchError } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { authService } from "@/services/authService";
+import Link from "next/link";
 
 interface LoginFormProps {
   setLoginSuccess: React.Dispatch<React.SetStateAction<boolean>>;
@@ -96,14 +97,9 @@ const LoginForm = ({ setLoginSuccess }: LoginFormProps) => {
             {form.formState.errors.password?.message}
           </FormMessage>
         </FormItem>
-        <Button
-          type="button"
-          variant={"ghost"}
-          size={"sm"}
-          onClick={() => push("/forgotpassword")}
-        >
-          Forgot Password
-        </Button>
+        <Link href="/forgotpassword" className="text-sm -mt-2 ml-auto font-semibold text-primary-600">
+          Forgot Password?
+        </Link>
         <Button className="w-full mt-6" type={loading ? "button" : "submit"}>
           {loading ? (
             <div className="flex items-center justify-center flex-1 my-auto font-semibold text-center text-white">
