@@ -13,6 +13,8 @@ import { RiProfileLine, RiDashboardLine, RiArrowLeftLine, RiUserHeartLine } from
 import { UserDataType } from '@/lib/types'
 import useToggle from '@/hooks/useToggle'
 import useMinimized from '@/lib/store/useMinimized'
+import { LuMaximize2, LuMinimize2 } from 'react-icons/lu'
+import DropdownLink from '../ui/DropdownLink'
 
 interface INavigationProps {
     data: UserDataType
@@ -22,12 +24,12 @@ const Navigation = ({ data }: INavigationProps) => {
     const [isToggled, toggle] = useToggleSidebar((state) => [state.isToggled, state.toggle])
     const [isMinimized, minimize] = useMinimized((state) => [state.isMinimized, state.minimize])
 
-    const showNavigationLink = data?.role === "admin" ?
-        <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
-            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Patients</span>
-        </NavLink> : <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
-            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>My Profile</span>
-        </NavLink>
+    // const showNavigationLink = data?.role === "admin" ?
+    //     <NavLink href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />}>
+    //         <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Patients</span>
+    //     </NavLink> : <NavLink href="/patients" icon={<RiProfileLine className="w-5 h-5" />}>
+    //         <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>My Profile</span>
+    //     </NavLink>
 
     return (
         <>
@@ -36,7 +38,7 @@ const Navigation = ({ data }: INavigationProps) => {
             <div className={`group ${isMinimized ? "w-[320px] lg:w-[56px] lg:hover:w-[320px] lg:z-50" : "w-[320px]"} bg-gradient-to-tr from-[#020D14] via-[#245F3E] to-[#B9D470] fixed top-0 bottom-0 ${isToggled ? "left-0 z-50 shadow-lg" : "-left-96"} z-40 lg:z-10 lg:left-0 transition-all`} style={{ willChange: 'transform' }}>
 
                 <Button variant="unstyled" size="square" className={`hidden ${isMinimized ? "group-hover:lg:block lg:hiddenfade-in-30" : "lg:block"} absolute top-4 right-4 hover:bg-gray-200/30`} onClick={minimize}>
-                    <RiArrowLeftLine className="w-6 h-6  text-white" />
+                    {isMinimized ? <LuMaximize2 className="w-6 h-6  text-white" /> : <LuMinimize2 className="w-6 h-6  text-white" />}
                 </Button>
 
                 <Button variant="unstyled" size="square" className='block lg:hidden absolute top-4 right-4 hover:bg-gray-200/30' onClick={toggle}>
@@ -48,22 +50,29 @@ const Navigation = ({ data }: INavigationProps) => {
                     <Image src={Logo} alt="Company Logo" className={`${isMinimized ? "hidden lg:group-hover:block lg:group-hover:fade-in" : "block"} w-44 logo-icon-invert`} />
                 </div>
                 <div className='py-4 relative'>
-                    <h6 className={`${isMinimized ? "group-hover:block hidden" : "block"} mb-1 font-medium ml-4 text-white text-sm`}>Navigation</h6>
-                    <ul className='flex flex-col gap-1'>
-                        <NavLink href="/" icon={<RiDashboardLine className="w-5 h-5" />}>
+                    <ul className={`flex flex-col gap-1 overflow-hidden ${isMinimized ? "px-3 lg:px-1.5" : "px-3"}`}>
+                        <NavLink isMinimized={isMinimized} href="/" icon={<RiDashboardLine className="w-5 h-5" />}>
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Dashboard</span>
                         </NavLink>
-                        {showNavigationLink}
-                        <NavLink href="/add-new-patient" icon={<RiUserHeartLine className="w-5 h-5" />}>
-                            <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>New Patient</span>
-                        </NavLink>
-                        <NavLink href="/sample" icon={<FiLayers className="w-5 h-5" />}>
+
+                        {data?.role === "patient" ?
+                            <NavLink isMinimized={isMinimized} href="/patients/summary" icon={<RiProfileLine className="w-5 h-5" />}>
+                                <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>My Profile</span>
+                            </NavLink> :
+                            <DropdownLink isMinimized={isMinimized} href="/patients" icon={<HiOutlineUserGroup className="w-5 h-5" />} links={[{ text: "Patient Summary", href: "/patients/summary" }, { text: "Add New Patient", href: "/patients/add-new-patient" }]}>
+                                <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Patients</span>
+                            </DropdownLink>
+                        }
+
+                        <NavLink isMinimized={isMinimized} href="/sample" icon={<FiLayers className="w-5 h-5" />}>
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Sample Page</span>
                         </NavLink>
-                        <NavLink href="/pdf-viewer" icon={<FiLayers className="w-5 h-5" />}>
+
+                        <NavLink isMinimized={isMinimized} href="/pdf-viewer" icon={<FiLayers className="w-5 h-5" />}>
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>PDF Viewer</span>
                         </NavLink>
-                        <NavLink href="/table-sample" icon={<FiLayers className="w-5 h-5" />}>
+
+                        <NavLink isMinimized={isMinimized} href="/table-sample" icon={<FiLayers className="w-5 h-5" />}>
                             <span className={`${isMinimized ? "lg:group-hover:block lg:hidden" : "block"}`}>Table Sample</span>
                         </NavLink>
                     </ul>

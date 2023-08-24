@@ -53,7 +53,7 @@ const PatientForm = ({ form, handleSubmit, isLoading, type = "add", isPatient = 
 
     return (
         <div className='border rounded-lg bg-white w-full mx-auto'>
-            <div className='hidden lg:flex py-4 px-6 overflow-x-auto form-wizard border-b'>
+            <div className='hidden lg:flex py-4 px-6 overflow-x-auto slim-scrollbar form-wizard border-b'>
                 {header.map((item, index) => {
                     return (
                         <Fragment key={index}>
