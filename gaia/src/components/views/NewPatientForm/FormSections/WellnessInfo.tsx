@@ -7,6 +7,7 @@ import SurveyQuestion from "../DynamicForms/SurveyQuestion"
 import { Label } from "@/components/ui/FormControls/label"
 import { pittsburgOption1, pittsburgOption2, pittsburgOption3, pittsburgOption4, pittsburgOption5 } from "@/config/formData"
 import { useEffect } from "react"
+import { DateField } from "@/components/ui/FormControls/DateField"
 
 interface PersonalInfoExtends extends IPersonalInformation {
     readOnly?: boolean
@@ -15,7 +16,7 @@ interface PersonalInfoExtends extends IPersonalInformation {
 const WellnessInfo = ({ form, readOnly }: PersonalInfoExtends) => {
     const watchSleepingProblem = form.watch().pittsburge_sleep_quality_index?.sleeping_optional?.question
     const watchPartner = form.watch().pittsburge_sleep_quality_index?.partner_optional?.question
-
+    console.log(form.watch())
     useEffect(() => {
         let timeoutId: NodeJS.Timeout | null = null;
         const debounceTime = 500; // in milliseconds
@@ -309,6 +310,15 @@ const WellnessInfo = ({ form, readOnly }: PersonalInfoExtends) => {
                                         />
                                     </FormControl>
                                 </FormItem>}
+                            </div>
+
+                            <div className="flex max-w-max">
+                                <FormItem>
+                                    <FormLabel required>Date of Application</FormLabel>
+                                    <FormControl>
+                                        <DateField readOnly={readOnly} {...form.register(`date_of_application` as any, { required: true })} />
+                                    </FormControl>
+                                </FormItem>
                             </div>
                         </div>
                     </div>

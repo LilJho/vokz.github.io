@@ -24,17 +24,13 @@ const VaccineDynamicForm = ({ form, readOnly }: PersonalInfoExtends) => {
         append({ vaccine: '', status: '' })
     }
 
-    const handleRemoveField = (index: number) => {
-        remove(index);
-    };
-
     return (
         <div>
             <FormLabel>Where were your previous vaccines or immunization completed?</FormLabel>
             <div className='mt-1 flex flex-col gap-2 border p-4 rounded-md'>
                 {fields.length > 0 ? fields?.map((item, index) => {
                     return (
-                        <div key={`${item}-${index}`} className='flex gap-4 md:gap-8'>
+                        <div key={`${item.id}`} className='flex gap-4 md:gap-8'>
                             <FormItem className={`flex-1`}>
                                 <FormLabel>Vaccination or Immunization name</FormLabel>
                                 <FormField
@@ -59,7 +55,7 @@ const VaccineDynamicForm = ({ form, readOnly }: PersonalInfoExtends) => {
                                     )}
                                 />
                             </FormItem>
-                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => handleRemoveField(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
+                            {!readOnly && fields.length > 1 && (<Button className='self-end max-w-max' color="red" size="square" onClick={() => remove(index)}><RiCloseLine className="w-5 h-5" /></Button>)}
                         </div>
                     )
                 }) : <NoDataFound readOnly={readOnly} />}

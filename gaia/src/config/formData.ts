@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const racesData = [
   "Hispanic",
   "Latino",
@@ -338,5 +340,7 @@ export const formDefaultData = {
       rating_answer: "",
     },
   },
-  status: "unauthorized",
+  status: "active",
+  account_status: "unauthorized",
+  date_of_application: dayjs().format("YYYY-MM-DD"),
 };
