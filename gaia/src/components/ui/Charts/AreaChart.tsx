@@ -3,6 +3,7 @@
 import React from 'react'
 import ApexChart from '../ApexChart';
 import { ApexOptions } from 'apexcharts';
+import GroupButton from "@/components/ui/GroupButton";
 
 const AreaChart = ({ data, title, height, type }: any) => {
     const series = data?.data
@@ -49,17 +50,27 @@ const AreaChart = ({ data, title, height, type }: any) => {
         }
     };
 
+    //Group Button Sample
+    const groupButtonData = [
+        {
+        label: "Daily",
+        onClick: () => console.log("1"),
+        },
+        {
+        label: "Weekly",
+        onClick: () => console.log("2"),
+        },
+        {
+        label: "Monthly",
+        onClick: () => console.log("3"),
+        },
+    ];
+
     return (
         <div className='p-4 bg-white rounded-md'>
-            <div className="col-2">
-                <h2 className='text-lg font-semibold'>{title}</h2>
-            </div>
-            <div className="col-2">
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-outline-success">Left</button>
-                    <button type="button" className="btn btn-outline-success">Middle</button>
-                    <button type="button" className="btn btn-outline-success">Right</button>
-                </div>
+            <div className="col-1">
+                <h2 className='text-lg font-semibold col-2'>{title}</h2>
+                <GroupButton data={groupButtonData} className='col-2'/>
             </div>
             <ApexChart height={height} options={options} series={series} type={type} />
         </div>
