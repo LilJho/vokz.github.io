@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = () => {
     return (
-        <BreadcrumbsLayout href="/patients" parentPageTitle='Patients Profile' currentPageTitle='BMI Report'>
+        <BreadcrumbsLayout href="/patients/summary" parentPageTitle='Patients Profile' currentPageTitle='BMI Report'>
             <div className='flex justify-center mt-4 3xl:mt-24'>
                 <BodyCompositionForm />
             </div>

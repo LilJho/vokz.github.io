@@ -12,6 +12,7 @@ import { RecordSchema } from '@/lib/validations/records';
 import Image from 'next/image';
 import UploadIllu from '@public/images/uploading.svg'
 import { Form, FormControl, FormItem, FormMessage } from '@/components/ui/FormControls/form';
+import SubmissionState from '@/components/ui/SubmissionState';
 
 interface IRecordFormProps {
     handleSubmit: () => void
@@ -45,7 +46,7 @@ const RecordForm = ({ handleSubmit, title = "", description = "", isLoading, for
     return (
         <>
             <Form {...form}>
-                <div className='mx-auto'>
+                <div className='mx-auto md:min-w-[400px]'>
                     <h3 className='text-2xl font-bold text-center'>{title}</h3>
                     <p className='max-w-md text-gray-500 mb-6 3xl:mb-10 text-center'>{description}</p>
                     <FormItem className='flex flex-col max-w-3xl'>
@@ -64,13 +65,8 @@ const RecordForm = ({ handleSubmit, title = "", description = "", isLoading, for
                 </div>
             </Form>
 
-            {isLoading ? <div className='z-50 fixed flex flex-col gap-4 items-center justify-center w-full h-full inset-0 backdrop-blur-sm bg-gray-300/70'>
-                <div className='bg-white border flex flex-col items-center px-6 py-10 rounded-md max-w-sm w-full'>
-                    <Image src={UploadIllu} alt="Upload Illustration" className='w-52' />
-                    <RiLoader5Line className="animate-spin w-20 h-20 text-primary-600" />
-                    <h2 className='text-lg font-semibold mt-4'>Uploading photo</h2>
-                </div>
-            </div> : null}
+            {isLoading ?
+                <SubmissionState message="Uploading your record" description="This may take a few moments. Please do not close the window or refresh the page." /> : null}
         </>
 
     )

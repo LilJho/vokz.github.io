@@ -34,7 +34,7 @@ const tabs = [
     icon: <RiUserHeartLine className="relative w-5 h-5 mr-2 -top-[1px]" />,
     value: "nutrition",
     content:
-      <ViewPDF />,
+      "Under construction",
   },
   {
     title: "Pain Management, strength and Conditioning",

@@ -44,7 +44,10 @@ const DropdownLink = ({ href, children, icon, links = [], isMinimized }: Props) 
       ref={dropdownRef}
       className={`w-full flex flex-col`}
     >
-      <button className={`cursor-pointer relative flex ${isMinimized ? "gap-4 lg:gap-0 lg:justify-center group-hover:lg:justify-normal group-hover:lg:gap-4" : "gap-4"} rounded-lg ${show || isActive ? "bg-gray-100/30 text-white " : "bg-transparent text-gray-100/80 hover:bg-gray-100/10"} items-center min-h-10 py-3 ${isMinimized ? "px-4 lg:px-2 group-hover:lg:px-4" : "px-4"} transition-all duration-200`} onClick={toggle}>
+      <button
+        className={`cursor-pointer relative flex ${isMinimized ? "gap-4 lg:gap-0 lg:justify-center group-hover:lg:justify-normal group-hover:lg:gap-4" : "gap-4"} rounded-lg ${show || isActive ? "bg-gray-100/30 text-white " : "bg-transparent text-gray-100/80 hover:bg-gray-100/10"} items-center min-h-10 py-3 ${isMinimized ? "px-4 lg:px-2 group-hover:lg:px-4" : "px-4"} transition-all duration-200`}
+        onClick={toggle}
+      >
         <div
           className={`relative [&>*]:relatve flex items-center justify-center [&>*]:top-[20px] [&>*]:w-6 [&>*]:h-6 text-inherit`}
         >
@@ -58,7 +61,7 @@ const DropdownLink = ({ href, children, icon, links = [], isMinimized }: Props) 
       </button>
 
       <div
-        className={`${isMinimized ? "flex lg:hidden group-hover:flex" : "flex"} mt-1 pl-7 w-full transition-all ease-in-out ${show ? "h-full opacity-100" : "h-0 overflow-hidden opacity-0"}`}
+        className={`${isMinimized ? "flex lg:hidden group-hover:flex" : "flex"} mt-1 pl-7 w-full react-collapse overflow-hidden  ${show ? "h-[88px]" : "h-0"}`}
       >
         <div className="h-[71px] max-h-[90%] rounded-full w-[2px] bg-gray-100/30"></div>
         <div className="flex flex-1 gap-1 w-full flex-col">

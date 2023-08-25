@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = () => {
     return (
-        <BreadcrumbsLayout href="/patients" parentPageTitle='Patients Profile' currentPageTitle='CGM Report'>
+        <BreadcrumbsLayout href="/patients/summary" parentPageTitle='Patients Profile' currentPageTitle='CGM Report'>
             <div>
                 <OCRComponent />
             </div>

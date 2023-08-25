@@ -5,12 +5,12 @@ import { RecordSchema } from '@/lib/validations/records'
 import { v4 as uuidv4 } from 'uuid';
 import useExtractText from '@/hooks/useExtractText'
 
-import { DailyActivitiesService,DailyBMIService } from '@/services/databaseServices'
+import { DailyActivitiesService, DailyBMIService } from '@/services/databaseServices'
 
 import RecordForm from './RecordForm'
 import { CropRegionsType, ToastTypes } from '@/lib/types'
 import { catchError } from '@/lib/utils'
-import usePostForm from '@/hooks/usePostForm';
+import usePostForm from '@/hooks/useSubmitForm';
 import axios from "axios";
 import userStore from '@/lib/store/userStore'
 
@@ -33,11 +33,11 @@ const BodyCompositionForm = () => {
             // const structuredDataArray = result.structured_data;
             // console.log({ result });
             const result = response.data; // Access the response data
-             const structuredDataArray = result.structured_data ;
-            
+            const structuredDataArray = result.structured_data;
+
             //   console.log("Result:", structuredDataArray[2]); getting structured data key
 
-            const summary_data = [structuredDataArray[0],structuredDataArray[1]];
+            const summary_data = [structuredDataArray[0], structuredDataArray[1]];
 
             const dailyActivities = {
                 report_type: "BMI Report",
@@ -50,7 +50,7 @@ const BodyCompositionForm = () => {
                 bmi_keyValue: string;
                 bmi_label: string;
                 bmi_value: string;
-              }>;
+            }>;
 
             const bmiArrayWithActivityId = bmiArray.map(bmiItem => {
                 const updatedDiagnosisItem = {

@@ -7,7 +7,7 @@ import useExtractText from '@/hooks/useExtractText'
 import RecordForm from './RecordForm'
 import { CropRegionsType, ToastTypes } from '@/lib/types'
 import { catchError, mime_types } from '@/lib/utils'
-import usePostForm from '@/hooks/usePostForm';
+import usePostForm from '@/hooks/useSubmitForm';
 import axios from 'axios';
 
 const O2RingForm = () => {
