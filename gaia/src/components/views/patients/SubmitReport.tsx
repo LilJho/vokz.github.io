@@ -12,6 +12,7 @@ import MRIllu from "@public/images/mr.svg"
 import Nutritionllu from "@public/images/nutrition.svg"
 import Painllu from "@public/images/pain.svg"
 import Mindfulnessllu from "@public/images/mind.svg"
+import BPIllu from "@public/images/bp.svg"
 import Image from 'next/image'
 import { HiX } from 'react-icons/hi'
 import Link from 'next/link'
@@ -26,7 +27,7 @@ const SubmitReport = () => {
             isOpen={isOpen}
             toggle={toggle}
             titleColor="text-primary-600"
-            maxWidth="max-w-4xl"
+            maxWidth="max-w-6xl"
             trigger={
                 <Button className='ml-auto' onClick={toggle}>Submit Report</Button>
             }>
@@ -50,6 +51,9 @@ const SubmitReport = () => {
                     </ReportButton>
                     <ReportButton image={DRMIllu} type="dmr" href="dashboard-watch-report">
                         Dashboard <br /> (Watch)
+                    </ReportButton>
+                    <ReportButton image={BPIllu} type="bp" href="blood-pressure">
+                        Blood <br /> Pressure
                     </ReportButton>
                     {user?.role === "admin" && <>
                         <ReportButton image={MRIllu} type="mr" href="02-ring-report">
@@ -78,7 +82,7 @@ export default SubmitReport
 interface IReportButton {
     children: React.ReactNode
     image: string
-    type: "dmr" | "cgm" | "ring" | "bmi" | "mr" | "nutrition" | "pain" | "mindfulness"
+    type: "dmr" | "cgm" | "ring" | "bmi" | "mr" | "nutrition" | "pain" | "mindfulness" | "bp"
     href: string
 }
 const ReportButton = ({ children, image, type, href }: IReportButton) => {
@@ -91,6 +95,7 @@ const ReportButton = ({ children, image, type, href }: IReportButton) => {
         "nutrition": "hover:border-[#F780AE] hover:text-[#F780AE] ",
         "pain": "hover:border-[#DD7328] hover:text-[#DD7328] ",
         "mindfulness": "hover:border-[#97CE1C] hover:text-[#97CE1C] ",
+        "bp": "hover:border-[#B23965] hover:text-[#B23965] ",
     }
     return (
         <Link href={`/patients/${href}`} className='flex-1'>

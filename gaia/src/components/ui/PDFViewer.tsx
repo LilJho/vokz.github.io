@@ -15,9 +15,9 @@ interface IPDFViewerProps {
 const PDFViewer = ({ url = "" }: IPDFViewerProps) => {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-7 gap-4 border rounded-lg w-full p-4 bg-white'>
-            <div className='lg:col-span-3'></div>
+            <div className='lg:col-span-2'></div>
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.9.179/build/pdf.worker.js">
-                <div className='lg:col-span-4 flex items-center justify-center p-4 h-[calc(100dvh-236px)] border rounded-lg'>
+                <div className='lg:col-span-5 flex items-center justify-center p-4 h-[calc(100dvh-236px)] border rounded-lg'>
                     {url ? <Viewer
                         fileUrl="/Gerard-Loy-June.pdf"
                     /> : <div className='flex flex-col items-center'>

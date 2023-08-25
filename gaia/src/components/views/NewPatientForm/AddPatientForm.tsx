@@ -1,7 +1,7 @@
 "use client"
 
 import { formDefaultData } from '@/config/formData';
-import usePostForm from '@/hooks/usePostForm';
+import usePostForm from '@/hooks/useSubmitForm';
 import { ToastTypes } from '@/lib/types';
 import { PatientSchema } from '@/lib/validations/patient';
 import * as z from "zod";
